@@ -29,12 +29,16 @@
 						{% endmacro %}
 						{{ toc_item("Projekte") }}
 						{{ toc_item("Support-Units") }}
+						{{ toc_item("Teammitglieder") }}
 					</ul>
 				</nav>
 			</div>
 			<main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-				{% macro render_units(units, name) %}
+				{% macro section(name) %}
 					<h1 id="{{name|urlencode}}">{{name}}</h1>
+				{% endmacro %}
+				{% macro render_units(units, name) %}
+					{{ section(name) }}
 					<table class="table">
 						<thead>
 							<tr>
@@ -64,6 +68,26 @@
 				{% endmacro %}
 				{{ render_units(projects, "Projekte") }}
 				{{ render_units(support_units, "Support-Units") }}
+
+				{{ section("Teammitglieder") }}
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>E-Mail</th>
+							<th>Nummer</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for member in members %}
+						<tr>
+							<td>{{ member.name }}</td>
+							<td>{{ member.email }}</td>
+							<td>{{ member.phone_number }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
 			</main>
 		</div>
 	</body>

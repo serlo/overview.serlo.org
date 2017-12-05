@@ -33,11 +33,32 @@ class Person:
     def __init__(self, xml):
         self.first_name = query(xml, ["first-name", text])
         self.last_name = query(xml, ["last-name", text])
+
+        contacts = xml.find("contact-data")
+
+        self.emails = [ query(x, ["address", text]) for x
+                        in contacts.find("email-addresses") ]
+        self.numbers = [ query(x, ["number", text]) for x
+                        in contacts.find("phone-numbers") ]
         self.xml = xml
 
     @property
     def name(self):
         return self.first_name + " " + self.last_name
+
+    @property
+    def email(self):
+        try:
+            return self.emails[0]
+        except IndexError:
+            return None
+
+    @property
+    def phone_number(self):
+        try:
+            return self.numbers[0]
+        except IndexError:
+            return None
 
 class Project:
     def __init__(self, xml):
@@ -80,6 +101,12 @@ class Highrise:
     def support_units(self):
         return self.get_projects_by_category(SUPPORT_UNIT_ID)
 
+    @property
+    def members(self):
+        params = { "tag_id": "5372644" }
+
+        return [ Person(x) for x in self.api_call("people", params) ]
+
 def error(message):
     print(f"ERROR: {message}", file=sys.stderr)
     sys.exit(1)
@@ -98,7 +125,8 @@ def run_script():
     template = env.get_template("report.html")
 
     print(template.render(projects=highrise.projects,
-                          support_units=highrise.support_units))
+                          support_units=highrise.support_units,
+                          members=highrise.members))
 
 if __name__ == "__main__":
     run_script()
