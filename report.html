@@ -14,37 +14,49 @@
 		</script>
 	</head>
 	<body>
-		<h1>Serlo-Team Portal</h1>
-		<h2>Inhaltsverzeichnis</h2>
-		<ol>
-			<li><a href="#projects">Projekte</a></li>
-		</ol>
-		<h2 id="projects">Projekte</h2>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Projektname</th>
-					<th>Lama</th>
-					<th>Projektbeschreibung</th>
-					<th>Projektmitglieder</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for project in projects %}
-				<tr>
-					<td>{{ project.name }}</td>
-					<td>{{ project.lama.name }}</td>
-					<td>{{ project.description }}</td>
-					<td>
-						<ul>
-							{% for person in project.members %}
-							<li>{{ person.name }}</li>
-							{% endfor %}
-						</ul>
-					</td>
-				</tr>
-				{% endfor %}
-			</tbody>
-		</table>
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+				<a class="navbar-brand" href="#">Serlo-Team Portal</a>
+			</nav>
+		</header>
+
+		<div class="container-fluid">
+			<div class="row">
+				<nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+					<ul class="nav nav-pills flex-column">
+						<li class="nav-item"><a class="nav-link" href="#projects">Projekte</a></li>
+					</ul>
+				</nav>
+			</div>
+			<main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+				<h1 id="projects">Projekte</h1>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Projektname</th>
+							<th>Lama</th>
+							<th>Projektbeschreibung</th>
+							<th>Projektmitglieder</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for project in projects %}
+						<tr>
+							<td>{{ project.name }}</td>
+							<td>{{ project.lama.name }}</td>
+							<td>{{ project.description }}</td>
+							<td>
+								<ul>
+									{% for person in project.members %}
+									<li>{{ person.name }}</li>
+									{% endfor %}
+								</ul>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</main>
+		</div>
 	</body>
 </html>
