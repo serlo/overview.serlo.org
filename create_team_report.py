@@ -9,6 +9,7 @@ import jinja2
 import requests
 
 PROJECT_ID = "6436430"
+SUPPORT_UNIT_ID="4849968"
 
 TOKEN_VARIABLE = "HIGHRISE_API_TOKEN"
 
@@ -67,10 +68,17 @@ class Highrise:
     def deals(self):
         return self.api_call("deals")
 
+    def get_projects_by_category(self, category_id):
+        return [ Project(x) for x in self.deals
+                 if query(x, ["category-id", text]) == category_id ]
+
     @property
     def projects(self):
-        return [ Project(x) for x in self.deals
-                 if query(x, ["category-id", text]) == PROJECT_ID ]
+        return self.get_projects_by_category(PROJECT_ID)
+
+    @property
+    def support_units(self):
+        return self.get_projects_by_category(SUPPORT_UNIT_ID)
 
 def error(message):
     print(f"ERROR: {message}", file=sys.stderr)
@@ -89,7 +97,8 @@ def run_script():
 
     template = env.get_template("report.html")
 
-    print(template.render(projects=highrise.projects))
+    print(template.render(projects=highrise.projects,
+                          support_units=highrise.support_units))
 
 if __name__ == "__main__":
     run_script()

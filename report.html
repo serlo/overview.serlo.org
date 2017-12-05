@@ -28,37 +28,42 @@
 						<li class="nav-item"><a class="nav-link" href="#{{name|urlencode}}">{{name}}</a></li>
 						{% endmacro %}
 						{{ toc_item("Projekte") }}
+						{{ toc_item("Support-Units") }}
 					</ul>
 				</nav>
 			</div>
 			<main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-				<h1 id="projects">Projekte</h1>
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Projektname</th>
-							<th>Lama</th>
-							<th>Projektbeschreibung</th>
-							<th>Projektmitglieder</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for project in projects %}
-						<tr>
-							<td>{{ project.name }}</td>
-							<td>{{ project.lama.name }}</td>
-							<td>{{ project.description }}</td>
-							<td>
-								<ul>
-									{% for person in project.members %}
-									<li>{{ person.name }}</li>
-									{% endfor %}
-								</ul>
-							</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+				{% macro render_units(units, name) %}
+					<h1 id="{{name|urlencode}}">{{name}}</h1>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Lama</th>
+								<th>Beschreibung</th>
+								<th>Mitglieder</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for project in units %}
+							<tr>
+								<td>{{ project.name }}</td>
+								<td>{{ project.lama.name }}</td>
+								<td>{{ project.description }}</td>
+								<td>
+									<ul>
+										{% for person in project.members %}
+										<li>{{ person.name }}</li>
+										{% endfor %}
+									</ul>
+								</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				{% endmacro %}
+				{{ render_units(projects, "Projekte") }}
+				{{ render_units(support_units, "Support-Units") }}
 			</main>
 		</div>
 	</body>
