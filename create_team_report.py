@@ -5,6 +5,7 @@ import xml.etree.ElementTree as ET
 from collections import namedtuple
 from functools import lru_cache, reduce
 
+import jinja2
 import requests
 
 PROJECT_ID = "6436430"
@@ -41,9 +42,14 @@ class Project:
     def __init__(self, xml):
         self.name = query(xml, ["name", text])
         self.status = query(xml, ["status", text])
+        self.description = query(xml, ["background", text])
         self.lama = Person(xml.find("party"))
-        self.members = [ Person(x) for x in xml.find("parties") ]
+        self.participants = [ Person(x) for x in xml.find("parties") ]
         self.xml = xml
+
+    @property
+    def members(self):
+        return [self.lama] + self.participants
 
 class Highrise:
     def __init__(self, project, api_token):
@@ -77,6 +83,13 @@ def run_script():
         error(f"Environment Variable {TOKEN_VARIABLE}")
 
     highrise = Highrise("de-serlo", api_token)
+
+    env = jinja2.Environment(autoescape=True,
+                             loader=jinja2.FileSystemLoader("."))
+
+    template = env.get_template("report.html")
+
+    print(template.render(projects=highrise.projects))
 
 if __name__ == "__main__":
     run_script()
