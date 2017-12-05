@@ -24,7 +24,10 @@
 			<div class="row">
 				<nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
 					<ul class="nav nav-pills flex-column">
-						<li class="nav-item"><a class="nav-link" href="#projects">Projekte</a></li>
+						{% macro toc_item(name) %}
+						<li class="nav-item"><a class="nav-link" href="#{{name|urlencode}}">{{name}}</a></li>
+						{% endmacro %}
+						{{ toc_item("Projekte") }}
 					</ul>
 				</nav>
 			</div>
