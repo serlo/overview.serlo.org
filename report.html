@@ -94,7 +94,7 @@
 							<td>{{ member.name }}</td>
 							<td>
 								{% call(email) generate_list(member.emails) %}
-									{{email}}
+									<a href="mailto:{{email}}">{{email}}</a>
 								{% endcall %}
 							</td>
 							<td>
