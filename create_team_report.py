@@ -110,9 +110,7 @@ def run_script():
 
     template = env.get_template("report.html")
 
-    print(template.render(projects=highrise.projects,
-                          support_units=highrise.support_units,
-                          members=highrise.members))
+    print(template.render(serlo=highrise))
 
 if __name__ == "__main__":
     run_script()

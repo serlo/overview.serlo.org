@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="de">
 
+{% macro section(name) %}
+	<h1 id="{{name|urlencode}}">{{name}}</h1>
+{% endmacro %}
+
 {% macro generate_list(list, list_type="ul") %}
 	<{{list_type}}>
 		{% for element in list %}
@@ -65,9 +69,6 @@
 				</nav>
 			</div>
 			<main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-				{% macro section(name) %}
-					<h1 id="{{name|urlencode}}">{{name}}</h1>
-				{% endmacro %}
 				{% macro render_units(units, name) %}
 					{{ section(name) }}
 					{% call(project) generate_table(units,
@@ -82,11 +83,11 @@
 						</td>
 					{% endcall %}
 				{% endmacro %}
-				{{ render_units(projects, "Projekte") }}
-				{{ render_units(support_units, "Support-Units") }}
+				{{ render_units(serlo.projects, "Projekte") }}
+				{{ render_units(serlo.support_units, "Support-Units") }}
 
 				{{ section("Teammitglieder") }}
-				{% call(member) generate_table(members, ["Name", "E-Mail", "Nummer"]) %}
+				{% call(member) generate_table(serlo.members, ["Name", "E-Mail", "Nummer"]) %}
 					<td>{{ member.name }}</td>
 					<td>
 						{% call(email) generate_list(member.emails) %}
