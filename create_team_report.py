@@ -46,20 +46,6 @@ class Person:
     def name(self):
         return self.first_name + " " + self.last_name
 
-    @property
-    def email(self):
-        try:
-            return self.emails[0]
-        except IndexError:
-            return None
-
-    @property
-    def phone_number(self):
-        try:
-            return self.numbers[0]
-        except IndexError:
-            return None
-
 class Project:
     def __init__(self, xml):
         self.name = query(xml, ["name", text])

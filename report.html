@@ -1,5 +1,14 @@
 <!DOCTYPE html>
 <html lang="de">
+{% macro generate_list(list, list_type="ul") %}
+	<{{list_type}}>
+		{% for element in list %}
+			<li>
+				{{ caller(element) }}
+			</li>
+			{% endfor %}
+	</{{list_type}}>
+{% endmacro %}
 	<head>
 		<meta charset="utf8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -83,8 +92,16 @@
 						{% for member in members %}
 						<tr>
 							<td>{{ member.name }}</td>
-							<td>{{ member.email }}</td>
-							<td>{{ member.phone_number }}</td>
+							<td>
+								{% call(email) generate_list(member.emails) %}
+									{{email}}
+								{% endcall %}
+							</td>
+							<td>
+								{% call(phone_number) generate_list(member.numbers) %}
+									{{phone_number}}
+								{% endcall %}
+							</td>
 						</tr>
 						{% endfor %}
 					</tbody>
