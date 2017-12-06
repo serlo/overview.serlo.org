@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 {% macro generate_list(list, list_type="ul") %}
 	<{{list_type}}>
 		{% for element in list %}
@@ -9,6 +10,26 @@
 			{% endfor %}
 	</{{list_type}}>
 {% endmacro %}
+
+{% macro generate_table(rows, headers) %}
+	<table class="table">
+		<thead>
+			<tr>
+				{% for header in headers %}
+					<th>{{header}}</th>
+				{% endfor %}
+			</tr>
+		</thead>
+		<tbody>
+			{% for row in rows %}
+				<tr>
+					{{ caller(row) }}
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endmacro %}
+
 	<head>
 		<meta charset="utf8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -49,63 +70,35 @@
 				{% endmacro %}
 				{% macro render_units(units, name) %}
 					{{ section(name) }}
-					<table class="table">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Lama</th>
-								<th>Beschreibung</th>
-								<th>Mitglieder</th>
-							</tr>
-						</thead>
-						<tbody>
-							{% for project in units %}
-							<tr>
-								<td>{{ project.name }}</td>
-								<td>{{ project.lama.name }}</td>
-								<td>{{ project.description }}</td>
-								<td>
-									<ul>
-										{% for person in project.members %}
-										<li>{{ person.name }}</li>
-										{% endfor %}
-									</ul>
-								</td>
-							</tr>
-							{% endfor %}
-						</tbody>
-					</table>
+					{% call(project) generate_table(units,
+					    ["Name", "Lama", "Beschreibung", "Mitglieder"]) %}
+						<td>{{ project.name }}</td>
+						<td>{{ project.lama.name }}</td>
+						<td>{{ project.description }}</td>
+						<td>
+							{% call(person) generate_list(project.members) %}
+								{{person.name}}
+							{% endcall %}
+						</td>
+					{% endcall %}
 				{% endmacro %}
 				{{ render_units(projects, "Projekte") }}
 				{{ render_units(support_units, "Support-Units") }}
 
 				{{ section("Teammitglieder") }}
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Name</th>
-							<th>E-Mail</th>
-							<th>Nummer</th>
-						</tr>
-					</thead>
-					<tbody>
-						{% for member in members %}
-						<tr>
-							<td>{{ member.name }}</td>
-							<td>
-								{% call(email) generate_list(member.emails) %}
-									<a href="mailto:{{email}}">{{email}}</a>
-								{% endcall %}
-							</td>
-							<td>
-								{% call(phone_number) generate_list(member.numbers) %}
-									<a href="tel:{{phone_number}}">{{phone_number}}</a>
-								{% endcall %}
-							</td>
-						</tr>
-						{% endfor %}
-					</tbody>
-				</table>
+				{% call(member) generate_table(members, ["Name", "E-Mail", "Nummer"]) %}
+					<td>{{ member.name }}</td>
+					<td>
+						{% call(email) generate_list(member.emails) %}
+							<a href="mailto:{{email}}">{{email}}</a>
+						{% endcall %}
+					</td>
+					<td>
+						{% call(phone_number) generate_list(member.numbers) %}
+							<a href="tel:{{phone_number}}">{{phone_number}}</a>
+						{% endcall %}
+					</td>
+				{% endcall %}
 			</main>
 		</div>
 	</body>
