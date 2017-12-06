@@ -99,7 +99,7 @@
 							</td>
 							<td>
 								{% call(phone_number) generate_list(member.numbers) %}
-									{{phone_number}}
+									<a href="tel:{{phone_number}}">{{phone_number}}</a>
 								{% endcall %}
 							</td>
 						</tr>
