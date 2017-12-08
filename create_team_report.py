@@ -33,6 +33,7 @@ class Person:
     def __init__(self, xml):
         self.first_name = query(xml, ["first-name", text])
         self.last_name = query(xml, ["last-name", text])
+        self.highrise_id = query(xml, ["id", text])
 
         contacts = xml.find("contact-data")
 
@@ -45,6 +46,13 @@ class Person:
     @property
     def name(self):
         return self.first_name + " " + self.last_name
+
+    @property
+    def id(self):
+        return self.highrise_id
+
+    def __str__(self):
+        return self.name
 
 class Project:
     def __init__(self, xml):

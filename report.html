@@ -34,6 +34,10 @@
 	</table>
 {% endmacro %}
 
+{% macro link(obj) %}
+	<a href="#{{obj.id}}">{{ obj }}</a>
+{% endmacro %}
+
 	<head>
 		<meta charset="utf8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -83,7 +87,7 @@
 						<td>{{ project.description }}</td>
 						<td>
 							{% call(person) generate_list(project.members) %}
-								{{person.name}}
+								{{ link(person) }}
 							{% endcall %}
 						</td>
 					{% endcall %}
@@ -93,7 +97,7 @@
 
 				{{ section("Teammitglieder") }}
 				{% call(member) generate_table(serlo.members, ["Name", "E-Mail", "Nummer"]) %}
-					<td>{{ member.name }}</td>
+					<td id="{{member.id}}">{{ member.name }}</td>
 					<td>
 						{% call(email) generate_list(member.emails) %}
 							<a href="mailto:{{email}}">{{email}}</a>
