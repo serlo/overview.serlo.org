@@ -44,7 +44,12 @@
 		<script type="text/javascript" src="script.js"></script>
 		<script type="text/javascript">
 			$(document).ready( function () {
-				$('table').DataTable();
+				$('table').DataTable({
+					"paging": false,
+					"language": {
+						"info": "Showing _TOTAL_ entries",
+					},
+				});
 			} );
 		</script>
 	</head>
