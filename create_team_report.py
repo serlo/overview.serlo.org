@@ -97,7 +97,7 @@ class Highrise:
 
     @property
     def members(self):
-        params = { "tag_id": "5372644" }
+        params = { "tag_id": "5360080" }
 
         return [ Person(x) for x in self.api_call("people", params) ]
 
