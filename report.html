@@ -45,6 +45,25 @@
 		<title>Serlo-Team Portal</title>
 		<link href="./favicon.ico" rel="icon" type="image/x-icon">
 		<link rel="stylesheet" href="./style.css">
+		<style type="text/css">
+		@media (min-width: 768px) {
+			.sidebar {
+				position: sticky;
+				top: 0;
+				height: 100vh;
+				box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+			}
+		}
+
+		.sidebar .nav-link {
+			font-weight: 500;
+			color: #333;
+		}
+
+		.sidebar .nav-link.active {
+			color: #007bff;
+		}
+		</style>
 		<script type="text/javascript" src="script.js"></script>
 		<script type="text/javascript">
 			$(document).ready( function () {
@@ -58,15 +77,13 @@
 		</script>
 	</head>
 	<body>
-		<header>
-			<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-				<a class="navbar-brand" href="#">Serlo-Team Portal</a>
-			</nav>
+		<header class="navbar navbar-expand navbar-dark bg-dark">
+			<a class="navbar-brand" href="#">Serlo-Team Portal</a>
 		</header>
 
 		<div class="container-fluid">
 			<div class="row">
-				<nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+				<nav class="col-12 col-md-2 bg-light sidebar">
 					<ul class="nav nav-pills flex-column">
 						{% macro toc_item(name) %}
 						<li class="nav-item"><a class="nav-link" href="#{{name|urlencode}}">{{name}}</a></li>
@@ -76,40 +93,40 @@
 						{{ toc_item("Teammitglieder") }}
 					</ul>
 				</nav>
-			</div>
-			<main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-				{% macro render_units(units, name) %}
-					{{ section(name) }}
-					{% call(project) generate_table(units,
-					    ["Name", "Lama", "Beschreibung", "Mitglieder"]) %}
-						<td>{{ project.name }}</td>
-						<td>{{ link(project.lama) }}</td>
-						<td>{{ project.description }}</td>
+				<main role="main" class="col-12 col-md-10">
+					{% macro render_units(units, name) %}
+						{{ section(name) }}
+						{% call(project) generate_table(units,
+							["Name", "Lama", "Beschreibung", "Mitglieder"]) %}
+							<td>{{ project.name }}</td>
+							<td>{{ link(project.lama) }}</td>
+							<td>{{ project.description }}</td>
+							<td>
+								{% call(person) generate_list(project.members) %}
+									{{ link(person) }}
+								{% endcall %}
+							</td>
+						{% endcall %}
+					{% endmacro %}
+					{{ render_units(serlo.projects, "Projekte") }}
+					{{ render_units(serlo.support_units, "Support-Units") }}
+
+					{{ section("Teammitglieder") }}
+					{% call(member) generate_table(serlo.members, ["Name", "E-Mail", "Nummer"]) %}
+						<td id="{{member.id}}">{{ member.name }}</td>
 						<td>
-							{% call(person) generate_list(project.members) %}
-								{{ link(person) }}
+							{% call(email) generate_list(member.emails) %}
+								<a href="mailto:{{email}}">{{email}}</a>
+							{% endcall %}
+						</td>
+						<td>
+							{% call(phone_number) generate_list(member.numbers) %}
+								<a href="tel:{{phone_number}}">{{phone_number}}</a>
 							{% endcall %}
 						</td>
 					{% endcall %}
-				{% endmacro %}
-				{{ render_units(serlo.projects, "Projekte") }}
-				{{ render_units(serlo.support_units, "Support-Units") }}
-
-				{{ section("Teammitglieder") }}
-				{% call(member) generate_table(serlo.members, ["Name", "E-Mail", "Nummer"]) %}
-					<td id="{{member.id}}">{{ member.name }}</td>
-					<td>
-						{% call(email) generate_list(member.emails) %}
-							<a href="mailto:{{email}}">{{email}}</a>
-						{% endcall %}
-					</td>
-					<td>
-						{% call(phone_number) generate_list(member.numbers) %}
-							<a href="tel:{{phone_number}}">{{phone_number}}</a>
-						{% endcall %}
-					</td>
-				{% endcall %}
-			</main>
+				</main>
+			</div>
 		</div>
 	</body>
 </html>
