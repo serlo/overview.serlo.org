@@ -1,32 +1,37 @@
+"""Script for generating an HTML report of all contacts saved in Highrise."""
+
 import os
 import sys
 import xml.etree.ElementTree as ET
 
-from collections import namedtuple
 from functools import lru_cache, reduce
 
 import jinja2
 import requests
 
 PROJECT_ID = "6436430"
-SUPPORT_UNIT_ID="4849968"
+SUPPORT_UNIT_ID = "4849968"
 
 TOKEN_VARIABLE = "HIGHRISE_API_TOKEN"
 
 def text(xml):
+    """Returns the text content of an XML element."""
     return xml.text
 
 def xml_get(xml, key):
+    """Returns an Element of an XML element based on the type of the key."""
     if xml is None:
         return None
     elif isinstance(key, int):
         return xml[key]
     elif callable(key):
         return key(xml)
-    else:
-        return xml.find(key)
+
+    return xml.find(key)
 
 def query(xml, path):
+    """Returns an property of the XML element `xml` based of the query defined
+    by `path`."""
     return reduce(xml_get, path, xml)
 
 class Person:
@@ -37,10 +42,10 @@ class Person:
 
         contacts = xml.find("contact-data")
 
-        self.emails = [ query(x, ["address", text]) for x
-                        in contacts.find("email-addresses") ]
-        self.numbers = [ query(x, ["number", text]) for x
-                        in contacts.find("phone-numbers") ]
+        self.emails = [query(x, ["address", text]) for x
+                       in contacts.find("email-addresses")]
+        self.numbers = [query(x, ["number", text]) for x
+                        in contacts.find("phone-numbers")]
         self.xml = xml
 
     @property
@@ -60,7 +65,7 @@ class Project:
         self.status = query(xml, ["status", text])
         self.description = query(xml, ["background", text])
         self.lama = Person(xml.find("party"))
-        self.participants = [ Person(x) for x in xml.find("parties") ]
+        self.participants = [Person(x) for x in xml.find("parties")]
         self.xml = xml
 
     @property
@@ -84,8 +89,8 @@ class Highrise:
         return self.api_call("deals")
 
     def get_projects_by_category(self, category_id):
-        return [ Project(x) for x in self.deals
-                 if query(x, ["category-id", text]) == category_id ]
+        return [Project(x) for x in self.deals
+                if query(x, ["category-id", text]) == category_id]
 
     @property
     def projects(self):
@@ -97,15 +102,17 @@ class Highrise:
 
     @property
     def members(self):
-        params = { "tag_id": "5360080" }
+        params = {"tag_id": "5360080"}
 
-        return [ Person(x) for x in self.api_call("people", params) ]
+        return [Person(x) for x in self.api_call("people", params)]
 
 def error(message):
+    """Reports an error an exits the program with return code `1`."""
     print(f"ERROR: {message}", file=sys.stderr)
     sys.exit(1)
 
 def run_script():
+    """Main function of the script."""
     try:
         api_token = os.environ[TOKEN_VARIABLE]
     except KeyError:
