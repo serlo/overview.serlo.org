@@ -5,6 +5,10 @@ from unittest import TestCase
 
 from serlo.model import Email
 
+def generate_specs(params, list_values):
+    """Helper function for creating model specifications."""
+    return [dict(zip(params, values)) for values in list_values]
+
 class TestGenericModel(TestCase):
     """Generic tests for the models."""
 
@@ -45,11 +49,8 @@ class ModelTest(ABC, TestCase):
 
 class TestEmail(ModelTest, TestCase):
     """Testcases for the model `Email`."""
-    specs = [
-        {"address": "hello@example.org"},
-        {"address": "not-an-email"},
-        {"address": ""},
-    ]
+    specs = generate_specs(["address"],
+                           [["hello@example.org"], [""], ["not-an-email"]])
 
     cls = Email
 
