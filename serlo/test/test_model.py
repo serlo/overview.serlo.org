@@ -40,6 +40,9 @@ class ModelTest(ABC, TestCase):
             for name, value in spec.items():
                 self.assertEqual(getattr(obj, name), value)
 
+            # Default value of `id` is None
+            self.assertIsNone(obj.id, None)
+
 class TestEmail(ModelTest, TestCase):
     """Testcases for the model `Email`."""
     specs = [
