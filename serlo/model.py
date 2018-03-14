@@ -29,6 +29,12 @@ class Email(Base):
 
     address = Column(String)
 
+class PhoneNumber(Base):
+    """Model of a phone number."""
+    # pylint: disable=too-few-public-methods
+
+    number = Column(String)
+
 class SerloDatabase(object):
     """Class for accessing the stored entities of Serlo and saving new
     entities."""

@@ -3,7 +3,7 @@
 from abc import ABC, abstractmethod
 from unittest import TestCase
 
-from serlo.model import Email, SerloDatabase
+from serlo.model import Email, PhoneNumber, SerloDatabase
 
 def generate_specs(params, list_values):
     """Helper function for creating model specifications."""
@@ -72,6 +72,13 @@ class TestEmail(ModelTest, TestCase):
                            [["hello@example.org"], [""], ["not-an-email"]])
 
     cls = Email
+
+class TestPhoneNumber(ModelTest, TestCase):
+    """Testcases for the model `PhoneNumber`."""
+    specs = generate_specs(["number"],
+                           [["+49017867"], [""], "01781523467"])
+
+    cls = PhoneNumber
 
 class TestSerloDatabase(TestCase):
     """Testcases for the class `SerloDatabase`."""
