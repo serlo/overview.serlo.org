@@ -35,6 +35,13 @@ class PhoneNumber(_SerloEntity):
 
     number = Column(String)
 
+class Person(_SerloEntity):
+    """Model of a person working at Serlo."""
+    # pylint: disable=too-few-public-methods
+
+    first_name = Column(String)
+    last_name = Column(String)
+
 class SerloDatabase(object):
     """Class for accessing the stored entities of Serlo and saving new
     entities."""
