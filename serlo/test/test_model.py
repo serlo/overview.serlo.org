@@ -35,6 +35,11 @@ class ModelTest(ABC, TestCase):
         """Class of the model."""
         raise NotImplementedError()
 
+    def create_entity(self, spec):
+        """Creates an entity of type `self.cls` based on the given
+        specification."""
+        return self.cls(**spec)
+
     def setUp(self):
         self.database = SerloDatabase("sqlite:///:memory:")
 
@@ -42,7 +47,7 @@ class ModelTest(ABC, TestCase):
         """Test Initialization of a model with several specs and check whether
         attributes are set properly."""
         for spec in self.specs:
-            obj = self.cls(**spec)
+            obj = self.create_entity(spec)
 
             for name, value in spec.items():
                 self.assertEqual(getattr(obj, name), value)
@@ -52,7 +57,7 @@ class ModelTest(ABC, TestCase):
 
     def test_add_objects_to_database(self):
         """Tests whether objects can be saved inside the database."""
-        objects = [self.cls(**spec) for spec in self.specs]
+        objects = [self.create_entity(spec) for spec in self.specs]
 
         self.database.add_all(objects)
 
@@ -91,7 +96,7 @@ class TestPerson(ModelTest, TestCase):
 
     def test_attribute_name(self):
         """Testcase for attribute `Person.name`."""
-        names = [self.cls(**spec).name for spec in self.specs]
+        names = [self.create_entity(spec).name for spec in self.specs]
 
         self.assertListEqual(names, ["Hello World", "Markus Lukas", " abc"])
 
