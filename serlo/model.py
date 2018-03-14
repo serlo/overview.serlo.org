@@ -14,6 +14,13 @@ class Base(object):
 
     id = Column(Integer, primary_key=True)
 
+    def __eq__(self, other):
+        return other is not None and self.__class__ == other.__class__ \
+                                 and self.id == other.id
+
+    def __hash__(self):
+        return self.id if self.id is not None else -1
+
 Base = declarative_base(cls=Base) # pylint: disable=invalid-name
 
 class Email(Base):
@@ -31,6 +38,13 @@ class SerloDatabase(object):
         of the database."""
 
         self._engine = create_engine(database)
-        self._session = sessionmaker(bind=self._engine)()
+        self._sessionmaker = sessionmaker(bind=self._engine)
 
         Base.metadata.create_all(self._engine)
+
+    def add_all(self, instances):
+        """Adds all entities of the iterator `iterator` to the database."""
+        session = self._sessionmaker()
+
+        session.add_all(instances)
+        session.commit()

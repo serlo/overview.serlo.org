@@ -35,6 +35,9 @@ class ModelTest(ABC, TestCase):
         """Class of the model."""
         raise NotImplementedError()
 
+    def setUp(self):
+        self.database = SerloDatabase("sqlite:///:memory:")
+
     def test_model_initialization(self):
         """Test Initialization of a model with several specs and check whether
         attributes are set properly."""
@@ -46,6 +49,22 @@ class ModelTest(ABC, TestCase):
 
             # Default value of `id` is None
             self.assertIsNone(obj.id, None)
+
+    def test_add_objects_to_database(self):
+        """Tests whether objects can be saved inside the database."""
+        objects = [self.cls(**spec) for spec in self.specs]
+
+        self.database.add_all(objects)
+
+        # pylint: disable=protected-access
+        session = self.database._sessionmaker()
+
+        self.assertSetEqual(set(objects), set(session.query(self.cls)))
+
+        # saved objects need to have an id
+        for obj in objects:
+            self.assertIsNotNone(obj.id)
+            self.assertGreater(obj.id, 0)
 
 class TestEmail(ModelTest, TestCase):
     """Testcases for the model `Email`."""
