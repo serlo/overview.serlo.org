@@ -4,7 +4,7 @@ from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declared_attr, declarative_base
 from sqlalchemy.orm import sessionmaker
 
-class Base(object):
+class _SerloEntity(object):
     """Base class of all models."""
     # pylint: disable=too-few-public-methods
 
@@ -21,15 +21,15 @@ class Base(object):
     def __hash__(self):
         return self.id if self.id is not None else -1
 
-Base = declarative_base(cls=Base) # pylint: disable=invalid-name
+_SerloEntity = declarative_base(cls=_SerloEntity) #pylint: disable=invalid-name
 
-class Email(Base):
+class Email(_SerloEntity):
     """Model of an email contact."""
     # pylint: disable=too-few-public-methods
 
     address = Column(String)
 
-class PhoneNumber(Base):
+class PhoneNumber(_SerloEntity):
     """Model of a phone number."""
     # pylint: disable=too-few-public-methods
 
@@ -46,7 +46,7 @@ class SerloDatabase(object):
         self._engine = create_engine(database)
         self._sessionmaker = sessionmaker(bind=self._engine)
 
-        Base.metadata.create_all(self._engine)
+        _SerloEntity.metadata.create_all(self._engine)
 
     def add_all(self, instances):
         """Adds all entities of the iterator `iterator` to the database."""
