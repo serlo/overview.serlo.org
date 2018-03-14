@@ -42,6 +42,16 @@ class Person(_SerloEntity):
     first_name = Column(String)
     last_name = Column(String)
 
+    @property
+    def name(self):
+        """Returns the full name of the person.
+
+        >>> p = Person(first_name="Markus", last_name="Miller")
+        >>> p.name
+        'Markus Miller'
+        """
+        return self.first_name + " " + self.last_name
+
 class SerloDatabase(object):
     """Class for accessing the stored entities of Serlo and saving new
     entities."""

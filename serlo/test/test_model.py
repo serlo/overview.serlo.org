@@ -89,6 +89,12 @@ class TestPerson(ModelTest, TestCase):
 
     cls = Person
 
+    def test_attribute_name(self):
+        """Testcase for attribute `Person.name`."""
+        names = [self.cls(**spec).name for spec in self.specs]
+
+        self.assertListEqual(names, ["Hello World", "Markus Lukas", " abc"])
+
 class TestSerloDatabase(TestCase):
     """Testcases for the class `SerloDatabase`."""
 
