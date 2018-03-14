@@ -3,7 +3,7 @@
 from abc import ABC, abstractmethod
 from unittest import TestCase
 
-from serlo.model import Email
+from serlo.model import Email, SerloDatabase
 
 def generate_specs(params, list_values):
     """Helper function for creating model specifications."""
@@ -53,6 +53,13 @@ class TestEmail(ModelTest, TestCase):
                            [["hello@example.org"], [""], ["not-an-email"]])
 
     cls = Email
+
+class TestSerloDatabase(TestCase):
+    """Testcases for the class `SerloDatabase`."""
+
+    def test_serlo_database_init(self): # pylint: disable=no-self-use
+        """Test initialization of `SerloDatabase`."""
+        SerloDatabase("sqlite:///:memory:")
 
 # ModelTest shall not be tested (see https://stackoverflow.com/a/43353680 )
 del ModelTest
