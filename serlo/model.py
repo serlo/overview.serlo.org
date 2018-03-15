@@ -18,9 +18,6 @@ class _SerloEntity(object):
         return other is not None and self.__class__ == other.__class__ \
                                  and self.id == other.id
 
-    def __hash__(self):
-        return self.id if self.id is not None else -1
-
 _SerloEntity = declarative_base(cls=_SerloEntity) #pylint: disable=invalid-name
 
 class Email(_SerloEntity):
@@ -29,11 +26,23 @@ class Email(_SerloEntity):
 
     address = Column(String)
 
+    def __eq__(self, other):
+        return super().__eq__(other) and self.address == other.address
+
+    def __hash__(self):
+        return hash((self.id, self.address))
+
 class PhoneNumber(_SerloEntity):
     """Model of a phone number."""
     # pylint: disable=too-few-public-methods
 
     number = Column(String)
+
+    def __eq__(self, other):
+        return super().__eq__(other) and self.number == other.number
+
+    def __hash__(self):
+        return hash((self.id, self.number))
 
 class Person(_SerloEntity):
     """Model of a person working at Serlo."""
@@ -41,6 +50,13 @@ class Person(_SerloEntity):
 
     first_name = Column(String)
     last_name = Column(String)
+
+    def __eq__(self, other):
+        return super().__eq__(other) and self.first_name == other.first_name \
+                                     and self.last_name == other.last_name
+
+    def __hash__(self):
+        return hash((self.id, self.first_name, self.last_name))
 
     @property
     def name(self):
