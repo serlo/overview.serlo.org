@@ -52,13 +52,17 @@ class TestPhoneNumber(TestCase):
         self.assertEqual(self.number2.number, "0178645389")
         self.assertEqual(self.number3.number, "")
 
+def generate_persons():
+    """Helper function for creating persons of type `Person`."""
+    return (Person(first_name="Markus", last_name="Miller"),
+            Person(first_name="Yannick", last_name="Müller"),
+            Person(first_name="", last_name=""))
+
 class TestPerson(TestCase):
     """Testcases for model `Person`."""
 
     def setUp(self):
-        self.person1 = Person(first_name="Markus", last_name="Miller")
-        self.person2 = Person(first_name="Yannick", last_name="Müller")
-        self.person3 = Person(first_name="", last_name="")
+        self.person1, self.person2, self.person3 = generate_persons()
 
     def test_attribute_id(self):
         """Testcase for attribute `Person.id`."""
@@ -92,7 +96,13 @@ class TestSerloDatabase(TestCase):
 
     def setUp(self):
         self.database = SerloDatabase("sqlite:///:memory:")
+        self.person1, self.person2, self.person3 = generate_persons()
 
-    def test_serlo_database_init(self): # pylint: disable=no-self-use
-        """Test initialization of `SerloDatabase`."""
-        SerloDatabase("sqlite:///:memory:")
+    def test_attribute_persons(self):
+        """Testcase for storing persons to `SerloDatabase`."""
+        self.assertListEqual(list(self.database.persons), [])
+
+        self.database.add_all([self.person1, self.person2, self.person3])
+
+        self.assertSetEqual(set(self.database.persons),
+                            set([self.person1, self.person2, self.person3]))

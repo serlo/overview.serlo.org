@@ -71,3 +71,8 @@ class SerloDatabase(object):
 
         session.add_all(instances)
         session.commit()
+
+    @property
+    def persons(self):
+        """Returns all stored persons of type `Person`."""
+        return self._sessionmaker().query(Person)
