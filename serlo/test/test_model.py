@@ -15,7 +15,7 @@ class TestGenericModel(TestCase):
     """Generic tests for the models."""
 
     def setUp(self):
-        self.models = [Email, Person]
+        self.models = [Person]
 
     def test_attr_tablename(self):
         """Test: Each model needs to have the attribute `__tablename__`."""
@@ -73,12 +73,29 @@ class ModelTest(ABC, TestCase):
             self.assertIsNotNone(obj.id)
             self.assertGreater(obj.id, 0)
 
-class TestEmail(ModelTest, TestCase):
+class TestEmail(TestCase):
     """Testcases for the model `Email`."""
-    specs = generate_specs(["address"],
-                           [["hello@example.org"], [""], ["not-an-email"]])
 
-    cls = Email
+    def setUp(self):
+        self.email1 = Email(address="hello@example.org")
+        self.email2 = Email(address="")
+        self.email3 = Email(address="not-an-email")
+
+    def test_attribute_tablename(self):
+        """Testcase for attribute `Email.__tablename__`."""
+        self.assertEqual(Email.__tablename__, "email")
+
+    def test_attribute_id(self):
+        """Testcase for attribute `Email.id`."""
+        self.assertIsNone(self.email1.id)
+        self.assertIsNone(self.email2.id)
+        self.assertIsNone(self.email3.id)
+
+    def test_attribute_address(self):
+        """Testcase for attribute `Email.address`."""
+        self.assertEqual(self.email1.address, "hello@example.org")
+        self.assertEqual(self.email2.address, "")
+        self.assertEqual(self.email3.address, "not-an-email")
 
 class TestPhoneNumber(TestCase):
     """Testcases for the model `PhoneNumber`."""
