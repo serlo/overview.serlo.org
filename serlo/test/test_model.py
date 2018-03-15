@@ -5,6 +5,8 @@ from unittest import TestCase
 
 from serlo.model import Email, Person, PhoneNumber, SerloDatabase
 
+# pylint: disable=missing-docstring
+
 def generate_specs(params, list_values):
     """Helper function for creating model specifications."""
     return [dict(zip(params, values)) for values in list_values]
@@ -13,7 +15,7 @@ class TestGenericModel(TestCase):
     """Generic tests for the models."""
 
     def setUp(self):
-        self.models = [Email, Person, PhoneNumber]
+        self.models = [Email, Person]
 
     def test_attr_tablename(self):
         """Test: Each model needs to have the attribute `__tablename__`."""
@@ -78,12 +80,29 @@ class TestEmail(ModelTest, TestCase):
 
     cls = Email
 
-class TestPhoneNumber(ModelTest, TestCase):
+class TestPhoneNumber(TestCase):
     """Testcases for the model `PhoneNumber`."""
-    specs = generate_specs(["number"],
-                           [["+49017867"], [""], "01781523467"])
 
-    cls = PhoneNumber
+    def setUp(self):
+        self.number1 = PhoneNumber(number="+49017867")
+        self.number2 = PhoneNumber(number="0178645389")
+        self.number3 = PhoneNumber(number="")
+
+    def test_attribute_tablename(self):
+        """Testcase for attribute `__tablename__`."""
+        self.assertEqual(PhoneNumber.__tablename__, "phonenumber")
+
+    def test_attribute_id(self):
+        """Testcase for attribute `PhoneNumber.id`."""
+        self.assertIsNone(self.number1.id)
+        self.assertIsNone(self.number2.id)
+        self.assertIsNone(self.number3.id)
+
+    def test_attribute_number(self):
+        """Testcase for attribute `PhoneNumber.number`."""
+        self.assertEqual(self.number1.number, "+49017867")
+        self.assertEqual(self.number2.number, "0178645389")
+        self.assertEqual(self.number3.number, "")
 
 class TestPerson(ModelTest, TestCase):
     """Testcases for model `Person`."""
