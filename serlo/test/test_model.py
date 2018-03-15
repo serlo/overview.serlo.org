@@ -13,7 +13,7 @@ class TestGenericModel(TestCase):
     """Generic tests for the models."""
 
     def setUp(self):
-        self.models = [Email]
+        self.models = [Email, Person, PhoneNumber]
 
     def test_attr_tablename(self):
         """Test: Each model needs to have the attribute `__tablename__`."""
