@@ -49,6 +49,12 @@ class Person(_SerloEntity):
         """
         return self.first_name + " " + self.last_name
 
+class WorkingUnit(_SerloEntity):
+    """Model for a working unit."""
+    # pylint: disable=too-few-public-methods
+
+    name = Column(String)
+
 class SerloDatabase(object):
     """Class for accessing the stored entities of Serlo and saving new
     entities."""

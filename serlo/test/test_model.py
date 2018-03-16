@@ -2,7 +2,7 @@
 
 from unittest import TestCase
 
-from serlo.model import Email, Person, PhoneNumber, SerloDatabase
+from serlo.model import Email, Person, PhoneNumber, SerloDatabase, WorkingUnit
 
 class TestEmail(TestCase):
     """Testcases for the model `Email`."""
@@ -120,6 +120,33 @@ class TestPerson(TestCase):
         self.assertEqual(self.person1.name, "Markus Miller")
         self.assertEqual(self.person2.name, "Yannick Müller")
         self.assertEqual(self.person3.name, " ")
+
+class TestWorkingUnit(TestCase):
+    """Testcases for the class `WorkingUnit`."""
+
+    def setUp(self):
+        self.person1, self.person2, self.person2 = generate_persons()[0:3]
+
+        self.project1 = WorkingUnit(name="project1")
+        self.project2 = WorkingUnit(name="")
+        self.unit1 = WorkingUnit(name="Support Unit Master")
+        self.unit2 = WorkingUnit(name="Another support unit")
+
+    def test_attribute_tablename(self):
+        """Test for attribute `WorkingUnit.__tablename__`."""
+        self.assertEqual(WorkingUnit.__tablename__, "workingunit")
+
+    def test_attribute_id(self):
+        """Test for attribute `WorkingUnit.id`"""
+        self.assertIsNone(self.project1.id)
+        self.assertIsNone(self.unit1.id)
+
+    def test_attribute_name(self):
+        """Test for attribute `WorkingUnit.name`."""
+        self.assertEqual(self.project1.name, "project1")
+        self.assertEqual(self.project2.name, "")
+        self.assertEqual(self.unit1.name, "Support Unit Master")
+        self.assertEqual(self.unit2.name, "Another support unit")
 
 class TestSerloDatabase(TestCase):
     """Testcases for the class `SerloDatabase`."""
