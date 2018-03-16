@@ -28,6 +28,7 @@ class PhoneNumber(_SerloEntity):
     # pylint: disable=too-few-public-methods
 
     number = Column(String)
+    person_id = Column(Integer, ForeignKey("person.id"))
 
 class Person(_SerloEntity):
     """Model of a person working at Serlo."""
@@ -36,6 +37,7 @@ class Person(_SerloEntity):
     first_name = Column(String)
     last_name = Column(String)
     emails = relationship("Email")
+    phone_numbers = relationship("PhoneNumber")
 
     @property
     def name(self):

@@ -58,19 +58,25 @@ def generate_persons():
     email2 = Email(address="My man")
     email3 = Email(address="")
 
+    phone1 = PhoneNumber(number="1")
+    phone2 = PhoneNumber(number="2")
+    phone3 = PhoneNumber(number="3")
+
     return (Person(first_name="Markus", last_name="Miller",
-                   emails=[email1]),
+                   emails=[email1], phone_numbers=[phone1]),
             Person(first_name="Yannick", last_name="Müller",
-                   emails=[email2, email3]),
-            Person(first_name="", last_name="", emails=[]),
-            email1, email2, email3)
+                   emails=[email2, email3], phone_numbers=[phone2, phone3]),
+            Person(first_name="", last_name="", emails=[], phone_numbers=[]),
+            email1, email2, email3, phone1, phone2, phone3)
 
 class TestPerson(TestCase):
     """Testcases for model `Person`."""
+    # pylint: disable=too-many-instance-attributes
 
     def setUp(self):
         self.person1, self.person2, self.person3, \
-                self.email1, self.email2, self.email3 = generate_persons()
+                self.email1, self.email2, self.email3, \
+                self.phone1, self.phone2, self.phone3 = generate_persons()
 
     def test_attribute_id(self):
         """Testcase for attribute `Person.id`."""
@@ -89,9 +95,19 @@ class TestPerson(TestCase):
 
     def test_attribute_emails(self):
         """Testcase for attribute `Person.emails`."""
-        self.assertListEqual(self.person1.emails, [self.email1])
-        self.assertListEqual(self.person2.emails, [self.email2, self.email3])
+        self.assertListEqual([x.address for x in self.person1.emails],
+                             [self.email1.address])
+        self.assertListEqual([x.address for x in self.person2.emails],
+                             [self.email2.address, self.email3.address])
         self.assertListEqual(self.person3.emails, [])
+
+    def test_attribute_phone_numbers(self):
+        """Testcase for attribute `Person.phone_numbers`."""
+        self.assertListEqual([x.number for x in self.person1.phone_numbers],
+                             [self.phone1.number])
+        self.assertListEqual([x.number for x in self.person2.phone_numbers],
+                             [self.phone2.number, self.phone3.number])
+        self.assertListEqual(self.person3.phone_numbers, [])
 
     def test_attribute_last_name(self):
         """Testcase for attribute `Person.last_name`."""
@@ -112,7 +128,8 @@ class TestSerloDatabase(TestCase):
     def setUp(self):
         self.database = SerloDatabase("sqlite:///:memory:")
         self.person1, self.person2, self.person3, \
-                self.email1, self.email2, self.email3 = generate_persons()
+                self.email1, self.email2, self.email3, \
+                self.phone1, self.phone2, self.phone3 = generate_persons()
 
         self.persons = [self.person1, self.person2, self.person3]
 
@@ -143,3 +160,5 @@ class TestSerloDatabase(TestCase):
             self.assertEqual(person.last_name, other.last_name)
             self.assertSetEqual(set(e.address for e in person.emails),
                                 set(e.address for e in other.emails))
+            self.assertSetEqual(set(p.number for p in person.phone_numbers),
+                                set(p.number for p in other.phone_numbers))
