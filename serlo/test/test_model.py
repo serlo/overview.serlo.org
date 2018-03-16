@@ -127,10 +127,14 @@ class TestWorkingUnit(TestCase):
     def setUp(self):
         self.person1, self.person2, self.person2 = generate_persons()[0:3]
 
-        self.project1 = WorkingUnit(name="project1")
-        self.project2 = WorkingUnit(name="")
-        self.unit1 = WorkingUnit(name="Support Unit Master")
-        self.unit2 = WorkingUnit(name="Another support unit")
+        self.project1 = WorkingUnit(name="project1",
+                                    description="My description")
+        self.project2 = WorkingUnit(name="",
+                                    description="")
+        self.unit1 = WorkingUnit(name="Support Unit Master",
+                                 description="A cool unit.")
+        self.unit2 = WorkingUnit(name="Another support unit",
+                                 description="Hello World")
 
     def test_attribute_tablename(self):
         """Test for attribute `WorkingUnit.__tablename__`."""
@@ -147,6 +151,13 @@ class TestWorkingUnit(TestCase):
         self.assertEqual(self.project2.name, "")
         self.assertEqual(self.unit1.name, "Support Unit Master")
         self.assertEqual(self.unit2.name, "Another support unit")
+
+    def test_attribute_description(self):
+        """Test for attribute `WorkingUnit.description`."""
+        self.assertEqual(self.project1.description, "My description")
+        self.assertEqual(self.project2.description, "")
+        self.assertEqual(self.unit1.description, "A cool unit.")
+        self.assertEqual(self.unit2.description, "Hello World")
 
 class TestSerloDatabase(TestCase):
     """Testcases for the class `SerloDatabase`."""

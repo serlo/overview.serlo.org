@@ -54,6 +54,7 @@ class WorkingUnit(_SerloEntity):
     # pylint: disable=too-few-public-methods
 
     name = Column(String)
+    description = Column(String)
 
 class SerloDatabase(object):
     """Class for accessing the stored entities of Serlo and saving new
