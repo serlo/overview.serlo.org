@@ -14,13 +14,6 @@ class _SerloEntity(object):
 
     id = Column(Integer, primary_key=True)
 
-    def __eq__(self, other):
-        return other is not None and self.__class__ == other.__class__ \
-                                 and self.id == other.id
-
-    def __hash__(self):
-        return hash(self.id)
-
 _SerloEntity = declarative_base(cls=_SerloEntity) #pylint: disable=invalid-name
 
 class Email(_SerloEntity):

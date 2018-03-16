@@ -133,9 +133,13 @@ class TestSerloDatabase(TestCase):
         self.assertSetEqual(set(self.persons), stored_persons)
 
         for person in self.persons:
+            self.assertIsNotNone(person.id)
+            self.assertGreater(person.id, 0)
+
             other = next(x for x in stored_persons if person.id == x.id)
 
             self.assertIsNotNone(other)
             self.assertEqual(person.first_name, other.first_name)
             self.assertEqual(person.last_name, other.last_name)
-            self.assertSetEqual(set(person.emails), set(other.emails))
+            self.assertSetEqual(set(e.address for e in person.emails),
+                                set(e.address for e in other.emails))
