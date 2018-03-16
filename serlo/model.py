@@ -1,8 +1,8 @@
 """Object relational mapping for Serlo entities."""
 
-from sqlalchemy import Column, Integer, String, create_engine
+from sqlalchemy import Column, Integer, String, create_engine, ForeignKey
 from sqlalchemy.ext.declarative import declared_attr, declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship
 
 class _SerloEntity(object):
     """Base class of all models."""
@@ -18,6 +18,9 @@ class _SerloEntity(object):
         return other is not None and self.__class__ == other.__class__ \
                                  and self.id == other.id
 
+    def __hash__(self):
+        return hash(self.id)
+
 _SerloEntity = declarative_base(cls=_SerloEntity) #pylint: disable=invalid-name
 
 class Email(_SerloEntity):
@@ -25,12 +28,7 @@ class Email(_SerloEntity):
     # pylint: disable=too-few-public-methods
 
     address = Column(String)
-
-    def __eq__(self, other):
-        return super().__eq__(other) and self.address == other.address
-
-    def __hash__(self):
-        return hash((self.id, self.address))
+    person_id = Column(Integer, ForeignKey("person.id"))
 
 class PhoneNumber(_SerloEntity):
     """Model of a phone number."""
@@ -38,25 +36,13 @@ class PhoneNumber(_SerloEntity):
 
     number = Column(String)
 
-    def __eq__(self, other):
-        return super().__eq__(other) and self.number == other.number
-
-    def __hash__(self):
-        return hash((self.id, self.number))
-
 class Person(_SerloEntity):
     """Model of a person working at Serlo."""
     # pylint: disable=too-few-public-methods
 
     first_name = Column(String)
     last_name = Column(String)
-
-    def __eq__(self, other):
-        return super().__eq__(other) and self.first_name == other.first_name \
-                                     and self.last_name == other.last_name
-
-    def __hash__(self):
-        return hash((self.id, self.first_name, self.last_name))
+    emails = relationship("Email")
 
     @property
     def name(self):
@@ -77,18 +63,16 @@ class SerloDatabase(object):
         of the database."""
 
         self._engine = create_engine(database)
-        self._sessionmaker = sessionmaker(bind=self._engine)
+        self._session = sessionmaker(bind=self._engine)()
 
         _SerloEntity.metadata.create_all(self._engine)
 
     def add_all(self, instances):
         """Adds all entities of the iterator `iterator` to the database."""
-        session = self._sessionmaker()
-
-        session.add_all(instances)
-        session.commit()
+        self._session.add_all(instances)
+        self._session.commit()
 
     @property
     def persons(self):
-        """Returns all stored persons of type `Person`."""
-        return self._sessionmaker().query(Person)
+        """Returns all stored persons of type `Per"""
+        return self._session.query(Person)

@@ -54,15 +54,23 @@ class TestPhoneNumber(TestCase):
 
 def generate_persons():
     """Helper function for creating persons of type `Person`."""
-    return (Person(first_name="Markus", last_name="Miller"),
-            Person(first_name="Yannick", last_name="Müller"),
-            Person(first_name="", last_name=""))
+    email1 = Email(address="hello@example.com")
+    email2 = Email(address="My man")
+    email3 = Email(address="")
+
+    return (Person(first_name="Markus", last_name="Miller",
+                   emails=[email1]),
+            Person(first_name="Yannick", last_name="Müller",
+                   emails=[email2, email3]),
+            Person(first_name="", last_name="", emails=[]),
+            email1, email2, email3)
 
 class TestPerson(TestCase):
     """Testcases for model `Person`."""
 
     def setUp(self):
-        self.person1, self.person2, self.person3 = generate_persons()
+        self.person1, self.person2, self.person3, \
+                self.email1, self.email2, self.email3 = generate_persons()
 
     def test_attribute_id(self):
         """Testcase for attribute `Person.id`."""
@@ -79,6 +87,12 @@ class TestPerson(TestCase):
         self.assertEqual(self.person2.first_name, "Yannick")
         self.assertEqual(self.person3.first_name, "")
 
+    def test_attribute_emails(self):
+        """Testcase for attribute `Person.emails`."""
+        self.assertListEqual(self.person1.emails, [self.email1])
+        self.assertListEqual(self.person2.emails, [self.email2, self.email3])
+        self.assertListEqual(self.person3.emails, [])
+
     def test_attribute_last_name(self):
         """Testcase for attribute `Person.last_name`."""
         self.assertEqual(self.person1.last_name, "Miller")
@@ -93,16 +107,35 @@ class TestPerson(TestCase):
 
 class TestSerloDatabase(TestCase):
     """Testcases for the class `SerloDatabase`."""
+    # pylint: disable=too-many-instance-attributes
 
     def setUp(self):
         self.database = SerloDatabase("sqlite:///:memory:")
-        self.person1, self.person2, self.person3 = generate_persons()
+        self.person1, self.person2, self.person3, \
+                self.email1, self.email2, self.email3 = generate_persons()
+
+        self.persons = [self.person1, self.person2, self.person3]
+
+    def test_storing_nothing(self):
+        """Testcase when nothing is stored."""
+        self.assertListEqual(list(self.database.persons), [])
+
+        self.database.add_all([])
+
+        self.assertListEqual(list(self.database.persons), [])
 
     def test_attribute_persons(self):
         """Testcase for storing persons to `SerloDatabase`."""
-        self.assertListEqual(list(self.database.persons), [])
+        self.database.add_all(self.persons)
 
-        self.database.add_all([self.person1, self.person2, self.person3])
+        stored_persons = set(self.database.persons)
 
-        self.assertSetEqual(set(self.database.persons),
-                            set([self.person1, self.person2, self.person3]))
+        self.assertSetEqual(set(self.persons), stored_persons)
+
+        for person in self.persons:
+            other = next(x for x in stored_persons if person.id == x.id)
+
+            self.assertIsNotNone(other)
+            self.assertEqual(person.first_name, other.first_name)
+            self.assertEqual(person.last_name, other.last_name)
+            self.assertSetEqual(set(person.emails), set(other.emails))
