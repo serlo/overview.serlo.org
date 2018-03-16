@@ -121,20 +121,23 @@ class TestPerson(TestCase):
         self.assertEqual(self.person2.name, "Yannick Müller")
         self.assertEqual(self.person3.name, " ")
 
+def generate_working_units():
+    """Create working units for testing."""
+    return (WorkingUnit(name="project1",
+                        description="My description"),
+            WorkingUnit(name="",
+                        description=""),
+            WorkingUnit(name="Support Unit Master",
+                        description="A cool unit."),
+            WorkingUnit(name="Another support unit",
+                        description="Hello World"))
+
 class TestWorkingUnit(TestCase):
     """Testcases for the class `WorkingUnit`."""
 
     def setUp(self):
-        self.person1, self.person2, self.person2 = generate_persons()[0:3]
-
-        self.project1 = WorkingUnit(name="project1",
-                                    description="My description")
-        self.project2 = WorkingUnit(name="",
-                                    description="")
-        self.unit1 = WorkingUnit(name="Support Unit Master",
-                                 description="A cool unit.")
-        self.unit2 = WorkingUnit(name="Another support unit",
-                                 description="Hello World")
+        self.project1, self.project2, \
+                self.unit1, self.unit2 = generate_working_units()
 
     def test_attribute_tablename(self):
         """Test for attribute `WorkingUnit.__tablename__`."""
