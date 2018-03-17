@@ -174,13 +174,20 @@ class TestSerloDatabase(TestCase):
 
         self.persons = [self.person1, self.person2, self.person3]
 
+        self.project1, self.project2, \
+                self.unit1, self.unit2 = generate_working_units()
+
+        self.units = [self.project1, self.project2, self.unit1, self.unit2]
+
     def test_storing_nothing(self):
         """Testcase when nothing is stored."""
         self.assertListEqual(list(self.database.persons), [])
+        self.assertListEqual(list(self.database.working_units), [])
 
         self.database.add_all([])
 
         self.assertListEqual(list(self.database.persons), [])
+        self.assertListEqual(list(self.database.working_units), [])
 
     def test_attribute_persons(self):
         """Testcase for storing persons to `SerloDatabase`."""
@@ -203,3 +210,12 @@ class TestSerloDatabase(TestCase):
                                 set(e.address for e in other.emails))
             self.assertSetEqual(set(p.number for p in person.phone_numbers),
                                 set(p.number for p in other.phone_numbers))
+
+    def test_atttribute_working_units(self):
+        """Testcase for storing working units to `SerloDatabase`."""
+        self.database.add_all([self.project1, self.project2])
+        self.database.add_all([self.unit1, self.unit2])
+
+        stored_units = set(self.database.working_units)
+
+        self.assertSetEqual(stored_units, set(self.units))

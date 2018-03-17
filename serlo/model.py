@@ -78,3 +78,8 @@ class SerloDatabase(object):
     def persons(self):
         """Returns all stored persons."""
         return self._session.query(Person)
+
+    @property
+    def working_units(self):
+        """Return all working units."""
+        return self._session.query(WorkingUnit)
