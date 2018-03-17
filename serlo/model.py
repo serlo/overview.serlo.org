@@ -76,5 +76,5 @@ class SerloDatabase(object):
 
     @property
     def persons(self):
-        """Returns all stored persons of type `Per"""
+        """Returns all stored persons."""
         return self._session.query(Person)
