@@ -32,9 +32,12 @@ class TestPhoneNumber(TestCase):
     """Testcases for the model `PhoneNumber`."""
 
     def setUp(self):
-        self.number1 = PhoneNumber(number="+49017867")
-        self.number2 = PhoneNumber(number="0178645389")
-        self.number3 = PhoneNumber(number="")
+        self.number1 = PhoneNumber(number="+49017867", vorwahl="0178")
+        self.number2 = PhoneNumber(number="0178645389", vorwahl="")
+        self.number3 = PhoneNumber(number="", vorwahl="")
+
+    def test_attribute_vorwahl(self):
+        self.assertEqual(self.number1.vorwahl, "0178")
 
     def test_attribute_tablename(self):
         """Testcase for attribute `__tablename__`."""
