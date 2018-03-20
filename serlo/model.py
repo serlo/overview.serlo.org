@@ -28,6 +28,7 @@ class PhoneNumber(_SerloEntity):
     # pylint: disable=too-few-public-methods
 
     number = Column(String)
+    vorwahl = Column(String)
     person_id = Column(Integer, ForeignKey("person.id"))
 
 class Person(_SerloEntity):
