@@ -120,21 +120,30 @@ class TestPerson(TestCase):
 
 def generate_working_units():
     """Create working units for testing."""
+    person1, person2, person3 = generate_persons()[0:3]
+
     return (WorkingUnit(name="project1",
-                        description="My description"),
+                        description="My description",
+                        person_responsible=person1),
             WorkingUnit(name="",
-                        description=""),
+                        description="",
+                        person_responsible=person2),
             WorkingUnit(name="Support Unit Master",
-                        description="A cool unit."),
+                        description="A cool unit.",
+                        person_responsible=person1),
             WorkingUnit(name="Another support unit",
-                        description="Hello World"))
+                        description="Hello World",
+                        person_responsible=person3),
+            person1, person2, person3)
 
 class TestWorkingUnit(TestCase):
     """Testcases for the class `WorkingUnit`."""
 
     def setUp(self):
         self.project1, self.project2, \
-                self.unit1, self.unit2 = generate_working_units()
+                self.unit1, self.unit2, \
+                self.person1, self.person2, \
+                self.person3 = generate_working_units()
 
     def test_attribute_tablename(self):
         """Test for attribute `WorkingUnit.__tablename__`."""
@@ -159,6 +168,13 @@ class TestWorkingUnit(TestCase):
         self.assertEqual(self.unit1.description, "A cool unit.")
         self.assertEqual(self.unit2.description, "Hello World")
 
+    def test_attribute_person_responsible(self): # pylint: disable=invalid-name
+        """Test for attribute `WorkingUnit.person_responsible`."""
+        self.assertEqual(self.project1.person_responsible, self.person1)
+        self.assertEqual(self.project2.person_responsible, self.person2)
+        self.assertEqual(self.unit1.person_responsible, self.person1)
+        self.assertEqual(self.unit2.person_responsible, self.person3)
+
 class TestSerloDatabase(TestCase):
     """Testcases for the class `SerloDatabase`."""
     # pylint: disable=too-many-instance-attributes
@@ -170,7 +186,7 @@ class TestSerloDatabase(TestCase):
         self.persons = [self.person1, self.person2, self.person3]
 
         self.project1, self.project2, \
-                self.unit1, self.unit2 = generate_working_units()
+                self.unit1, self.unit2 = generate_working_units()[0:4]
 
         self.units = [self.project1, self.project2, self.unit1, self.unit2]
 

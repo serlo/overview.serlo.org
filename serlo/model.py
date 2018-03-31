@@ -79,6 +79,8 @@ class Person(_SerloEntity):
     last_name = Column(String)
     emails = relationship("Email")
     phone_numbers = relationship("PhoneNumber")
+    managing_units = relationship("WorkingUnit",
+                                  back_populates="person_responsible")
 
     @property
     def _properties(self):
@@ -101,10 +103,13 @@ class WorkingUnit(_SerloEntity):
 
     name = Column(String)
     description = Column(String)
+    person_responsible_id = Column(Integer, ForeignKey("person.id"))
+    person_responsible = relationship("Person",
+                                      back_populates="managing_units")
 
     @property
     def _properties(self):
-        return (self.name, self.description)
+        return (self.name, self.description, self.person_responsible)
 
 class SerloDatabase(object):
     """Class for accessing the stored entities of Serlo and saving new
