@@ -2,7 +2,8 @@
 
 from unittest import TestCase
 
-from serlo.model import Email, Person, PhoneNumber, SerloDatabase, WorkingUnit
+from serlo.model import UnitType, Email, Person, PhoneNumber, SerloDatabase, \
+                        WorkingUnit
 
 class TestEmail(TestCase):
     """Testcases for the model `Email`."""
@@ -124,19 +125,23 @@ def generate_working_units():
 
     return (WorkingUnit(name="project1",
                         description="My description",
+                        unit_type=UnitType.project,
                         person_responsible=person1,
                         participants=[person3]),
             WorkingUnit(name="",
                         description="",
+                        unit_type=UnitType.project,
                         person_responsible=person2,
                         participants=[]),
             WorkingUnit(name="Support Unit Master",
                         description="A cool unit.",
+                        unit_type=UnitType.support_unit,
                         person_responsible=person1,
                         participants=[person2]),
             WorkingUnit(name="Another support unit",
                         description="Hello World",
                         person_responsible=person3,
+                        unit_type=UnitType.support_unit,
                         participants=[person1, person2]),
             person1, person2, person3)
 
@@ -195,6 +200,13 @@ class TestWorkingUnit(TestCase):
         self.assertListEqual(self.unit1.members, [self.person1, self.person2])
         self.assertListEqual(self.unit2.members,
                              [self.person3, self.person1, self.person2])
+
+    def test_attribute_unit_type(self): # pylint: disable=invalid-name
+        """Test for attribute `WorkingUnit.type`."""
+        self.assertEqual(self.project1.unit_type, UnitType.project)
+        self.assertEqual(self.project2.unit_type, UnitType.project)
+        self.assertEqual(self.unit1.unit_type, UnitType.support_unit)
+        self.assertEqual(self.unit2.unit_type, UnitType.support_unit)
 
 class TestSerloDatabase(TestCase):
     """Testcases for the class `SerloDatabase`."""

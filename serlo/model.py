@@ -1,10 +1,12 @@
 """Object relational mapping for Serlo entities."""
 
+import enum
+
 from abc import abstractmethod
 from collections.abc import Sequence, Set, Hashable
 
 from sqlalchemy import Column, Integer, String, create_engine, ForeignKey, \
-                       Table
+                       Table, Enum
 from sqlalchemy.ext.declarative import declared_attr, declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 
@@ -106,12 +108,18 @@ class Person(_SerloEntity):
         """
         return self.first_name + " " + self.last_name
 
+class UnitType(enum.Enum):
+    """Typo of an working unit."""
+    project = 1
+    support_unit = 2
+
 class WorkingUnit(_SerloEntity):
     """Model for a working unit."""
     # pylint: disable=too-few-public-methods
 
     name = Column(String)
     description = Column(String)
+    unit_type = Enum(UnitType)
     person_responsible_id = Column(Integer, ForeignKey("person.id"))
     person_responsible = relationship("Person",
                                       back_populates="managing_units")
@@ -120,8 +128,8 @@ class WorkingUnit(_SerloEntity):
 
     @property
     def _properties(self):
-        return (self.name, self.description, self.person_responsible,
-                self.participants)
+        return (self.name, self.description, self.unit_type,
+                self.person_responsible, self.participants)
 
     @property
     def members(self):
