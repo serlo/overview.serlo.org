@@ -1,8 +1,25 @@
 """Object relational mapping for Serlo entities."""
 
+from abc import abstractmethod
+from collections.abc import Sequence, Set, Hashable
+
 from sqlalchemy import Column, Integer, String, create_engine, ForeignKey
 from sqlalchemy.ext.declarative import declared_attr, declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
+
+def _hash(obj):
+    """Computes the hash value of `obj`. This function expands the domain of
+    the builtin function `hash()` to sets and lists."""
+    if isinstance(obj, tuple):
+        obj = tuple(_hash(x) for x in obj)
+
+    if not isinstance(obj, Hashable):
+        if isinstance(obj, Set):
+            obj = tuple(sorted(_hash(x) for x in obj))
+        elif isinstance(obj, Sequence):
+            obj = tuple(_hash(x) for x in obj)
+
+    return hash(obj)
 
 class _SerloEntity(object):
     """Base class of all models."""
@@ -14,6 +31,22 @@ class _SerloEntity(object):
 
     id = Column(Integer, primary_key=True)
 
+    @property
+    @abstractmethod
+    def _properties(self):
+        """Returns all attributes of this object as a tuple which are used
+        for equality testing."""
+        raise NotImplementedError()
+
+    def __eq__(self, other):
+        # pylint: disable=protected-access
+        return other is not None and isinstance(other, self.__class__) \
+                                 and self.id == other.id \
+                                 and self._properties == other._properties
+
+    def __hash__(self):
+        return _hash((self.id, self._properties))
+
 _SerloEntity = declarative_base(cls=_SerloEntity) #pylint: disable=invalid-name
 
 class Email(_SerloEntity):
@@ -23,12 +56,20 @@ class Email(_SerloEntity):
     address = Column(String)
     person_id = Column(Integer, ForeignKey("person.id"))
 
+    @property
+    def _properties(self):
+        return (self.address,)
+
 class PhoneNumber(_SerloEntity):
     """Model of a phone number."""
     # pylint: disable=too-few-public-methods
 
     number = Column(String)
     person_id = Column(Integer, ForeignKey("person.id"))
+
+    @property
+    def _properties(self):
+        return (self.number,)
 
 class Person(_SerloEntity):
     """Model of a person working at Serlo."""
@@ -38,6 +79,11 @@ class Person(_SerloEntity):
     last_name = Column(String)
     emails = relationship("Email")
     phone_numbers = relationship("PhoneNumber")
+
+    @property
+    def _properties(self):
+        return (self.first_name, self.last_name, self.emails,
+                self.phone_numbers)
 
     @property
     def name(self):
@@ -55,6 +101,10 @@ class WorkingUnit(_SerloEntity):
 
     name = Column(String)
     description = Column(String)
+
+    @property
+    def _properties(self):
+        return (self.name, self.description)
 
 class SerloDatabase(object):
     """Class for accessing the stored entities of Serlo and saving new

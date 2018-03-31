@@ -95,18 +95,15 @@ class TestPerson(TestCase):
 
     def test_attribute_emails(self):
         """Testcase for attribute `Person.emails`."""
-        self.assertListEqual([x.address for x in self.person1.emails],
-                             [self.email1.address])
-        self.assertListEqual([x.address for x in self.person2.emails],
-                             [self.email2.address, self.email3.address])
+        self.assertListEqual(self.person1.emails, [self.email1])
+        self.assertListEqual(self.person2.emails, [self.email2, self.email3])
         self.assertListEqual(self.person3.emails, [])
 
     def test_attribute_phone_numbers(self):
         """Testcase for attribute `Person.phone_numbers`."""
-        self.assertListEqual([x.number for x in self.person1.phone_numbers],
-                             [self.phone1.number])
-        self.assertListEqual([x.number for x in self.person2.phone_numbers],
-                             [self.phone2.number, self.phone3.number])
+        self.assertListEqual(self.person1.phone_numbers, [self.phone1])
+        self.assertListEqual(self.person2.phone_numbers,
+                             [self.phone2, self.phone3])
         self.assertListEqual(self.person3.phone_numbers, [])
 
     def test_attribute_last_name(self):
@@ -168,9 +165,7 @@ class TestSerloDatabase(TestCase):
 
     def setUp(self):
         self.database = SerloDatabase("sqlite:///:memory:")
-        self.person1, self.person2, self.person3, \
-                self.email1, self.email2, self.email3, \
-                self.phone1, self.phone2, self.phone3 = generate_persons()
+        self.person1, self.person2, self.person3 = generate_persons()[0:3]
 
         self.persons = [self.person1, self.person2, self.person3]
 
@@ -193,29 +188,11 @@ class TestSerloDatabase(TestCase):
         """Testcase for storing persons to `SerloDatabase`."""
         self.database.add_all(self.persons)
 
-        stored_persons = set(self.database.persons)
-
-        self.assertSetEqual(set(self.persons), stored_persons)
-
-        for person in self.persons:
-            self.assertIsNotNone(person.id)
-            self.assertGreater(person.id, 0)
-
-            other = next(x for x in stored_persons if person.id == x.id)
-
-            self.assertIsNotNone(other)
-            self.assertEqual(person.first_name, other.first_name)
-            self.assertEqual(person.last_name, other.last_name)
-            self.assertSetEqual(set(e.address for e in person.emails),
-                                set(e.address for e in other.emails))
-            self.assertSetEqual(set(p.number for p in person.phone_numbers),
-                                set(p.number for p in other.phone_numbers))
+        self.assertSetEqual(set(self.database.persons), set(self.persons))
 
     def test_atttribute_working_units(self):
         """Testcase for storing working units to `SerloDatabase`."""
-        self.database.add_all([self.project1, self.project2])
+        self.database.add_all([self.project2, self.project1])
         self.database.add_all([self.unit1, self.unit2])
 
-        stored_units = set(self.database.working_units)
-
-        self.assertSetEqual(stored_units, set(self.units))
+        self.assertSetEqual(set(self.database.working_units), set(self.units))
