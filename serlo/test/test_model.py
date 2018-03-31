@@ -124,16 +124,20 @@ def generate_working_units():
 
     return (WorkingUnit(name="project1",
                         description="My description",
-                        person_responsible=person1),
+                        person_responsible=person1,
+                        participants=[person3]),
             WorkingUnit(name="",
                         description="",
-                        person_responsible=person2),
+                        person_responsible=person2,
+                        participants=[]),
             WorkingUnit(name="Support Unit Master",
                         description="A cool unit.",
-                        person_responsible=person1),
+                        person_responsible=person1,
+                        participants=[person2]),
             WorkingUnit(name="Another support unit",
                         description="Hello World",
-                        person_responsible=person3),
+                        person_responsible=person3,
+                        participants=[person1, person2]),
             person1, person2, person3)
 
 class TestWorkingUnit(TestCase):
@@ -174,6 +178,14 @@ class TestWorkingUnit(TestCase):
         self.assertEqual(self.project2.person_responsible, self.person2)
         self.assertEqual(self.unit1.person_responsible, self.person1)
         self.assertEqual(self.unit2.person_responsible, self.person3)
+
+    def test_attribute_participants(self):
+        """Test for attribute `WorkingUnit.participants`."""
+        self.assertListEqual(self.project1.participants, [self.person3])
+        self.assertListEqual(self.project2.participants, [])
+        self.assertListEqual(self.unit1.participants, [self.person2])
+        self.assertListEqual(self.unit2.participants,
+                             [self.person1, self.person2])
 
 class TestSerloDatabase(TestCase):
     """Testcases for the class `SerloDatabase`."""

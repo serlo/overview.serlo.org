@@ -3,7 +3,8 @@
 from abc import abstractmethod
 from collections.abc import Sequence, Set, Hashable
 
-from sqlalchemy import Column, Integer, String, create_engine, ForeignKey
+from sqlalchemy import Column, Integer, String, create_engine, ForeignKey, \
+                       Table
 from sqlalchemy.ext.declarative import declared_attr, declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 
@@ -71,6 +72,11 @@ class PhoneNumber(_SerloEntity):
     def _properties(self):
         return (self.number,)
 
+_WorkingUnitParticipants = Table( # pylint: disable=invalid-name
+    "working_unit_participants", _SerloEntity.metadata,
+    Column("working_unit_id", Integer, ForeignKey("workingunit.id")),
+    Column("person_id", Integer, ForeignKey("person.id")))
+
 class Person(_SerloEntity):
     """Model of a person working at Serlo."""
     # pylint: disable=too-few-public-methods
@@ -81,6 +87,9 @@ class Person(_SerloEntity):
     phone_numbers = relationship("PhoneNumber")
     managing_units = relationship("WorkingUnit",
                                   back_populates="person_responsible")
+    participating_units = relationship("WorkingUnit",
+                                       back_populates="participants",
+                                       secondary=_WorkingUnitParticipants)
 
     @property
     def _properties(self):
@@ -106,10 +115,13 @@ class WorkingUnit(_SerloEntity):
     person_responsible_id = Column(Integer, ForeignKey("person.id"))
     person_responsible = relationship("Person",
                                       back_populates="managing_units")
+    participants = relationship("Person", back_populates="participating_units",
+                                secondary=_WorkingUnitParticipants)
 
     @property
     def _properties(self):
-        return (self.name, self.description, self.person_responsible)
+        return (self.name, self.description, self.person_responsible,
+                self.participants)
 
 class SerloDatabase(object):
     """Class for accessing the stored entities of Serlo and saving new
