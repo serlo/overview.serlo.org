@@ -123,6 +123,12 @@ class WorkingUnit(_SerloEntity):
         return (self.name, self.description, self.person_responsible,
                 self.participants)
 
+    @property
+    def members(self):
+        """Returns list of all persons working in this unit (person responsible
+        and participants)."""
+        return [self.person_responsible] + self.participants
+
 class SerloDatabase(object):
     """Class for accessing the stored entities of Serlo and saving new
     entities."""

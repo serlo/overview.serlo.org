@@ -187,6 +187,15 @@ class TestWorkingUnit(TestCase):
         self.assertListEqual(self.unit2.participants,
                              [self.person1, self.person2])
 
+    def test_attribute_members(self):
+        """Test for attribute `WorkingUnit.members`."""
+        self.assertListEqual(self.project1.members,
+                             [self.person1, self.person3])
+        self.assertListEqual(self.project2.members, [self.person2])
+        self.assertListEqual(self.unit1.members, [self.person1, self.person2])
+        self.assertListEqual(self.unit2.members,
+                             [self.person3, self.person1, self.person2])
+
 class TestSerloDatabase(TestCase):
     """Testcases for the class `SerloDatabase`."""
     # pylint: disable=too-many-instance-attributes
