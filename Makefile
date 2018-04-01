@@ -9,4 +9,4 @@ highrise_import:
 	$(PYTHON) highrise_importer.py '$(DATABASE)'
 
 test:
-	$(PYTHON) -m nose --with-doctest serlo
+	$(PYTHON) -m nose --with-doctest serlo test
