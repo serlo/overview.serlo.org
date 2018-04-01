@@ -5,6 +5,49 @@ from unittest import TestCase
 from serlo.model import UnitType, Email, Person, PhoneNumber, SerloDatabase, \
                         WorkingUnit
 
+def generate_persons():
+    """Helper function for creating persons of type `Person`."""
+    email1 = Email(address="hello@example.com")
+    email2 = Email(address="My man")
+    email3 = Email(address="")
+
+    phone1 = PhoneNumber(number="1")
+    phone2 = PhoneNumber(number="2")
+    phone3 = PhoneNumber(number="3")
+
+    return (Person(first_name="Markus", last_name="Miller",
+                   emails=[email1], phone_numbers=[phone1]),
+            Person(first_name="Yannick", last_name="Müller",
+                   emails=[email2, email3], phone_numbers=[phone2, phone3]),
+            Person(first_name="", last_name="", emails=[], phone_numbers=[]),
+            email1, email2, email3, phone1, phone2, phone3)
+
+def generate_working_units():
+    """Create working units for testing."""
+    person1, person2, person3 = generate_persons()[0:3]
+
+    return (WorkingUnit(name="project1",
+                        description="My description",
+                        unit_type=UnitType.project,
+                        person_responsible=person1,
+                        participants=[person3]),
+            WorkingUnit(name="",
+                        description="",
+                        unit_type=UnitType.project,
+                        person_responsible=person2,
+                        participants=[]),
+            WorkingUnit(name="Support Unit Master",
+                        description="A cool unit.",
+                        unit_type=UnitType.support_unit,
+                        person_responsible=person1,
+                        participants=[person2]),
+            WorkingUnit(name="Another support unit",
+                        description="Hello World",
+                        person_responsible=person3,
+                        unit_type=UnitType.support_unit,
+                        participants=[person1, person2]),
+            person1, person2, person3)
+
 class TestEmail(TestCase):
     """Testcases for the model `Email`."""
 
@@ -52,23 +95,6 @@ class TestPhoneNumber(TestCase):
         self.assertEqual(self.number1.number, "+49017867")
         self.assertEqual(self.number2.number, "0178645389")
         self.assertEqual(self.number3.number, "")
-
-def generate_persons():
-    """Helper function for creating persons of type `Person`."""
-    email1 = Email(address="hello@example.com")
-    email2 = Email(address="My man")
-    email3 = Email(address="")
-
-    phone1 = PhoneNumber(number="1")
-    phone2 = PhoneNumber(number="2")
-    phone3 = PhoneNumber(number="3")
-
-    return (Person(first_name="Markus", last_name="Miller",
-                   emails=[email1], phone_numbers=[phone1]),
-            Person(first_name="Yannick", last_name="Müller",
-                   emails=[email2, email3], phone_numbers=[phone2, phone3]),
-            Person(first_name="", last_name="", emails=[], phone_numbers=[]),
-            email1, email2, email3, phone1, phone2, phone3)
 
 class TestPerson(TestCase):
     """Testcases for model `Person`."""
@@ -118,32 +144,6 @@ class TestPerson(TestCase):
         self.assertEqual(self.person1.name, "Markus Miller")
         self.assertEqual(self.person2.name, "Yannick Müller")
         self.assertEqual(self.person3.name, " ")
-
-def generate_working_units():
-    """Create working units for testing."""
-    person1, person2, person3 = generate_persons()[0:3]
-
-    return (WorkingUnit(name="project1",
-                        description="My description",
-                        unit_type=UnitType.project,
-                        person_responsible=person1,
-                        participants=[person3]),
-            WorkingUnit(name="",
-                        description="",
-                        unit_type=UnitType.project,
-                        person_responsible=person2,
-                        participants=[]),
-            WorkingUnit(name="Support Unit Master",
-                        description="A cool unit.",
-                        unit_type=UnitType.support_unit,
-                        person_responsible=person1,
-                        participants=[person2]),
-            WorkingUnit(name="Another support unit",
-                        description="Hello World",
-                        person_responsible=person3,
-                        unit_type=UnitType.support_unit,
-                        participants=[person1, person2]),
-            person1, person2, person3)
 
 class TestWorkingUnit(TestCase):
     """Testcases for the class `WorkingUnit`."""
