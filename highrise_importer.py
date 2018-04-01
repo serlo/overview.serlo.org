@@ -12,7 +12,7 @@ def run_script():
     try:
         database_file = sys.argv[1]
     except IndexError:
-        sys.exit(f"Error: No database file specified as first argument.")
+        sys.exit("Error: No database file specified as first argument.")
 
     try:
         api_token = os.environ[TOKEN_VARIABLE]
