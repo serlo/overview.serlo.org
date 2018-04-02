@@ -6,8 +6,8 @@ import xml.etree.ElementTree as ET
 
 from unittest import TestCase
 
-from highrise_importer import parse_email
 from test.data import generate_emails, generate_email_specs
+from highrise_importer import parse_email
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
@@ -30,8 +30,8 @@ def run_command(args, env=None):
 class TestHighriseImporterScript(TestCase):
     """Testsuite for executing the script."""
 
-    def test_parse_emails(self):
-        """Testcase for parsing emails from XML."""
+    def test_parse_email(self):
+        """Testcase for the function `parse_email()`."""
         specs = [ET.fromstring(x) for x in generate_email_specs()]
         emails = generate_emails()
 
@@ -40,7 +40,7 @@ class TestHighriseImporterScript(TestCase):
         self.assertEqual(parse_email(specs[2]), emails[2])
 
     def test_passing_arguments(self):
-        """Testcase for calling the script without set arguments."""
+        """Testcase for calling the script without arguments."""
         returncode, out, err = run_command("python highrise_importer.py")
 
         self.assertEqual(returncode, 1)
