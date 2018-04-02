@@ -50,6 +50,9 @@ class _SerloEntity(object):
     def __hash__(self):
         return _hash((self.id, self._properties))
 
+    def __repr__(self):
+        return self.__class__.__name__ + repr(self._properties)
+
 _SerloEntity = declarative_base(cls=_SerloEntity) #pylint: disable=invalid-name
 
 class Email(_SerloEntity):
