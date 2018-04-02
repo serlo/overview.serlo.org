@@ -3,9 +3,19 @@
 import os
 import sys
 
-from serlo.model import SerloDatabase
+from serlo.model import SerloDatabase, Email
 
 TOKEN_VARIABLE = "HIGHRISE_API_TOKEN"
+
+def parse_email(xml):
+    """Parse emails defined by XML specification `xml`."""
+    address_xml = xml.find("address")
+
+    assert address_xml is not None
+
+    address = address_xml.text
+
+    return Email(address=address if address is not None else "")
 
 def run_script():
     """Executes this script."""
