@@ -7,7 +7,7 @@ import xml.etree.ElementTree as ET
 from unittest import TestCase
 
 from highrise_importer import parse_email, parse_phone_number, \
-                              xml_text
+                              xml_text, xml_find
 from tests.data import generate_emails, generate_email_specs, \
                        generate_phone_numbers, generate_phone_number_specs
 
@@ -39,6 +39,22 @@ class TestHighriseImporterScript(TestCase):
                          "Hello World")
         self.assertEqual(xml_text(ET.fromstring("<a></a>")), "")
         self.assertEqual(xml_text(ET.fromstring("<a/>")), "")
+
+    def test_xml_find(self):
+        """Tests for function `xml_find()`."""
+        xml = ET.fromstring("<a><b><c>1</c></b><d /><e>42</e></a>")
+
+        self.assertEqual(xml_find("b", xml), xml.find("b"))
+        self.assertEqual(xml_find("e", xml).text, "42")
+
+        with self.assertRaises(AssertionError):
+            xml_find("b", ET.fromstring("<a><c/><d/></a>"))
+
+        with self.assertRaises(AssertionError):
+            xml_find("b", ET.fromstring("<a><b><c/></b><b /></a>"))
+
+        with self.assertRaises(AssertionError):
+            xml_find("b", ET.fromstring("<a></a>"))
 
     def test_parse_email(self):
         """Testcase for the function `parse_email()`."""

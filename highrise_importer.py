@@ -12,21 +12,24 @@ def xml_text(xml):
     contain an inner text an empty string is returned."""
     return str.join('', xml.itertext())
 
+def xml_find(tag_name, xml):
+    """Returns the child with tag `tag_name` of the XML element `xml`. It
+    throws an `AssertationError` when no or more than one children of the tag
+    `tag_name` are defined."""
+    results = xml.findall(tag_name)
+
+    assert results, f"Child with tag `{tag_name}` not found."
+    assert len(results) < 2, f"Too many children with tag `{tag_name}` found."
+
+    return results[0]
+
 def parse_email(xml):
     """Parse emails defined by XML specification `xml`."""
-    address_xml = xml.find("address")
-
-    assert address_xml is not None
-
-    return Email(address=xml_text(address_xml))
+    return Email(address=xml_text(xml_find("address", xml)))
 
 def parse_phone_number(xml):
     """Parse phone number defined by XML specification `xml`."""
-    number_xml = xml.find("number")
-
-    assert number_xml is not None
-
-    return PhoneNumber(number=xml_text(number_xml))
+    return PhoneNumber(number=xml_text(xml_find("number", xml)))
 
 def run_script():
     """Executes this script."""
