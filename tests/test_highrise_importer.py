@@ -8,13 +8,13 @@ from unittest import TestCase
 
 from highrise_importer import parse_email, parse_phone_number, parse_person, \
                               parse_people, parse_working_unit, xml_text, \
-                              xml_find
+                              xml_find, parse_working_units
 from tests.data import generate_emails, generate_email_specs, \
                        generate_phone_numbers, generate_phone_number_specs, \
                        generate_persons, generate_person_specs, \
                        generate_people, generate_people_specs, \
                        generate_working_units, generate_working_unit_specs, \
-                       generate_person_ids
+                       generate_person_ids, generate_working_unit_list_spec
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
@@ -119,6 +119,14 @@ class TestHighriseImporterScript(TestCase):
             ET.fromstring("""<deal>
                               <category-id type="integer">123</category-id>
                              </deal>"""), persons))
+
+    def test_parse_working_units(self):
+        """Testcase for the function `parse_working_units()`."""
+        units = generate_working_units()
+        spec = ET.fromstring(generate_working_unit_list_spec())
+        persons = dict(parse_people(ET.fromstring(generate_people_specs()[0])))
+
+        self.assertListEqual(parse_working_units(spec, persons), units)
 
     def test_passing_arguments(self):
         """Testcase for calling the script without arguments."""

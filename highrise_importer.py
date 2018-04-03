@@ -78,6 +78,12 @@ def parse_working_unit(xml, persons):
                        participants=[persons[x] for x in participant_ids
                                      if x in persons])
 
+def parse_working_units(xml, persons):
+    """Parse working units from a XML specification."""
+    results = [parse_working_unit(x, persons) for x in xml]
+
+    return [x for x in results if x is not None]
+
 def run_script():
     """Executes this script."""
     try:

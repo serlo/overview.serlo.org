@@ -253,7 +253,7 @@ def generate_working_unit_specs():
     """Create working units for testing."""
     person1, person2, person3 = generate_person_specs()
     id1, id2, id3 = generate_person_ids()
-    
+
     return [f"""<deal>
                  <account-id type="integer">30</account-id>
                  <author-id type="integer">13</author-id>
@@ -378,3 +378,18 @@ def generate_working_unit_specs():
                    {person2}
                  </parties>
                 </deal>"""]
+
+def generate_working_unit_list_spec():
+    """Returns a spec containing all working_units defined by
+    `generate_working_units()`."""
+    unit1, unit2, unit3, unit4 = generate_working_unit_specs()
+
+    return f"""<deals>
+                {unit1}
+                <deal><category-id type="integer">1</category-id></deal>
+                {unit2}
+                {unit3}
+                <deal><category-id type="integer">23</category-id></deal>
+                {unit4}
+                <deal><category-id type="integer">56775</category-id></deal>
+               </deals>"""
