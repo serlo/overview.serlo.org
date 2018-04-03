@@ -40,6 +40,9 @@ class TestHighriseImporterScript(TestCase):
         self.assertEqual(xml_text(ET.fromstring("<a></a>")), "")
         self.assertEqual(xml_text(ET.fromstring("<a/>")), "")
 
+        with self.assertRaises(TypeError):
+            xml_text(None)
+
     def test_xml_find(self):
         """Tests for function `xml_find()`."""
         xml = ET.fromstring("<a><b><c>1</c></b><d /><e>42</e></a>")
@@ -55,6 +58,9 @@ class TestHighriseImporterScript(TestCase):
 
         with self.assertRaises(AssertionError):
             xml_find("b", ET.fromstring("<a></a>"))
+
+        with self.assertRaises(TypeError):
+            xml_find("b", None)
 
     def test_parse_email(self):
         """Testcase for the function `parse_email()`."""
