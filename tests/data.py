@@ -44,6 +44,11 @@ def generate_phone_number_specs():
                </phone-number>""",
             """<phone-number><number /></phone-number>"""]
 
+def generate_person_ids():
+    """Returns person ids corresponding to objects returned by
+    `generate_person()`."""
+    return ["23", "42", "1"]
+
 def generate_persons():
     """Returns example objects of Type `Person`."""
     email1, email2, email3 = generate_emails()
@@ -60,6 +65,7 @@ def generate_person_specs():
     returned by `generate_persons()`."""
     email1, email2, email3 = generate_email_specs()
     phone1, phone2, phone3 = generate_phone_number_specs()
+    id1, id2, id3 = generate_person_ids()
 
     return [f"""<person>
                  <author-id type="integer">129</author-id>
@@ -68,7 +74,7 @@ def generate_person_specs():
                  <created-at type="datetime">2017-06-12T15:07:32Z</created-at>
                  <first-name>Markus</first-name>
                  <group-id type="integer" nil="true"></group-id>
-                 <id type="integer">28</id>
+                 <id type="integer">{id1}</id>
                  <last-name>Miller</last-name>
                  <owner-id type="integer" nil="true"></owner-id>
                  <title></title>
@@ -114,7 +120,7 @@ def generate_person_specs():
                  <created-at type="datetime">2017-06-12T15:07:32Z</created-at>
                  <first-name>Yannick</first-name>
                  <group-id type="integer" nil="true"></group-id>
-                 <id type="integer">28</id>
+                 <id type="integer">{id2}</id>
                  <last-name>Müller</last-name>
                  <owner-id type="integer" nil="true"></owner-id>
                  <title></title>
@@ -162,7 +168,7 @@ def generate_person_specs():
                  <created-at type="datetime">2017-06-12T15:07:32Z</created-at>
                  <first-name></first-name>
                  <group-id type="integer" nil="true"></group-id>
-                 <id type="integer">28</id>
+                 <id type="integer">{id3}</id>
                  <last-name />
                  <owner-id type="integer" nil="true"></owner-id>
                  <title></title>
@@ -203,8 +209,11 @@ def generate_person_specs():
 def generate_people():
     """Returns a list of person lists for testing."""
     person1, person2, person3 = generate_persons()
+    id1, id2, id3 = generate_person_ids()
 
-    return [[person1, person2], [person1, person2, person3], []]
+    return [[(id1, person1), (id2, person2)],
+            [(id1, person1), (id2, person2), (id3, person3)],
+            []]
 
 def generate_people_specs():
     """Returns XML specifications of people lists corresponding to the

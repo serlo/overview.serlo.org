@@ -11,7 +11,8 @@ from highrise_importer import parse_email, parse_phone_number, parse_person, \
 from tests.data import generate_emails, generate_email_specs, \
                        generate_phone_numbers, generate_phone_number_specs, \
                        generate_persons, generate_person_specs, \
-                       generate_people, generate_people_specs
+                       generate_people, generate_people_specs, \
+                       generate_person_ids
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
@@ -86,10 +87,11 @@ class TestHighriseImporterScript(TestCase):
         """Testcase for the function `parse_person()`."""
         specs = [ET.fromstring(x) for x in generate_person_specs()]
         persons = generate_persons()
+        ids = generate_person_ids()
 
-        self.assertEqual(parse_person(specs[0]), persons[0])
-        self.assertEqual(parse_person(specs[1]), persons[1])
-        self.assertEqual(parse_person(specs[2]), persons[2])
+        self.assertEqual(parse_person(specs[0]), (ids[0], persons[0]))
+        self.assertEqual(parse_person(specs[1]), (ids[1], persons[1]))
+        self.assertEqual(parse_person(specs[2]), (ids[2], persons[2]))
 
     def test_parse_people(self):
         """Testcase for the function `parse_people()`."""

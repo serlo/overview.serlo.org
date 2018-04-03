@@ -41,12 +41,13 @@ def parse_person(xml):
     """Parse person defined by XML specification `xml`."""
     contact_data = xml_find("contact-data", xml)
 
-    return Person(first_name=xml_text(xml_find("first-name", xml)),
-                  last_name=xml_text(xml_find("last-name", xml)),
-                  emails=[parse_email(e) for e in
-                          xml_find("email-addresses", contact_data)],
-                  phone_numbers=[parse_phone_number(e) for e in
-                                 xml_find("phone-numbers", contact_data)])
+    return (xml_text(xml_find("id", xml)),
+            Person(first_name=xml_text(xml_find("first-name", xml)),
+                   last_name=xml_text(xml_find("last-name", xml)),
+                   emails=[parse_email(e) for e in
+                           xml_find("email-addresses", contact_data)],
+                   phone_numbers=[parse_phone_number(e) for e in
+                                  xml_find("phone-numbers", contact_data)]))
 def parse_people(xml):
     """Parse people defined by XML specification `xml`."""
     return [parse_person(e) for e in xml.findall("person", xml)]
