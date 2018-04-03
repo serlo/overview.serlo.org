@@ -3,7 +3,7 @@
 import os
 import sys
 
-from serlo.model import SerloDatabase, Email
+from serlo.model import SerloDatabase, Email, PhoneNumber
 
 TOKEN_VARIABLE = "HIGHRISE_API_TOKEN"
 
@@ -16,6 +16,16 @@ def parse_email(xml):
     address = address_xml.text
 
     return Email(address=address if address is not None else "")
+
+def parse_phone_number(xml):
+    """Parse phone number defined by XML specification `xml`."""
+    number_xml = xml.find("number")
+
+    assert number_xml is not None
+
+    number = number_xml.text
+
+    return PhoneNumber(number=number if number is not None else "")
 
 def run_script():
     """Executes this script."""

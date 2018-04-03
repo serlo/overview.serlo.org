@@ -6,8 +6,9 @@ import xml.etree.ElementTree as ET
 
 from unittest import TestCase
 
-from highrise_importer import parse_email
-from tests.data import generate_emails, generate_email_specs
+from highrise_importer import parse_email, parse_phone_number
+from tests.data import generate_emails, generate_email_specs, \
+                       generate_phone_numbers, generate_phone_number_specs
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
@@ -38,6 +39,15 @@ class TestHighriseImporterScript(TestCase):
         self.assertEqual(parse_email(specs[0]), emails[0])
         self.assertEqual(parse_email(specs[1]), emails[1])
         self.assertEqual(parse_email(specs[2]), emails[2])
+
+    def test_parse_phone_number(self):
+        """Testcase for the function `parse_phone_number()`."""
+        specs = [ET.fromstring(x) for x in generate_phone_number_specs()]
+        numbers = generate_phone_numbers()
+
+        self.assertEqual(parse_phone_number(specs[0]), numbers[0])
+        self.assertEqual(parse_phone_number(specs[1]), numbers[1])
+        self.assertEqual(parse_phone_number(specs[2]), numbers[2])
 
     def test_passing_arguments(self):
         """Testcase for calling the script without arguments."""
