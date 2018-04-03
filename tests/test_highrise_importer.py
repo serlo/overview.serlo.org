@@ -6,7 +6,8 @@ import xml.etree.ElementTree as ET
 
 from unittest import TestCase
 
-from highrise_importer import parse_email, parse_phone_number
+from highrise_importer import parse_email, parse_phone_number, \
+                              xml_text
 from tests.data import generate_emails, generate_email_specs, \
                        generate_phone_numbers, generate_phone_number_specs
 
@@ -30,6 +31,14 @@ def run_command(args, env=None):
 
 class TestHighriseImporterScript(TestCase):
     """Testsuite for executing the script."""
+
+    def test_xml_text(self):
+        """Tests for function `xml_text()`."""
+        self.assertEqual(xml_text(ET.fromstring("<a>Hello</a>")), "Hello")
+        self.assertEqual(xml_text(ET.fromstring("<a>Hello <b>World</b></a>")),
+                         "Hello World")
+        self.assertEqual(xml_text(ET.fromstring("<a></a>")), "")
+        self.assertEqual(xml_text(ET.fromstring("<a/>")), "")
 
     def test_parse_email(self):
         """Testcase for the function `parse_email()`."""

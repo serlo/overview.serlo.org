@@ -7,15 +7,18 @@ from serlo.model import SerloDatabase, Email, PhoneNumber
 
 TOKEN_VARIABLE = "HIGHRISE_API_TOKEN"
 
+def xml_text(xml):
+    """Returns the inner text of the XML element `xml`. In case it doesn't
+    contain an inner text an empty string is returned."""
+    return str.join('', xml.itertext())
+
 def parse_email(xml):
     """Parse emails defined by XML specification `xml`."""
     address_xml = xml.find("address")
 
     assert address_xml is not None
 
-    address = address_xml.text
-
-    return Email(address=address if address is not None else "")
+    return Email(address=xml_text(address_xml))
 
 def parse_phone_number(xml):
     """Parse phone number defined by XML specification `xml`."""
@@ -23,9 +26,7 @@ def parse_phone_number(xml):
 
     assert number_xml is not None
 
-    number = number_xml.text
-
-    return PhoneNumber(number=number if number is not None else "")
+    return PhoneNumber(number=xml_text(number_xml))
 
 def run_script():
     """Executes this script."""
