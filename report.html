@@ -99,7 +99,7 @@
 						{% call(project) generate_table(units,
 							["Name", "Lama", "Beschreibung", "Mitglieder"]) %}
 							<td>{{ project.name }}</td>
-							<td>{{ link(project.lama) }}</td>
+							<td>{{ link(project.person_responsible) }}</td>
 							<td>{{ project.description }}</td>
 							<td>
 								{% call(person) generate_list(project.members) %}
@@ -112,16 +112,16 @@
 					{{ render_units(serlo.support_units, "Support-Units") }}
 
 					{{ section("Teammitglieder") }}
-					{% call(member) generate_table(serlo.members, ["Name", "E-Mail", "Nummer"]) %}
+					{% call(member) generate_table(serlo.persons, ["Name", "E-Mail", "Nummer"]) %}
 						<td id="{{member.id}}">{{ member.name }}</td>
 						<td>
 							{% call(email) generate_list(member.emails) %}
-								<a href="mailto:{{email}}">{{email}}</a>
+								<a href="mailto:{{email.address}}">{{email.address}}</a>
 							{% endcall %}
 						</td>
 						<td>
-							{% call(phone_number) generate_list(member.numbers) %}
-								<a href="tel:{{phone_number}}">{{phone_number}}</a>
+							{% call(phone_number) generate_list(member.phone_numbers) %}
+								<a href="tel:{{phone_number.number}}">{{phone_number.number}}</a>
 							{% endcall %}
 						</td>
 					{% endcall %}
