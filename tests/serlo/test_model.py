@@ -4,33 +4,8 @@ from unittest import TestCase
 
 from serlo.model import UnitType, Email, Person, PhoneNumber, SerloDatabase, \
                         WorkingUnit
-from tests.data import generate_persons, generate_emails, generate_phone_numbers
-
-def generate_working_units():
-    """Create working units for testing."""
-    person1, person2, person3 = generate_persons()
-
-    return (WorkingUnit(name="project1",
-                        description="My description",
-                        unit_type=UnitType.project,
-                        person_responsible=person1,
-                        participants=[person3]),
-            WorkingUnit(name="",
-                        description="",
-                        unit_type=UnitType.project,
-                        person_responsible=person2,
-                        participants=[]),
-            WorkingUnit(name="Support Unit Master",
-                        description="A cool unit.",
-                        unit_type=UnitType.support_unit,
-                        person_responsible=person1,
-                        participants=[person2]),
-            WorkingUnit(name="Another support unit",
-                        description="Hello World",
-                        person_responsible=person3,
-                        unit_type=UnitType.support_unit,
-                        participants=[person1, person2]),
-            person1, person2, person3)
+from tests.data import generate_persons, generate_emails, \
+                       generate_working_units, generate_phone_numbers
 
 class TestEmail(TestCase):
     """Testcases for the model `Email`."""
@@ -134,9 +109,9 @@ class TestWorkingUnit(TestCase):
 
     def setUp(self):
         self.project1, self.project2, \
-                self.unit1, self.unit2, \
-                self.person1, self.person2, \
-                self.person3 = generate_working_units()
+                self.unit1, self.unit2 = generate_working_units()
+
+        self.person1, self.person2, self.person3 = generate_persons()
 
     def test_attribute_tablename(self):
         """Test for attribute `WorkingUnit.__tablename__`."""

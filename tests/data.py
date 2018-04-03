@@ -1,6 +1,6 @@
 """This module contains example data for testing."""
 
-from serlo.model import Email, PhoneNumber, Person
+from serlo.model import Email, PhoneNumber, Person, WorkingUnit, UnitType
 
 def generate_emails():
     """Returns examples of emails."""
@@ -214,3 +214,28 @@ def generate_people_specs():
     return [f"<people>{person1} {person2}</people>",
             f"<people>{person1} {person2} {person3}</people>",
             f"<people />"]
+
+def generate_working_units():
+    """Create working units for testing."""
+    person1, person2, person3 = generate_persons()
+
+    return [WorkingUnit(name="project1",
+                        description="My description",
+                        unit_type=UnitType.project,
+                        person_responsible=person1,
+                        participants=[person3]),
+            WorkingUnit(name="",
+                        description="",
+                        unit_type=UnitType.project,
+                        person_responsible=person2,
+                        participants=[]),
+            WorkingUnit(name="Support Unit Master",
+                        description="A cool unit.",
+                        unit_type=UnitType.support_unit,
+                        person_responsible=person1,
+                        participants=[person2]),
+            WorkingUnit(name="Another support unit",
+                        description="Hello World",
+                        person_responsible=person3,
+                        unit_type=UnitType.support_unit,
+                        participants=[person1, person2])]
