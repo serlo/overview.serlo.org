@@ -6,8 +6,8 @@ import xml.etree.ElementTree as ET
 
 from unittest import TestCase
 
-from test.data import generate_emails, generate_email_specs
 from highrise_importer import parse_email
+from tests.data import generate_emails, generate_email_specs
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
