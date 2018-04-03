@@ -3,9 +3,13 @@
 import os
 import sys
 
-from serlo.model import SerloDatabase, Email, PhoneNumber, Person
+from serlo.model import SerloDatabase, Email, PhoneNumber, Person, UnitType, \
+                        WorkingUnit
 
 TOKEN_VARIABLE = "HIGHRISE_API_TOKEN"
+
+PROJECT_ID = "6436430"
+SUPPORT_UNIT_ID = "4849968"
 
 def xml_text(xml):
     """Returns the inner text of the XML element `xml`. In case it doesn't
@@ -51,6 +55,28 @@ def parse_person(xml):
 def parse_people(xml):
     """Parse people defined by XML specification `xml`."""
     return [parse_person(e) for e in xml.findall("person", xml)]
+
+def parse_working_unit(xml, persons):
+    """Parse a working unit defined by XML specification `xml`."""
+    category_id = xml_text(xml_find("category-id", xml))
+
+    if category_id == PROJECT_ID:
+        unit_type = UnitType.project
+    elif category_id == SUPPORT_UNIT_ID:
+        unit_type = UnitType.support_unit
+    else:
+        return None
+
+    person_responsible = persons[xml_text(xml_find("party-id", xml))]
+    participant_ids = [xml_text(xml_find("id", x)) for x
+                       in xml_find("parties", xml)]
+
+    return WorkingUnit(name=xml_text(xml_find("name", xml)),
+                       description=xml_text(xml_find("background", xml)),
+                       unit_type=unit_type,
+                       person_responsible=person_responsible,
+                       participants=[persons[x] for x in participant_ids
+                                     if x in persons])
 
 def run_script():
     """Executes this script."""

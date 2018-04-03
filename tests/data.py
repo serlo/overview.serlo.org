@@ -211,8 +211,8 @@ def generate_people():
     person1, person2, person3 = generate_persons()
     id1, id2, id3 = generate_person_ids()
 
-    return [[(id1, person1), (id2, person2)],
-            [(id1, person1), (id2, person2), (id3, person3)],
+    return [[(id1, person1), (id2, person2), (id3, person3)],
+            [(id1, person1), (id2, person2)],
             []]
 
 def generate_people_specs():
@@ -220,8 +220,8 @@ def generate_people_specs():
     lists returned by `generate_people()`."""
     person1, person2, person3 = generate_person_specs()
 
-    return [f"<people>{person1} {person2}</people>",
-            f"<people>{person1} {person2} {person3}</people>",
+    return [f"<people>{person1} {person2} {person3}</people>",
+            f"<people>{person1} {person2}</people>",
             f"<people />"]
 
 def generate_working_units():
@@ -248,3 +248,133 @@ def generate_working_units():
                         person_responsible=person3,
                         unit_type=UnitType.support_unit,
                         participants=[person1, person2])]
+
+def generate_working_unit_specs():
+    """Create working units for testing."""
+    person1, person2, person3 = generate_person_specs()
+    id1, id2, id3 = generate_person_ids()
+    
+    return [f"""<deal>
+                 <account-id type="integer">30</account-id>
+                 <author-id type="integer">13</author-id>
+                 <background>My description</background>
+                 <category-id type="integer">6436430</category-id>
+                 <created-at type="datetime">2018-02-19T14:22:51Z</created-at>
+                 <currency>USD</currency>
+                 <duration type="integer">1</duration>
+                 <group-id type="integer" nil="true"></group-id>
+                 <id type="integer">1</id>
+                 <name>project1</name>
+                 <owner-id type="integer" nil="true"></owner-id>
+                 <party-id type="integer">{id1}</party-id>
+                 <price type="integer">0</price>
+                 <price-type>fixed</price-type>
+                 <responsible-party-id type="integer" nil="true">
+                 </responsible-party-id>
+                 <status>pending</status>
+                 <status-changed-on type="datetime" nil="true">
+                 </status-changed-on>
+                 <updated-at type="datetime">2018-02-27T16:39:41Z</updated-at>
+                 <visible-to>Everyone</visible-to>
+                 <category>
+                   <id type="integer">6436430</id>
+                   <name>Project</name>
+                 </category>
+                 {person1}
+                 <parties type="array">
+                   {person3}
+                 </parties>
+                </deal>""",
+            f"""<deal>
+                 <account-id type="integer">30</account-id>
+                 <author-id type="integer">13</author-id>
+                 <background></background>
+                 <category-id type="integer">6436430</category-id>
+                 <created-at type="datetime">2018-02-19T14:22:51Z</created-at>
+                 <currency>USD</currency>
+                 <duration type="integer">1</duration>
+                 <group-id type="integer" nil="true"></group-id>
+                 <id type="integer">2</id>
+                 <name></name>
+                 <owner-id type="integer" nil="true"></owner-id>
+                 <party-id type="integer">{id2}</party-id>
+                 <price type="integer">0</price>
+                 <price-type>fixed</price-type>
+                 <responsible-party-id type="integer" nil="true">
+                 </responsible-party-id>
+                 <status>pending</status>
+                 <status-changed-on type="datetime" nil="true">
+                 </status-changed-on>
+                 <updated-at type="datetime">2018-02-27T16:39:41Z</updated-at>
+                 <visible-to>Everyone</visible-to>
+                 <category>
+                   <id type="integer">6436430</id>
+                   <name>Project</name>
+                 </category>
+                 {person2}
+                 <parties type="array">
+                 </parties>
+                </deal>""",
+            f"""<deal>
+                 <account-id type="integer">30</account-id>
+                 <author-id type="integer">13</author-id>
+                 <background>A cool unit.</background>
+                 <category-id type="integer">4849968</category-id>
+                 <created-at type="datetime">2018-02-19T14:22:51Z</created-at>
+                 <currency>USD</currency>
+                 <duration type="integer">1</duration>
+                 <group-id type="integer" nil="true"></group-id>
+                 <id type="integer">789</id>
+                 <name>Support Unit Master</name>
+                 <owner-id type="integer" nil="true"></owner-id>
+                 <party-id type="integer">{id1}</party-id>
+                 <price type="integer">0</price>
+                 <price-type>fixed</price-type>
+                 <responsible-party-id type="integer" nil="true">
+                 </responsible-party-id>
+                 <status>pending</status>
+                 <status-changed-on type="datetime" nil="true">
+                 </status-changed-on>
+                 <updated-at type="datetime">2018-02-27T16:39:41Z</updated-at>
+                 <visible-to>Everyone</visible-to>
+                 <category>
+                   <id type="integer">4849968</id>
+                   <name>Support Unit</name>
+                 </category>
+                 {person1}
+                 <parties type="array">
+                   {person2}
+                 </parties>
+                </deal>""",
+            f"""<deal>
+                 <account-id type="integer">30</account-id>
+                 <author-id type="integer">13</author-id>
+                 <background>Hello World</background>
+                 <category-id type="integer">4849968</category-id>
+                 <created-at type="datetime">2018-02-19T14:22:51Z</created-at>
+                 <currency>USD</currency>
+                 <duration type="integer">1</duration>
+                 <group-id type="integer" nil="true"></group-id>
+                 <id type="integer">789</id>
+                 <name>Another support unit</name>
+                 <owner-id type="integer" nil="true"></owner-id>
+                 <party-id type="integer">{id3}</party-id>
+                 <price type="integer">0</price>
+                 <price-type>fixed</price-type>
+                 <responsible-party-id type="integer" nil="true">
+                 </responsible-party-id>
+                 <status>pending</status>
+                 <status-changed-on type="datetime" nil="true">
+                 </status-changed-on>
+                 <updated-at type="datetime">2018-02-27T16:39:41Z</updated-at>
+                 <visible-to>Everyone</visible-to>
+                 <category>
+                   <id type="integer">4849968</id>
+                   <name>Support Unit</name>
+                 </category>
+                 {person3}
+                 <parties type="array">
+                   {person1}
+                   {person2}
+                 </parties>
+                </deal>"""]

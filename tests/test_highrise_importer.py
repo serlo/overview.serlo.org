@@ -7,11 +7,13 @@ import xml.etree.ElementTree as ET
 from unittest import TestCase
 
 from highrise_importer import parse_email, parse_phone_number, parse_person, \
-                              parse_people, xml_text, xml_find
+                              parse_people, parse_working_unit, xml_text, \
+                              xml_find
 from tests.data import generate_emails, generate_email_specs, \
                        generate_phone_numbers, generate_phone_number_specs, \
                        generate_persons, generate_person_specs, \
                        generate_people, generate_people_specs, \
+                       generate_working_units, generate_working_unit_specs, \
                        generate_person_ids
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
@@ -101,6 +103,22 @@ class TestHighriseImporterScript(TestCase):
         self.assertListEqual(parse_people(specs[0]), people[0])
         self.assertListEqual(parse_people(specs[1]), people[1])
         self.assertListEqual(parse_people(specs[2]), people[2])
+
+    def test_parse_working_unit(self):
+        """Testcase for the function `parse_working_unit()`."""
+        specs = [ET.fromstring(x) for x in generate_working_unit_specs()]
+        units = generate_working_units()
+        persons = dict(parse_people(ET.fromstring(generate_people_specs()[0])))
+
+        self.assertEqual(parse_working_unit(specs[0], persons), units[0])
+        self.assertEqual(parse_working_unit(specs[1], persons), units[1])
+        self.assertEqual(parse_working_unit(specs[2], persons), units[2])
+        self.assertEqual(parse_working_unit(specs[3], persons), units[3])
+
+        self.assertIsNone(parse_working_unit(
+            ET.fromstring("""<deal>
+                              <category-id type="integer">123</category-id>
+                             </deal>"""), persons))
 
     def test_passing_arguments(self):
         """Testcase for calling the script without arguments."""
