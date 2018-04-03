@@ -122,7 +122,7 @@ class WorkingUnit(_SerloEntity):
 
     name = Column(String)
     description = Column(String)
-    unit_type = Enum(UnitType)
+    unit_type = Column(Enum(UnitType))
     person_responsible_id = Column(Integer, ForeignKey("person.id"))
     person_responsible = relationship("Person",
                                       back_populates="managing_units")
