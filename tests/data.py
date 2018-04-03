@@ -199,3 +199,18 @@ def generate_person_specs():
                  </contact-data>
                  <subject_datas type="array" />
                 </person>"""]
+
+def generate_people():
+    """Returns a list of person lists for testing."""
+    person1, person2, person3 = generate_persons()
+
+    return [[person1, person2], [person1, person2, person3], []]
+
+def generate_people_specs():
+    """Returns XML specifications of people lists corresponding to the
+    lists returned by `generate_people()`."""
+    person1, person2, person3 = generate_person_specs()
+
+    return [f"<people>{person1} {person2}</people>",
+            f"<people>{person1} {person2} {person3}</people>",
+            f"<people />"]

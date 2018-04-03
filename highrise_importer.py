@@ -47,6 +47,9 @@ def parse_person(xml):
                           xml_find("email-addresses", contact_data)],
                   phone_numbers=[parse_phone_number(e) for e in
                                  xml_find("phone-numbers", contact_data)])
+def parse_people(xml):
+    """Parse people defined by XML specification `xml`."""
+    return [parse_person(e) for e in xml.findall("person", xml)]
 
 def run_script():
     """Executes this script."""
