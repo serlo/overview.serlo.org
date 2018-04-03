@@ -204,3 +204,19 @@ class TestSerloDatabase(TestCase):
         self.database.add_all([self.unit1, self.unit2])
 
         self.assertSetEqual(set(self.database.working_units), set(self.units))
+
+    def test_attribute_projects(self):
+        """Testcase for accessing all active projects."""
+        self.database.add_all([self.project1, self.project2, self.unit1,
+                               self.unit2])
+
+        self.assertSetEqual(set(self.database.projects),
+                            set([self.project1, self.project2]))
+
+    def test_attribute_support_units(self):
+        """Testcase for accessing all active support_units."""
+        self.database.add_all([self.project1, self.project2, self.unit1,
+                               self.unit2])
+
+        self.assertSetEqual(set(self.database.support_units),
+                            set([self.unit1, self.unit2]))

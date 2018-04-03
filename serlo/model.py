@@ -165,5 +165,17 @@ class SerloDatabase(object):
 
     @property
     def working_units(self):
-        """Return all working units."""
+        """Returns all working units."""
         return self._session.query(WorkingUnit)
+
+    @property
+    def projects(self):
+        """Returns all active projects."""
+        return [p for p in self.working_units
+                if p.unit_type == UnitType.project]
+
+    @property
+    def support_units(self):
+        """Returns all active support units."""
+        return [p for p in self.working_units
+                if p.unit_type == UnitType.support_unit]
