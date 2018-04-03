@@ -3,7 +3,7 @@
 import os
 import sys
 
-from serlo.model import SerloDatabase, Email, PhoneNumber
+from serlo.model import SerloDatabase, Email, PhoneNumber, Person
 
 TOKEN_VARIABLE = "HIGHRISE_API_TOKEN"
 
@@ -36,6 +36,17 @@ def parse_email(xml):
 def parse_phone_number(xml):
     """Parse phone number defined by XML specification `xml`."""
     return PhoneNumber(number=xml_text(xml_find("number", xml)))
+
+def parse_person(xml):
+    """Parse person defined by XML specification `xml`."""
+    contact_data = xml_find("contact-data", xml)
+
+    return Person(first_name=xml_text(xml_find("first-name", xml)),
+                  last_name=xml_text(xml_find("last-name", xml)),
+                  emails=[parse_email(e) for e in
+                          xml_find("email-addresses", contact_data)],
+                  phone_numbers=[parse_phone_number(e) for e in
+                                 xml_find("phone-numbers", contact_data)])
 
 def run_script():
     """Executes this script."""
