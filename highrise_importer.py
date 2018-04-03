@@ -2,6 +2,9 @@
 
 import os
 import sys
+import xml.etree.ElementTree as ET
+
+import requests
 
 from serlo.model import SerloDatabase, Email, PhoneNumber, Person, UnitType, \
                         WorkingUnit
@@ -10,6 +13,7 @@ TOKEN_VARIABLE = "HIGHRISE_API_TOKEN"
 
 PROJECT_ID = "6436430"
 SUPPORT_UNIT_ID = "4849968"
+MEMBER_ID = "5360080"
 
 def xml_text(xml):
     """Returns the inner text of the XML element `xml`. In case it doesn't
@@ -84,6 +88,16 @@ def parse_working_units(xml, persons):
 
     return [x for x in results if x is not None]
 
+def api_call(endpoint, api_token, params=None):
+    """Executes an API call to Highrise."""
+    if params is None:
+        params = {}
+
+    url = f"https://de-serlo.highrisehq.com/{endpoint}.xml"
+    req = requests.get(url, auth=(api_token, "_"), params=params)
+
+    return ET.fromstring(req.text)
+
 def run_script():
     """Executes this script."""
     try:
@@ -97,6 +111,14 @@ def run_script():
         sys.exit(f"Error: Environment Variable {TOKEN_VARIABLE} not defined.")
 
     database = SerloDatabase(database_file)
+
+    persons = dict(parse_people(api_call("people", api_token,
+                                         params={"tag_id": MEMBER_ID})))
+
+    units = parse_working_units(api_call("deals", api_token), persons)
+
+    database.add_all(persons.values())
+    database.add_all(units)
 
 if __name__ == "__main__":
     run_script()
