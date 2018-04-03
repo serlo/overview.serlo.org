@@ -4,27 +4,11 @@ from unittest import TestCase
 
 from serlo.model import UnitType, Email, Person, PhoneNumber, SerloDatabase, \
                         WorkingUnit
-
-def generate_persons():
-    """Helper function for creating persons of type `Person`."""
-    email1 = Email(address="hello@example.com")
-    email2 = Email(address="My man")
-    email3 = Email(address="")
-
-    phone1 = PhoneNumber(number="1")
-    phone2 = PhoneNumber(number="2")
-    phone3 = PhoneNumber(number="3")
-
-    return (Person(first_name="Markus", last_name="Miller",
-                   emails=[email1], phone_numbers=[phone1]),
-            Person(first_name="Yannick", last_name="Müller",
-                   emails=[email2, email3], phone_numbers=[phone2, phone3]),
-            Person(first_name="", last_name="", emails=[], phone_numbers=[]),
-            email1, email2, email3, phone1, phone2, phone3)
+from tests.data import generate_persons, generate_emails, generate_phone_numbers
 
 def generate_working_units():
     """Create working units for testing."""
-    person1, person2, person3 = generate_persons()[0:3]
+    person1, person2, person3 = generate_persons()
 
     return (WorkingUnit(name="project1",
                         description="My description",
@@ -101,9 +85,9 @@ class TestPerson(TestCase):
     # pylint: disable=too-many-instance-attributes
 
     def setUp(self):
-        self.person1, self.person2, self.person3, \
-                self.email1, self.email2, self.email3, \
-                self.phone1, self.phone2, self.phone3 = generate_persons()
+        self.person1, self.person2, self.person3 = generate_persons()
+        self.email1, self.email2, self.email3 = generate_emails()
+        self.phone1, self.phone2, self.phone3 = generate_phone_numbers()
 
     def test_attribute_id(self):
         """Testcase for attribute `Person.id`."""

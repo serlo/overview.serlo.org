@@ -1,6 +1,6 @@
 """This module contains example data for testing."""
 
-from serlo.model import Email, PhoneNumber
+from serlo.model import Email, PhoneNumber, Person
 
 def generate_emails():
     """Returns examples of emails."""
@@ -43,3 +43,14 @@ def generate_phone_number_specs():
                 <number>+490</number>
                </phone-number>""",
             """<phone-number><number /></phone-number>"""]
+
+def generate_persons():
+    """Returns example objects of Type `Person`."""
+    email1, email2, email3 = generate_emails()
+    phone1, phone2, phone3 = generate_phone_numbers()
+
+    return [Person(first_name="Markus", last_name="Miller",
+                   emails=[email1], phone_numbers=[phone1]),
+            Person(first_name="Yannick", last_name="Müller",
+                   emails=[email2, email3], phone_numbers=[phone2, phone3]),
+            Person(first_name="", last_name="", emails=[], phone_numbers=[])]
