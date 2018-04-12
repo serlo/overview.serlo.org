@@ -101,7 +101,7 @@
 					{% macro render_units(units, name) %}
 						{{ section(name) }}
 						{% call(project) generate_table(units,
-							["Name", "Lama", "Beschreibung", "Mitglieder"]) %}
+							["Name", "Lama", "Mitglieder", "Beschreibung"]) %}
 							<td>
 								{{ project.name }}
 								{% if project.overview_document %}
@@ -109,12 +109,12 @@
 								{% endif %}
 							</td>
 							<td>{{ print_person(project.person_responsible) }}</td>
-							<td>{{ project.description }}</td>
 							<td>
 								{% call(person) generate_list(project.members) %}
 									{{ print_person(person) }}
 								{% endcall %}
 							</td>
+							<td>{{ project.description }}</td>
 						{% endcall %}
 					{% endmacro %}
 					{{ render_units(serlo.projects, "Projekte") }}
