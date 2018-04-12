@@ -167,6 +167,13 @@ class TestWorkingUnit(TestCase):
         self.assertEqual(self.unit1.unit_type, UnitType.support_unit)
         self.assertEqual(self.unit2.unit_type, UnitType.support_unit)
 
+    def test_attribute_overview_document(self): # pylint: disable=invalid-name
+        """Test for attribute `WorkingUnit.overview_document`"""
+        self.assertEqual(self.project1.overview_document, "overview_document")
+        self.assertEqual(self.project2.overview_document, "")
+        self.assertEqual(self.unit1.overview_document, "http://example.org")
+        self.assertEqual(self.unit2.overview_document, "Hello Document")
+
 class TestSerloDatabase(TestCase):
     """Testcases for the class `SerloDatabase`."""
     # pylint: disable=too-many-instance-attributes

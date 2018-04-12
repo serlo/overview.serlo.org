@@ -93,8 +93,7 @@ class Person(_SerloEntity):
     managing_units = relationship("WorkingUnit",
                                   back_populates="person_responsible")
     participating_units = relationship("WorkingUnit",
-                                       back_populates="participants",
-                                       secondary=_WorkingUnitParticipants)
+                                       back_populates="participants")
 
     @property
     def _properties(self):
@@ -128,11 +127,13 @@ class WorkingUnit(_SerloEntity):
                                       back_populates="managing_units")
     participants = relationship("Person", back_populates="participating_units",
                                 secondary=_WorkingUnitParticipants)
+    overview_document = Column(String)
 
     @property
     def _properties(self):
         return (self.name, self.description, self.unit_type,
-                self.person_responsible, self.participants)
+                self.person_responsible, self.participants,
+                self.overview_document)
 
     @property
     def members(self):

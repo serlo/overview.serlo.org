@@ -230,21 +230,25 @@ def generate_working_units():
 
     return [WorkingUnit(name="project1",
                         description="My description",
+                        overview_document="overview_document",
                         unit_type=UnitType.project,
                         person_responsible=person1,
                         participants=[person3]),
             WorkingUnit(name="",
                         description="",
+                        overview_document="",
                         unit_type=UnitType.project,
                         person_responsible=person2,
                         participants=[]),
             WorkingUnit(name="Support Unit Master",
                         description="A cool unit.",
+                        overview_document="http://example.org",
                         unit_type=UnitType.support_unit,
                         person_responsible=person1,
                         participants=[person2]),
             WorkingUnit(name="Another support unit",
                         description="Hello World",
+                        overview_document="Hello Document",
                         person_responsible=person3,
                         unit_type=UnitType.support_unit,
                         participants=[person1, person2])]
@@ -284,6 +288,20 @@ def generate_working_unit_specs():
                  <parties type="array">
                    {person3}
                  </parties>
+                 <subject_datas type="array">
+                  <subject_data>
+                    <id type="integer">25</id>
+                    <subject_field_id type="integer">1224123</subject_field_id>
+                    <subject_field_label>Status</subject_field_label>
+                    <value>things are ok ..</value>
+                  </subject_data>
+                  <subject_data>
+                    <id type="integer">148</id>
+                    <subject_field_id type="integer">1224165</subject_field_id>
+                    <subject_field_label>Link to Overview Document</subject_field_label>
+                    <value>overview_document</value>
+                  </subject_data>
+                 </subject_datas>
                 </deal>""",
             f"""<deal>
                  <account-id type="integer">30</account-id>
@@ -314,6 +332,20 @@ def generate_working_unit_specs():
                  {person2}
                  <parties type="array">
                  </parties>
+                 <subject_datas type="array">
+                  <subject_data>
+                    <id type="integer">25</id>
+                    <subject_field_id type="integer">1224123</subject_field_id>
+                    <subject_field_label>Status</subject_field_label>
+                    <value>things are ok ..</value>
+                  </subject_data>
+                  <subject_data>
+                    <id type="integer">148</id>
+                    <subject_field_id type="integer">1224165</subject_field_id>
+                    <subject_field_label>Link to Overview Document</subject_field_label>
+                    <value></value>
+                  </subject_data>
+                 </subject_datas>
                 </deal>""",
             f"""<deal>
                  <account-id type="integer">30</account-id>
@@ -345,6 +377,20 @@ def generate_working_unit_specs():
                  <parties type="array">
                    {person2}
                  </parties>
+                 <subject_datas type="array">
+                  <subject_data>
+                    <id type="integer">25</id>
+                    <subject_field_id type="integer">1224123</subject_field_id>
+                    <subject_field_label>Status</subject_field_label>
+                    <value>things are ok ..</value>
+                  </subject_data>
+                  <subject_data>
+                    <id type="integer">148</id>
+                    <subject_field_id type="integer">1224165</subject_field_id>
+                    <subject_field_label>Link to Overview Document</subject_field_label>
+                    <value>http://example.org</value>
+                  </subject_data>
+                 </subject_datas>
                 </deal>""",
             f"""<deal>
                  <account-id type="integer">30</account-id>
@@ -377,6 +423,20 @@ def generate_working_unit_specs():
                    {person1}
                    {person2}
                  </parties>
+                 <subject_datas type="array">
+                  <subject_data>
+                    <id type="integer">25</id>
+                    <subject_field_id type="integer">1224123</subject_field_id>
+                    <subject_field_label>Status</subject_field_label>
+                    <value>things are ok ..</value>
+                  </subject_data>
+                  <subject_data>
+                    <id type="integer">148</id>
+                    <subject_field_id type="integer">1224165</subject_field_id>
+                    <subject_field_label>Link to Overview Document</subject_field_label>
+                    <value>Hello Document</value>
+                  </subject_data>
+                 </subject_datas>
                 </deal>"""]
 
 def generate_working_unit_list_spec():

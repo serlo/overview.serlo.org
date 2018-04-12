@@ -14,6 +14,7 @@ TOKEN_VARIABLE = "HIGHRISE_API_TOKEN"
 PROJECT_ID = "6436430"
 SUPPORT_UNIT_ID = "4849968"
 MEMBER_ID = "5360080"
+SUBJECT_DATA_OVERVIEW = "1224165"
 
 def xml_text(xml):
     """Returns the inner text of the XML element `xml`. In case it doesn't
@@ -36,6 +37,20 @@ def xml_find(tag_name, xml):
     assert len(results) < 2, f"Too many children with tag `{tag_name}` found."
 
     return results[0]
+
+def parse_subject_datas(xml):
+    """Returns a dircectory of all subject data in `xml`. Subject data are
+    values stored in custom fields in Highrise. This functions returns
+    a directoy with all custom field values as strings. The keys are
+    links."""
+    subject_datas = xml.find("subject_datas")
+
+    if subject_datas:
+        return dict((xml_text(xml_find("subject_field_id", child)),
+                     xml_text(xml_find("value", child))) for child
+                    in subject_datas.findall("subject_data"))
+
+    return dict()
 
 def parse_email(xml):
     """Parse emails defined by XML specification `xml`."""
@@ -64,6 +79,10 @@ def parse_working_unit(xml, persons):
     """Parse a working unit defined by XML specification `xml`."""
     category_id = xml_text(xml_find("category-id", xml))
 
+    subject_datas = parse_subject_datas(xml)
+
+    overview_document = subject_datas.get(SUBJECT_DATA_OVERVIEW, "")
+
     if category_id == PROJECT_ID:
         unit_type = UnitType.project
     elif category_id == SUPPORT_UNIT_ID:
@@ -77,6 +96,7 @@ def parse_working_unit(xml, persons):
 
     return WorkingUnit(name=xml_text(xml_find("name", xml)),
                        description=xml_text(xml_find("background", xml)),
+                       overview_document=overview_document,
                        unit_type=unit_type,
                        person_responsible=person_responsible,
                        participants=[persons[x] for x in participant_ids
