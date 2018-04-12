@@ -102,7 +102,12 @@
 						{{ section(name) }}
 						{% call(project) generate_table(units,
 							["Name", "Lama", "Beschreibung", "Mitglieder"]) %}
-							<td>{{ project.name }}</td>
+							<td>
+								{{ project.name }}
+								{% if project.overview_document %}
+								<small><a href="{{ project.overview_document }}">(Overview)</a></small>
+								{% endif %}
+							</td>
 							<td>{{ print_person(project.person_responsible) }}</td>
 							<td>{{ project.description }}</td>
 							<td>
