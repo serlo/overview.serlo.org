@@ -138,10 +138,10 @@
 						</td>
 						<td>
 							{% call(unit) generate_list(member.managing_units) %}
-								<a href="unit{{ unit.id }}"><i>{{ unit.name }} (Lama)</i></a>
+								<a href="#unit{{ unit.id }}"><i>{{ unit.name }} (Lama)</i></a>
 							{% endcall %}
 							{% call(unit) generate_list(member.participating_units) %}
-								<a href="unit{{ unit.id }}">{{ unit.name }}</a>
+								<a href="#unit{{ unit.id }}">{{ unit.name }}</a>
 							{% endcall %}
 						</td>
 					{% endcall %}
