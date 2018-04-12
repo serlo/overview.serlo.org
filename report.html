@@ -102,7 +102,7 @@
 						{{ section(name) }}
 						{% call(project) generate_table(units,
 							["Name", "Lama", "Mitglieder", "Beschreibung"]) %}
-							<td>
+							<td id="unit{{ project.id }}">
 								{{ project.name }}
 								{% if project.overview_document %}
 								<small><a href="{{ project.overview_document }}">(Overview)</a></small>
@@ -121,7 +121,8 @@
 					{{ render_units(serlo.support_units, "Support-Units") }}
 
 					{{ section("Teammitglieder") }}
-					{% call(member) generate_table(serlo.persons, ["Name", "E-Mail", "Nummer"]) %}
+					{% call(member) generate_table(serlo.persons,
+						["Name", "E-Mail", "Nummer", "Projekte / Units"]) %}
 						<td id="{{member.id}}">{{ member.name }}</td>
 						<td>
 							{% call(email) generate_list(member.emails) %}
@@ -131,6 +132,14 @@
 						<td>
 							{% call(phone_number) generate_list(member.phone_numbers) %}
 								<a href="tel:{{phone_number.number}}">{{phone_number.number}}</a>
+							{% endcall %}
+						</td>
+						<td>
+							{% call(unit) generate_list(member.managing_units) %}
+								<a href="unit{{ unit.id }}"><i>{{ unit.name }} (Lama)</i></a>
+							{% endcall %}
+							{% call(unit) generate_list(member.participating_units) %}
+								<a href="unit{{ unit.id }}">{{ unit.name }}</a>
 							{% endcall %}
 						</td>
 					{% endcall %}
