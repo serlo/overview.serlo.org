@@ -6,13 +6,15 @@
 {% endmacro %}
 
 {% macro generate_list(list, list_type="ul") %}
-	<{{list_type}}>
-		{% for element in list %}
-			<li>
-				{{ caller(element) }}
-			</li>
-			{% endfor %}
-	</{{list_type}}>
+	{% if list %}
+		<{{list_type}}>
+			{% for element in list %}
+				<li>
+					{{ caller(element) }}
+				</li>
+				{% endfor %}
+		</{{list_type}}>
+	{% endif %}
 {% endmacro %}
 
 {% macro generate_table(rows, headers) %}
