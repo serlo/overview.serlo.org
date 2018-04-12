@@ -93,7 +93,8 @@ class Person(_SerloEntity):
     managing_units = relationship("WorkingUnit",
                                   back_populates="person_responsible")
     participating_units = relationship("WorkingUnit",
-                                       back_populates="participants")
+                                       back_populates="participants",
+                                       secondary=_WorkingUnitParticipants)
 
     @property
     def _properties(self):
@@ -124,7 +125,8 @@ class WorkingUnit(_SerloEntity):
     unit_type = Column(Enum(UnitType))
     person_responsible_id = Column(Integer, ForeignKey("person.id"))
     person_responsible = relationship("Person",
-                                      back_populates="managing_units")
+                                      back_populates="managing_units",
+                                      foreign_keys=[person_responsible_id])
     participants = relationship("Person", back_populates="participating_units",
                                 secondary=_WorkingUnitParticipants)
     overview_document = Column(String)

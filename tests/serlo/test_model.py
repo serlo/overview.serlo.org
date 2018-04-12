@@ -227,3 +227,27 @@ class TestSerloDatabase(TestCase):
 
         self.assertSetEqual(set(self.database.support_units),
                             set([self.unit1, self.unit2]))
+
+    def test_attribute_managing_units(self):
+        """Test for attribute `Person.managing_unit`."""
+        self.database.add_all([self.project1, self.project2, self.unit1,
+                               self.unit2])
+
+        person1 = self.project1.person_responsible
+        person3 = self.unit2.person_responsible
+
+        self.assertEqual(list(person1.managing_units),
+                         [self.project1, self.unit1])
+        self.assertEqual(list(person3.managing_units), [self.unit2])
+
+    def test_attribute_participating_units(self): # pylint: disable=invalid-name
+        """Test for attribute `Person.participating_unit`."""
+        self.database.add_all([self.project1, self.project2, self.unit1,
+                               self.unit2])
+
+        person1 = self.project1.person_responsible
+        person2 = self.project2.person_responsible
+
+        self.assertEqual(set(person1.participating_units), set([self.unit2]))
+        self.assertEqual(set(person2.participating_units),
+                         set([self.unit1, self.unit2]))
