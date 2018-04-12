@@ -23,7 +23,7 @@ $(DATABASE_TMP):
 $(DATABASE): $(DATABASE_TMP)
 	mv '$<' '$@'
 
-$(FAVICON):
+$(FAVICON): $(OUTPUT_DIR)
 	curl -s 'https://de.serlo.org/favicon.ico' > '$@'
 
 $(CSS): $(OUTPUT_DIR)
