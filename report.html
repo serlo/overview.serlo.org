@@ -34,8 +34,8 @@
 	</table>
 {% endmacro %}
 
-{% macro link(obj) %}
-	<a href="#{{obj.id}}">{{ obj }}</a>
+{% macro print_person(obj) %}
+	<a href="#{{obj.id}}">{{ obj.name }}</a>
 {% endmacro %}
 
 	<head>
@@ -99,11 +99,11 @@
 						{% call(project) generate_table(units,
 							["Name", "Lama", "Beschreibung", "Mitglieder"]) %}
 							<td>{{ project.name }}</td>
-							<td>{{ link(project.person_responsible) }}</td>
+							<td>{{ print_person(project.person_responsible) }}</td>
 							<td>{{ project.description }}</td>
 							<td>
 								{% call(person) generate_list(project.members) %}
-									{{ link(person) }}
+									{{ print_person(person) }}
 								{% endcall %}
 							</td>
 						{% endcall %}
