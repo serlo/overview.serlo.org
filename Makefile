@@ -9,8 +9,9 @@ OUTPUT_DIR := out
 INDEX_HTML := $(OUTPUT_DIR)/index.html
 FAVICON := $(OUTPUT_DIR)/favicon.ico
 CSS := $(OUTPUT_DIR)/styles.css
+JAVASCRIPT := $(OUTPUT_DIR)/script.js
 
-TARGETS := $(DATABASE) $(INDEX_HTML) $(FAVICON) $(CSS)
+TARGETS := $(DATABASE) $(INDEX_HTML) $(FAVICON) $(CSS) $(JAVASCRIPT)
 
 .PHONY: test $(TARGETS)
 
@@ -28,6 +29,10 @@ $(FAVICON):
 $(CSS): $(OUTPUT_DIR)
 	curl -s 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css' > '$@'
 	curl -s 'https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css' >> '$@'
+
+$(JAVASCRIPT): $(OUTPUT_DIR)
+	curl -s 'https://code.jquery.com/jquery-3.2.1.min.js' > '$@'
+	curl -s 'https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js' >> '$@'
 
 $(INDEX_HTML): $(OUTPUT_DIR)
 	$(PYTHON) create_team_report.py 'sqlite:///$(DATABASE)' \
