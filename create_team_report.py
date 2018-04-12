@@ -4,7 +4,7 @@ import sys
 
 import jinja2
 
-from serlo.model import SerloDatabase, UnitType
+from serlo.model import SerloDatabase
 
 def run_script(args):
     """Main function of the script."""
