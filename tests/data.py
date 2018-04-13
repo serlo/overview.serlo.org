@@ -1,6 +1,7 @@
 """This module contains example data for testing."""
 
-from serlo.model import Email, PhoneNumber, Person, WorkingUnit, UnitType
+from serlo.model import Email, PhoneNumber, Person, WorkingUnit, UnitType, \
+                        UnitStatus
 
 def generate_emails():
     """Returns examples of emails."""
@@ -232,18 +233,21 @@ def generate_working_units():
                         description="My description",
                         overview_document="overview_document",
                         unit_type=UnitType.project,
+                        status=UnitStatus.perfect,
                         person_responsible=person1,
                         participants=[person3]),
             WorkingUnit(name="",
                         description="",
                         overview_document="",
                         unit_type=UnitType.project,
+                        status=None,
                         person_responsible=person2,
                         participants=[]),
             WorkingUnit(name="Support Unit Master",
                         description="A cool unit.",
                         overview_document="http://example.org",
                         unit_type=UnitType.support_unit,
+                        status=UnitStatus.ok,
                         person_responsible=person1,
                         participants=[person2]),
             WorkingUnit(name="Another support unit",
@@ -251,6 +255,7 @@ def generate_working_units():
                         overview_document="Hello Document",
                         person_responsible=person3,
                         unit_type=UnitType.support_unit,
+                        status=UnitStatus.problems,
                         participants=[person1, person2])]
 
 def generate_working_unit_specs():
@@ -293,7 +298,7 @@ def generate_working_unit_specs():
                     <id type="integer">25</id>
                     <subject_field_id type="integer">1224123</subject_field_id>
                     <subject_field_label>Status</subject_field_label>
-                    <value>things are ok ..</value>
+                    <value>all is very well</value>
                   </subject_data>
                   <subject_data>
                     <id type="integer">148</id>
@@ -337,7 +342,7 @@ def generate_working_unit_specs():
                     <id type="integer">25</id>
                     <subject_field_id type="integer">1224123</subject_field_id>
                     <subject_field_label>Status</subject_field_label>
-                    <value>things are ok ..</value>
+                    <value></value>
                   </subject_data>
                   <subject_data>
                     <id type="integer">148</id>
@@ -428,7 +433,7 @@ def generate_working_unit_specs():
                     <id type="integer">25</id>
                     <subject_field_id type="integer">1224123</subject_field_id>
                     <subject_field_label>Status</subject_field_label>
-                    <value>things are ok ..</value>
+                    <value>we have problems</value>
                   </subject_data>
                   <subject_data>
                     <id type="integer">148</id>

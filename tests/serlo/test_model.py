@@ -3,7 +3,7 @@
 from unittest import TestCase
 
 from serlo.model import UnitType, Email, Person, PhoneNumber, SerloDatabase, \
-                        WorkingUnit
+                        WorkingUnit, UnitStatus
 from tests.data import generate_persons, generate_emails, \
                        generate_working_units, generate_phone_numbers
 
@@ -173,6 +173,13 @@ class TestWorkingUnit(TestCase):
         self.assertEqual(self.project2.overview_document, "")
         self.assertEqual(self.unit1.overview_document, "http://example.org")
         self.assertEqual(self.unit2.overview_document, "Hello Document")
+
+    def test_attribute_status(self):
+        """Test for attribute `WorkingUnit.status`."""
+        self.assertEqual(self.project1.status, UnitStatus.perfect)
+        self.assertIsNone(self.project2.status)
+        self.assertEqual(self.unit1.status, UnitStatus.ok)
+        self.assertEqual(self.unit2.status, UnitStatus.problems)
 
 class TestSerloDatabase(TestCase):
     """Testcases for the class `SerloDatabase`."""

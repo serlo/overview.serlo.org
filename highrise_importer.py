@@ -7,7 +7,7 @@ import xml.etree.ElementTree as ET
 import requests
 
 from serlo.model import SerloDatabase, Email, PhoneNumber, Person, UnitType, \
-                        WorkingUnit
+                        WorkingUnit, UnitStatus
 
 TOKEN_VARIABLE = "HIGHRISE_API_TOKEN"
 
@@ -15,6 +15,7 @@ PROJECT_ID = "6436430"
 SUPPORT_UNIT_ID = "4849968"
 MEMBER_ID = "5360080"
 SUBJECT_DATA_OVERVIEW = "1224165"
+SUBJECT_DATA_STATUS = "1224123"
 
 def xml_text(xml):
     """Returns the inner text of the XML element `xml`. In case it doesn't
@@ -82,6 +83,16 @@ def parse_working_unit(xml, persons):
     subject_datas = parse_subject_datas(xml)
 
     overview_document = subject_datas.get(SUBJECT_DATA_OVERVIEW, "")
+    status = subject_datas.get(SUBJECT_DATA_STATUS, None)
+
+    if status == "all is very well":
+        status = UnitStatus.perfect
+    elif status == "things are ok ..":
+        status = UnitStatus.ok
+    elif status == "we have problems":
+        status = UnitStatus.problems
+    elif not status:
+        status = None
 
     if category_id == PROJECT_ID:
         unit_type = UnitType.project
@@ -97,6 +108,7 @@ def parse_working_unit(xml, persons):
     return WorkingUnit(name=xml_text(xml_find("name", xml)),
                        description=xml_text(xml_find("background", xml)),
                        overview_document=overview_document,
+                       status=status,
                        unit_type=unit_type,
                        person_responsible=person_responsible,
                        participants=[persons[x] for x in participant_ids

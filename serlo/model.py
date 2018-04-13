@@ -116,6 +116,12 @@ class UnitType(enum.Enum):
     project = 1
     support_unit = 2
 
+class UnitStatus(enum.Enum):
+    """Status of a working unit."""
+    perfect = 1
+    ok = 2
+    problems = 3
+
 class WorkingUnit(_SerloEntity):
     """Model for a working unit."""
     # pylint: disable=too-few-public-methods
@@ -123,6 +129,7 @@ class WorkingUnit(_SerloEntity):
     name = Column(String)
     description = Column(String)
     unit_type = Column(Enum(UnitType))
+    status = Column(Enum(UnitStatus))
     person_responsible_id = Column(Integer, ForeignKey("person.id"))
     person_responsible = relationship("Person",
                                       back_populates="managing_units",
@@ -135,7 +142,7 @@ class WorkingUnit(_SerloEntity):
     def _properties(self):
         return (self.name, self.description, self.unit_type,
                 self.person_responsible, self.participants,
-                self.overview_document)
+                self.overview_document, self.status)
 
     @property
     def members(self):
