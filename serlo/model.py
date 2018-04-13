@@ -122,6 +122,16 @@ class UnitStatus(enum.Enum):
     ok = 2
     problems = 3
 
+    def __str__(self):
+        if self == UnitStatus.perfect:
+            return "perfect"
+        elif self == UnitStatus.ok:
+            return "ok"
+        elif self == UnitStatus.problems:
+            return "problems"
+
+        raise ValueError("status not known")
+
 class WorkingUnit(_SerloEntity):
     """Model for a working unit."""
     # pylint: disable=too-few-public-methods

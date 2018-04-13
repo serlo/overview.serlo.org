@@ -28,9 +28,7 @@
 		</thead>
 		<tbody>
 			{% for row in rows %}
-				<tr>
-					{{ caller(row) }}
-				</tr>
+				{{ caller(row) }}
 			{% endfor %}
 		</tbody>
 	</table>
@@ -69,6 +67,10 @@
 		table td {
 			min-width: 25ex;
 		}
+
+		table.dataTable tr.status-perfect { background-color: #e6ffcc; }
+		table.dataTable tr.status-ok { background-color: #ffffb3; }
+		table.dataTable tr.status-problems { background-color: #ffb3b3; }
 		</style>
 		<script type="text/javascript" src="script.js"></script>
 		<script type="text/javascript">
@@ -104,19 +106,21 @@
 						{{ section(name) }}
 						{% call(project) generate_table(units,
 							["Name", "Lama", "Mitglieder", "Beschreibung"]) %}
-							<td id="unit{{ project.id }}">
-								{{ project.name }}
-								{% if project.overview_document %}
-								<small><a href="{{ project.overview_document }}">(Overview)</a></small>
-								{% endif %}
-							</td>
-							<td>{{ print_person(project.person_responsible) }}</td>
-							<td>
-								{% call(person) generate_list(project.members) %}
-									{{ print_person(person) }}
-								{% endcall %}
-							</td>
-							<td>{{ project.description }}</td>
+							<tr id="unit{{ project.id }}" {% if project.status %} class="status-{{ project.status }}" {% endif %}>
+								<td id="unit{{ project.id }}">
+									{{ project.name }}
+									{% if project.overview_document %}
+									<small><a href="{{ project.overview_document }}">(Overview)</a></small>
+									{% endif %}
+								</td>
+								<td>{{ print_person(project.person_responsible) }}</td>
+								<td>
+									{% call(person) generate_list(project.members) %}
+										{{ print_person(person) }}
+									{% endcall %}
+								</td>
+								<td>{{ project.description }}</td>
+							</tr>
 						{% endcall %}
 					{% endmacro %}
 					{{ render_units(serlo.projects, "Projekte") }}
@@ -125,25 +129,27 @@
 					{{ section("Teammitglieder") }}
 					{% call(member) generate_table(serlo.persons,
 						["Name", "E-Mail", "Nummer", "Projekte / Units"]) %}
-						<td id="{{member.id}}">{{ member.name }}</td>
-						<td>
-							{% call(email) generate_list(member.emails) %}
-								<a href="mailto:{{email.address}}">{{email.address}}</a>
-							{% endcall %}
-						</td>
-						<td>
-							{% call(phone_number) generate_list(member.phone_numbers) %}
-								<a href="tel:{{phone_number.number}}">{{phone_number.number}}</a>
-							{% endcall %}
-						</td>
-						<td>
-							{% call(unit) generate_list(member.managing_units) %}
-								<a href="#unit{{ unit.id }}"><i>{{ unit.name }} (Lama)</i></a>
-							{% endcall %}
-							{% call(unit) generate_list(member.participating_units) %}
-								<a href="#unit{{ unit.id }}">{{ unit.name }}</a>
-							{% endcall %}
-						</td>
+						<tr id="{{ member.id }}">
+							<td id="{{member.id}}">{{ member.name }}</td>
+							<td>
+								{% call(email) generate_list(member.emails) %}
+									<a href="mailto:{{email.address}}">{{email.address}}</a>
+								{% endcall %}
+							</td>
+							<td>
+								{% call(phone_number) generate_list(member.phone_numbers) %}
+									<a href="tel:{{phone_number.number}}">{{phone_number.number}}</a>
+								{% endcall %}
+							</td>
+							<td>
+								{% call(unit) generate_list(member.managing_units) %}
+									<a href="#unit{{ unit.id }}"><i>{{ unit.name }} (Lama)</i></a>
+								{% endcall %}
+								{% call(unit) generate_list(member.participating_units) %}
+									<a href="#unit{{ unit.id }}">{{ unit.name }}</a>
+								{% endcall %}
+							</td>
+						</tr>
 					{% endcall %}
 				</main>
 			</div>
