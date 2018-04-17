@@ -298,7 +298,7 @@ def generate_working_unit_specs():
                     <id type="integer">25</id>
                     <subject_field_id type="integer">1224123</subject_field_id>
                     <subject_field_label>Status</subject_field_label>
-                    <value>all is very well</value>
+                    <value>we are ahead of our schedule</value>
                   </subject_data>
                   <subject_data>
                     <id type="integer">148</id>
@@ -387,7 +387,7 @@ def generate_working_unit_specs():
                     <id type="integer">25</id>
                     <subject_field_id type="integer">1224123</subject_field_id>
                     <subject_field_label>Status</subject_field_label>
-                    <value>things are ok ..</value>
+                    <value>we are in line with our schedule</value>
                   </subject_data>
                   <subject_data>
                     <id type="integer">148</id>
@@ -433,7 +433,7 @@ def generate_working_unit_specs():
                     <id type="integer">25</id>
                     <subject_field_id type="integer">1224123</subject_field_id>
                     <subject_field_label>Status</subject_field_label>
-                    <value>we have problems</value>
+                    <value>we are behind schedule</value>
                   </subject_data>
                   <subject_data>
                     <id type="integer">148</id>
