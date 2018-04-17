@@ -91,7 +91,7 @@ def parse_working_unit(xml, persons):
         status = UnitStatus.ok
     elif status == "we are behind schedule":
         status = UnitStatus.problems
-    elif not status:
+    else:
         status = None
 
     if category_id == PROJECT_ID:
@@ -101,7 +101,12 @@ def parse_working_unit(xml, persons):
     else:
         return None
 
-    person_responsible = persons[xml_text(xml_find("party-id", xml))]
+    try:
+        person_responsible = persons[xml_text(xml_find("party-id", xml))]
+    except KeyError:
+        # TODO: write unittests for this exception
+        return None
+
     participant_ids = [xml_text(xml_find("id", x)) for x
                        in xml_find("parties", xml)]
 
