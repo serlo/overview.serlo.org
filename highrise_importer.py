@@ -85,11 +85,11 @@ def parse_working_unit(xml, persons):
     overview_document = subject_datas.get(SUBJECT_DATA_OVERVIEW, "")
     status = subject_datas.get(SUBJECT_DATA_STATUS, None)
 
-    if status == "all is very well":
+    if status == "we are ahead of our schedule":
         status = UnitStatus.perfect
-    elif status == "things are ok ..":
+    elif status == "we are in line with our schedule":
         status = UnitStatus.ok
-    elif status == "we have problems":
+    elif status == "we are behind schedule":
         status = UnitStatus.problems
     elif not status:
         status = None
