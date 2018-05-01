@@ -164,7 +164,18 @@
                 </a>
                 {% endcall %}
               </td>
-              <td id="{{member.id}}">{{ member.name }}</td>
+              <td>
+                {% if member.mentor %}
+                  <strong>MentorIn:</strong> <br>
+                  <a href="#{{ member.mentor.id }}"> {{ member.mentor.name }} </a>
+                {% endif %}
+                {% if member.mentor and member.mentees %} <br> <br> {% endif %}
+                {% if member.mentees %} <strong> Mentees:</strong> <br> {% endif %}
+                {% call(mentee) generate_list(member.mentees) %}
+                  <a href="#{{ mentee.id }}">{{ mentee.name }}</a>
+                {% endcall %}
+
+              </td>
 
             </tr>
           {% endcall %}
