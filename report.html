@@ -73,7 +73,7 @@
 		table.dataTable td.status-problems { background-color: #ffb3b3; }
 		table.dataTable.hover td.status-perfect:hover { background-color: #4dff4d; }
 		table.dataTable.hover td.status-ok:hover { background-color: #ffff4d; }
-		table.dataTable.hover td.status-problems:hover { background-color: #ff8080;
+		table.dataTable.hover td.status-problems:hover { background-color: #ff8080;}
 
 		a.status-perfect {background-color: #99ff99;}
 		a.status-ok {background-color: #ffff99;}
@@ -118,8 +118,8 @@
 						{{ section(name) }}
 						{% call(project) generate_table(units,
 							["Name", "Lama", "Mitglieder", "Beschreibung"]) %}
-							<tr id="unit{{ project.id }}" >
-								<td id="unit{{ project.id }}" {% if project.status %} class="status-{{ project.status }}" {% endif %} >
+							<tr id="unit{{ project.id }}">
+								<td id="unit{{ project.id }}" {% if project.status %} class="status-{{ project.status }}" {% endif %}>
 									{{ project.name }}
 									{% if project.overview_document %}
 									<small><a href="{{ project.overview_document }}">(Overview)</a></small>
