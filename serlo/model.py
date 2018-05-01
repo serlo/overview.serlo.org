@@ -61,10 +61,11 @@ class Email(_SerloEntity):
 
     address = Column(String)
     person_id = Column(Integer, ForeignKey("person.id"))
+    location = Column(String)
 
     @property
     def _properties(self):
-        return (self.address,)
+        return (self.address, self.location)
 
 class PhoneNumber(_SerloEntity):
     """Model of a phone number."""
@@ -110,6 +111,11 @@ class Person(_SerloEntity):
         'Markus Miller'
         """
         return self.first_name + " " + self.last_name
+
+    @property
+    def work_emails(self):
+        """Returns a list of all emails of a person with location 'work'."""
+        return [email for email in self.emails if email.location == "Work"]
 
 class UnitType(enum.Enum):
     """Typo of an working unit."""

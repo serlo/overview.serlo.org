@@ -5,9 +5,9 @@ from serlo.model import Email, PhoneNumber, Person, WorkingUnit, UnitType, \
 
 def generate_emails():
     """Returns examples of emails."""
-    return [Email(address="hello@example.org"),
-            Email(address="some-string-with-ü"),
-            Email(address="")]
+    return [Email(address="hello@example.org", location="Home"),
+            Email(address="some-string-with-ü", location="Work"),
+            Email(address="", location="")]
 
 def generate_email_specs():
     """Returns XML specifications of emails corresponding to the results of
@@ -22,7 +22,7 @@ def generate_email_specs():
                 <id type="integer">34567</id>
                 <location>Work</location>
                </email-address>""",
-            """<email-address><address /></email-address>"""]
+            """<email-address><address /><location></location></email-address>"""]
 
 def generate_phone_numbers():
     """Returns example phone numbers."""

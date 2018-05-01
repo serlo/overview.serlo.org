@@ -11,9 +11,9 @@ class TestEmail(TestCase):
     """Testcases for the model `Email`."""
 
     def setUp(self):
-        self.email1 = Email(address="hello@example.org")
-        self.email2 = Email(address="")
-        self.email3 = Email(address="not-an-email")
+        self.email1 = Email(address="hello@example.org", location="Work")
+        self.email2 = Email(address="", location="Home")
+        self.email3 = Email(address="not-an-email", location="")
 
     def test_attribute_tablename(self):
         """Testcase for attribute `Email.__tablename__`."""
@@ -30,6 +30,12 @@ class TestEmail(TestCase):
         self.assertEqual(self.email1.address, "hello@example.org")
         self.assertEqual(self.email2.address, "")
         self.assertEqual(self.email3.address, "not-an-email")
+
+    def test_attribute_location(self):
+        """Testcase for attribute `Email.location`."""
+        self.assertEqual(self.email1.location, "Work")
+        self.assertEqual(self.email2.location, "Home")
+        self.assertEqual(self.email3.location, "")
 
 class TestPhoneNumber(TestCase):
     """Testcases for the model `PhoneNumber`."""
@@ -103,6 +109,12 @@ class TestPerson(TestCase):
         self.assertEqual(self.person1.name, "Markus Miller")
         self.assertEqual(self.person2.name, "Yannick Müller")
         self.assertEqual(self.person3.name, " ")
+
+    def test_attribute_work_emails(self):
+        """Testcase for attribute `Person.work_emails`."""
+        self.assertListEqual(self.person1.work_emails, [])
+        self.assertListEqual(self.person2.work_emails, [self.email2])
+        self.assertListEqual(self.person3.work_emails, [])
 
 class TestWorkingUnit(TestCase):
     """Testcases for the class `WorkingUnit`."""
