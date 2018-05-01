@@ -13,6 +13,7 @@ TOKEN_VARIABLE = "HIGHRISE_API_TOKEN"
 
 PROJECT_ID = "6436430"
 SUPPORT_UNIT_ID = "4849968"
+MENTORING_DEAL_ID = "6438903"
 MEMBER_ID = "5360080"
 SUBJECT_DATA_OVERVIEW = "1224165"
 SUBJECT_DATA_STATUS = "1224123"
@@ -125,6 +126,20 @@ def parse_working_units(xml, persons):
     results = [parse_working_unit(x, persons) for x in xml]
 
     return [x for x in results if x is not None]
+
+def parse_mentoring(xml):
+    """Returns a dictionary specifing all mentoring relationships. The key is
+    the person id of mentor and the value is a list of all person ids which
+    are the mentees."""
+    result = []
+
+    for deal in xml:
+        if xml_text(xml_find("category-id", deal)) == MENTORING_DEAL_ID:
+            result.append((xml_text(xml_find("party-id", deal)),
+                           [xml_text(xml_find("id", party)) for
+                            party in xml_find("parties", deal)]))
+
+    return dict(result)
 
 def api_call(endpoint, api_token, params=None):
     """Executes an API call to Highrise."""

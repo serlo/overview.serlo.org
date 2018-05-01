@@ -8,13 +8,14 @@ from unittest import TestCase
 
 from highrise_importer import parse_email, parse_phone_number, parse_person, \
                               parse_people, parse_working_unit, xml_text, \
-                              xml_find, parse_working_units
+                              xml_find, parse_working_units, parse_mentoring
 from tests.data import generate_emails, generate_email_specs, \
                        generate_phone_numbers, generate_phone_number_specs, \
                        generate_persons, generate_person_specs, \
                        generate_people, generate_people_specs, \
                        generate_working_units, generate_working_unit_specs, \
-                       generate_person_ids, generate_working_unit_list_spec
+                       generate_person_ids, generate_working_unit_list_spec, \
+                       generate_mentoring_spec
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
@@ -127,6 +128,14 @@ class TestHighriseImporterScript(TestCase):
         persons = dict(parse_people(ET.fromstring(generate_people_specs()[0])))
 
         self.assertListEqual(parse_working_units(spec, persons), units)
+
+    def test_parse_mentoring(self):
+        """Testcase for the function `parse_mentoring()`."""
+        spec = ET.fromstring(generate_mentoring_spec())
+        id1, id2, id3 = generate_person_ids()
+
+        self.assertDictEqual(parse_mentoring(spec),
+                             {id2: [id1], id3: [id2]})
 
     def test_passing_arguments(self):
         """Testcase for calling the script without arguments."""

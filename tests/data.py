@@ -461,3 +461,27 @@ def generate_working_unit_list_spec():
                 {unit4}
                 <deal><category-id type="integer">56775</category-id></deal>
                </deals>"""
+
+def generate_mentoring_spec():
+    """Retruns a spec specifing all mentoring relationships."""
+    id1, id2, id3 = generate_person_ids()
+    person1, person2, person3 = generate_person_specs()
+
+    return f"""<deals>
+                <deal>
+                 <party-id type="integer">{id2}</party-id>
+                 <category-id type="integer">6438903</category-id>
+                 <parties type="array">
+                   {person1}
+                 </parties>
+                </deal>
+                <deal><category-id type="integer">23</category-id></deal>
+                <deal><category-id type="integer">56775</category-id></deal>
+                <deal>
+                 <party-id type="integer">{id3}</party-id>
+                 <category-id type="integer">6438903</category-id>
+                 <parties type="array">
+                   {person2}
+                 </parties>
+                </deal>
+               </deals>"""
