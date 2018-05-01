@@ -144,7 +144,7 @@
             <tr id="{{ member.id }}">
               <td id="{{member.id}}">{{ member.name }}</td>
               <td>
-                {% call(email) generate_list(member.emails) %}
+                {% call(email) generate_list(member.work_emails) %}
                   <a href="mailto:{{email.address}}">{{email.address}}</a>
                 {% endcall %}
 
