@@ -55,11 +55,14 @@ def generate_persons():
     email1, email2, email3 = generate_emails()
     phone1, phone2, phone3 = generate_phone_numbers()
 
+    person3 = Person(first_name="", last_name="", emails=[], phone_numbers=[])
+    person2 = Person(first_name="Yannick", last_name="Müller",
+                     emails=[email2, email3], phone_numbers=[phone2, phone3],
+                     mentor=person3)
+
     return [Person(first_name="Markus", last_name="Miller",
-                   emails=[email1], phone_numbers=[phone1]),
-            Person(first_name="Yannick", last_name="Müller",
-                   emails=[email2, email3], phone_numbers=[phone2, phone3]),
-            Person(first_name="", last_name="", emails=[], phone_numbers=[])]
+                   emails=[email1], phone_numbers=[phone1], mentor=person2),
+            person2, person3]
 
 def generate_person_specs():
     """Returns XML specifications of persons corresponding to the objects

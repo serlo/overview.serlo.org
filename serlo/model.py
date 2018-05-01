@@ -87,6 +87,7 @@ class Person(_SerloEntity):
     """Model of a person working at Serlo."""
     # pylint: disable=too-few-public-methods
 
+    id = Column(Integer, primary_key=True)
     first_name = Column(String)
     last_name = Column(String)
     emails = relationship("Email")
@@ -96,6 +97,8 @@ class Person(_SerloEntity):
     participating_units = relationship("WorkingUnit",
                                        back_populates="participants",
                                        secondary=_WorkingUnitParticipants)
+    mentor_id = Column(Integer, ForeignKey("person.id"))
+    mentor = relationship("Person", remote_side=[id])
 
     @property
     def _properties(self):
