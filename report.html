@@ -140,18 +140,18 @@
 
 					{{ section("Teammitglieder") }}
 					{% call(member) generate_table(serlo.persons,
-						["Name", "E-Mail", "Nummer", "Projekte / Units"]) %}
+						["Name", "Kontakt", "Projekte / Units", "Mentoring"]) %}
 						<tr id="{{ member.id }}">
 							<td id="{{member.id}}">{{ member.name }}</td>
 							<td>
 								{% call(email) generate_list(member.emails) %}
 									<a href="mailto:{{email.address}}">{{email.address}}</a>
+									
 								{% endcall %}
-							</td>
-							<td>
 								{% call(phone_number) generate_list(member.phone_numbers) %}
 									<a href="tel:{{phone_number.number}}">{{phone_number.number}}</a>
 								{% endcall %}
+
 							</td>
 							<td>
 								{% call(unit) generate_list(member.managing_units) %}
@@ -161,6 +161,8 @@
 									<a href="#unit{{ unit.id }}" {% if unit.status %} class="status-{{ unit.status }}" {% endif %} >{{ unit.name }}</a>
 								{% endcall %}
 							</td>
+							<td id="{{member.id}}">{{ member.name }}</td>
+
 						</tr>
 					{% endcall %}
 				</main>
