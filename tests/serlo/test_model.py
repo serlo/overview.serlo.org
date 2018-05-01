@@ -110,6 +110,12 @@ class TestPerson(TestCase):
         self.assertEqual(self.person2.name, "Yannick Müller")
         self.assertEqual(self.person3.name, " ")
 
+    def test_attribute_work_emails(self):
+        """Testcase for attribute `Person.work_emails`."""
+        self.assertListEqual(self.person1.work_emails, [])
+        self.assertListEqual(self.person2.work_emails, [self.email2])
+        self.assertListEqual(self.person3.work_emails, [])
+
 class TestWorkingUnit(TestCase):
     """Testcases for the class `WorkingUnit`."""
 
