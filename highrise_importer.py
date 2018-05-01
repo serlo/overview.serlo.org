@@ -168,7 +168,19 @@ def run_script():
     persons = dict(parse_people(api_call("people", api_token,
                                          params={"tag_id": MEMBER_ID})))
 
-    units = parse_working_units(api_call("deals", api_token), persons)
+    deals = api_call("deals", api_token)
+
+    mentoring_spec = parse_mentoring(deals)
+
+    for mentor_id, mentee_ids in mentoring_spec.items():
+        for mentee_id in mentee_ids:
+            mentor = persons.get(mentor_id, None)
+            mentee = persons.get(mentee_id, None)
+
+            if mentor and mentee:
+                mentee.mentor = mentor
+
+    units = parse_working_units(deals, persons)
 
     database.add_all(persons.values())
     database.add_all(units)
