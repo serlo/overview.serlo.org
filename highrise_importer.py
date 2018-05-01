@@ -55,7 +55,8 @@ def parse_subject_datas(xml):
 
 def parse_email(xml):
     """Parse emails defined by XML specification `xml`."""
-    return Email(address=xml_text(xml_find("address", xml)))
+    return Email(address=xml_text(xml_find("address", xml)),
+                 location=xml_text(xml_find("location", xml)))
 
 def parse_phone_number(xml):
     """Parse phone number defined by XML specification `xml`."""
