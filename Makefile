@@ -1,6 +1,6 @@
 PYTHON := $(shell if which pyenv > /dev/null; \
                  then echo python ; else echo python3 ; fi)
-TEMPLATE := report.html
+TEMPLATE := template.html
 
 DATABASE := serlo.db
 DATABASE_TMP := $(shell mktemp -u)
