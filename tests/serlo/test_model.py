@@ -276,3 +276,11 @@ class TestSerloDatabase(TestCase):
         self.assertEqual(set(person1.participating_units), set([self.unit2]))
         self.assertEqual(set(person2.participating_units),
                          set([self.unit1, self.unit2]))
+
+    def test_attribute_mentees(self):
+        """Test for attribute `Person.mentees`."""
+        self.database.add_all([self.person1, self.person2, self.person3])
+
+        self.assertListEqual(self.person1.mentees, [])
+        self.assertListEqual(self.person2.mentees, [self.person1])
+        self.assertListEqual(self.person3.mentees, [self.person2])

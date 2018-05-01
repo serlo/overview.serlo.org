@@ -99,6 +99,7 @@ class Person(_SerloEntity):
                                        secondary=_WorkingUnitParticipants)
     mentor_id = Column(Integer, ForeignKey("person.id"))
     mentor = relationship("Person", remote_side=[id])
+    mentees = relationship("Person", back_populates="mentor")
 
     @property
     def _properties(self):
