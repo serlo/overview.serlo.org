@@ -61,10 +61,11 @@ class Email(_SerloEntity):
 
     address = Column(String)
     person_id = Column(Integer, ForeignKey("person.id"))
+    location = Column(String)
 
     @property
     def _properties(self):
-        return (self.address,)
+        return (self.address, self.location)
 
 class PhoneNumber(_SerloEntity):
     """Model of a phone number."""

@@ -11,9 +11,9 @@ class TestEmail(TestCase):
     """Testcases for the model `Email`."""
 
     def setUp(self):
-        self.email1 = Email(address="hello@example.org")
-        self.email2 = Email(address="")
-        self.email3 = Email(address="not-an-email")
+        self.email1 = Email(address="hello@example.org", location="Work")
+        self.email2 = Email(address="", location="Home")
+        self.email3 = Email(address="not-an-email", location="")
 
     def test_attribute_tablename(self):
         """Testcase for attribute `Email.__tablename__`."""
@@ -30,6 +30,12 @@ class TestEmail(TestCase):
         self.assertEqual(self.email1.address, "hello@example.org")
         self.assertEqual(self.email2.address, "")
         self.assertEqual(self.email3.address, "not-an-email")
+
+    def test_attribute_location(self):
+        """Testcase for attribute `Email.location`."""
+        self.assertEqual(self.email1.location, "Work")
+        self.assertEqual(self.email2.location, "Home")
+        self.assertEqual(self.email3.location, "")
 
 class TestPhoneNumber(TestCase):
     """Testcases for the model `PhoneNumber`."""
