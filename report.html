@@ -2,174 +2,174 @@
 <html lang="de">
 
 {% macro section(name) %}
-	<h1 id="{{name|urlencode}}">{{name}}</h1>
+  <h1 id="{{name|urlencode}}">{{name}}</h1>
 {% endmacro %}
 
 {% macro generate_list(list, list_type="ul") %}
-	{% if list %}
-		<{{list_type}}>
-			{% for element in list %}
-				<li>
-					{{ caller(element) }}
-				</li>
-				{% endfor %}
-		</{{list_type}}>
-	{% endif %}
+  {% if list %}
+    <{{list_type}}>
+      {% for element in list %}
+        <li>
+          {{ caller(element) }}
+        </li>
+        {% endfor %}
+    </{{list_type}}>
+  {% endif %}
 {% endmacro %}
 
 {% macro generate_table(rows, headers) %}
-	<table class="table hover">
-		<thead>
-			<tr>
-				{% for header in headers %}
-					<th>{{header}}</th>
-				{% endfor %}
-			</tr>
-		</thead>
-		<tbody>
-			{% for row in rows %}
-				{{ caller(row) }}
-			{% endfor %}
-		</tbody>
-	</table>
+  <table class="table hover">
+    <thead>
+      <tr>
+        {% for header in headers %}
+          <th>{{header}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+        {{ caller(row) }}
+      {% endfor %}
+    </tbody>
+  </table>
 {% endmacro %}
 
 {% macro print_person(obj) %}
-	<a href="#{{obj.id}}">{{ obj.name }}</a>
+  <a href="#{{obj.id}}">{{ obj.name }}</a>
 {% endmacro %}
 
-	<head>
-		<meta charset="utf8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="robots" content="noindex, follow">
-		<title>Serlo-Team Portal</title>
-		<link href="./favicon.ico" rel="icon" type="image/x-icon">
-		<link rel="stylesheet" href="./styles.css">
-		<style type="text/css">
-		@media (min-width: 768px) {
-			.sidebar {
-				position: sticky;
-				top: 0;
-				height: 100vh;
-				box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-			}
-		}
+  <head>
+    <meta charset="utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, follow">
+    <title>Serlo-Team Portal</title>
+    <link href="./favicon.ico" rel="icon" type="image/x-icon">
+    <link rel="stylesheet" href="./styles.css">
+    <style type="text/css">
+    @media (min-width: 768px) {
+      .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+      }
+    }
 
-		.sidebar .nav-link {
-			font-weight: 500;
-			color: #333;
-		}
+    .sidebar .nav-link {
+      font-weight: 500;
+      color: #333;
+    }
 
-		.sidebar .nav-link.active {
-			color: #007bff;
-		}
+    .sidebar .nav-link.active {
+      color: #007bff;
+    }
 
-		table td {
-			min-width: 25ex;
-		}
+    table td {
+      min-width: 25ex;
+    }
 
-		table.dataTable td.status-perfect { background-color: #99ff99; }
-		table.dataTable td.status-ok { background-color:  #ffff99; }
-		table.dataTable td.status-problems { background-color: #ffb3b3; }
-		table.dataTable.hover td.status-perfect:hover { background-color: #4dff4d; }
-		table.dataTable.hover td.status-ok:hover { background-color: #ffff4d; }
-		table.dataTable.hover td.status-problems:hover { background-color: #ff8080;}
+    table.dataTable td.status-perfect { background-color: #99ff99; }
+    table.dataTable td.status-ok { background-color:  #ffff99; }
+    table.dataTable td.status-problems { background-color: #ffb3b3; }
+    table.dataTable.hover td.status-perfect:hover { background-color: #4dff4d; }
+    table.dataTable.hover td.status-ok:hover { background-color: #ffff4d; }
+    table.dataTable.hover td.status-problems:hover { background-color: #ff8080;}
 
-		a.status-perfect {background-color: #99ff99;}
-		a.status-ok {background-color: #ffff99;}
-		a.status-problems {background-color: #ffb3b3;}
+    a.status-perfect {background-color: #99ff99;}
+    a.status-ok {background-color: #ffff99;}
+    a.status-problems {background-color: #ffb3b3;}
 
-		a.status-perfect:hover { background-color: #4dff4d;}
-		a.status-ok:hover { background-color:  #ffff4d;}
-		a.status-problems:hover { background-color:  #ff8080;}
+    a.status-perfect:hover { background-color: #4dff4d;}
+    a.status-ok:hover { background-color:  #ffff4d;}
+    a.status-problems:hover { background-color:  #ff8080;}
 
-		</style>
-		<script type="text/javascript" src="script.js"></script>
-		<script type="text/javascript">
-			$(document).ready( function () {
-				$('table').DataTable({
-					"paging": false,
-					"language": {
-						"info": "Showing _TOTAL_ entries",
-					},
-				});
-			} );
-		</script>
-	</head>
-	<body>
-		<header class="navbar navbar-expand navbar-dark bg-dark">
-			<a class="navbar-brand" href="#">Serlo-Team Portal</a>
-		</header>
+    </style>
+    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript">
+      $(document).ready( function () {
+        $('table').DataTable({
+          "paging": false,
+          "language": {
+            "info": "Showing _TOTAL_ entries",
+          },
+        });
+      } );
+    </script>
+  </head>
+  <body>
+    <header class="navbar navbar-expand navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Serlo-Team Portal</a>
+    </header>
 
-		<div class="container-fluid">
-			<div class="row">
-				<nav class="col-12 col-md-2 bg-light sidebar">
-					<ul class="nav nav-pills flex-column">
-						{% macro toc_item(name) %}
-						<li class="nav-item"><a class="nav-link" href="#{{name|urlencode}}">{{name}}</a></li>
-						{% endmacro %}
-						{{ toc_item("Projekte") }}
-						{{ toc_item("Support-Units") }}
-						{{ toc_item("Teammitglieder") }}
-					</ul>
-				</nav>
-				<main role="main" class="col-12 col-md-10">
-					{% macro render_units(units, name) %}
-						{{ section(name) }}
-						{% call(project) generate_table(units,
-							["Name", "Lama", "Mitglieder", "Beschreibung"]) %}
-							<tr id="unit{{ project.id }}">
-								<td id="unit{{ project.id }}" {% if project.status %} class="status-{{ project.status }}" {% endif %}>
-									{{ project.name }}
-									{% if project.overview_document %}
-									<small><a href="{{ project.overview_document }}">(Overview)</a></small>
-									{% endif %}
-								</td>
-								<td>{{ print_person(project.person_responsible) }}</td>
-								<td>
-									{% call(person) generate_list(project.members) %}
-										{{ print_person(person) }}
-									{% endcall %}
-								</td>
-								<td>{{ project.description }}</td>
-							</tr>
-						{% endcall %}
-					{% endmacro %}
-					{{ render_units(serlo.projects, "Projekte") }}
-					{{ render_units(serlo.support_units, "Support-Units") }}
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-12 col-md-2 bg-light sidebar">
+          <ul class="nav nav-pills flex-column">
+            {% macro toc_item(name) %}
+            <li class="nav-item"><a class="nav-link" href="#{{name|urlencode}}">{{name}}</a></li>
+            {% endmacro %}
+            {{ toc_item("Projekte") }}
+            {{ toc_item("Support-Units") }}
+            {{ toc_item("Teammitglieder") }}
+          </ul>
+        </nav>
+        <main role="main" class="col-12 col-md-10">
+          {% macro render_units(units, name) %}
+            {{ section(name) }}
+            {% call(project) generate_table(units,
+              ["Name", "Lama", "Mitglieder", "Beschreibung"]) %}
+              <tr id="unit{{ project.id }}">
+                <td id="unit{{ project.id }}" {% if project.status %} class="status-{{ project.status }}" {% endif %}>
+                  {{ project.name }}
+                  {% if project.overview_document %}
+                  <small><a href="{{ project.overview_document }}">(Overview)</a></small>
+                  {% endif %}
+                </td>
+                <td>{{ print_person(project.person_responsible) }}</td>
+                <td>
+                  {% call(person) generate_list(project.members) %}
+                    {{ print_person(person) }}
+                  {% endcall %}
+                </td>
+                <td>{{ project.description }}</td>
+              </tr>
+            {% endcall %}
+          {% endmacro %}
+          {{ render_units(serlo.projects, "Projekte") }}
+          {{ render_units(serlo.support_units, "Support-Units") }}
 
-					{{ section("Teammitglieder") }}
-					{% call(member) generate_table(serlo.persons,
-						["Name", "Kontakt", "Projekte / Units", "Mentoring"]) %}
-						<tr id="{{ member.id }}">
-							<td id="{{member.id}}">{{ member.name }}</td>
-							<td>
-								{% call(email) generate_list(member.emails) %}
-									<a href="mailto:{{email.address}}">{{email.address}}</a>
-								{% endcall %}
+          {{ section("Teammitglieder") }}
+          {% call(member) generate_table(serlo.persons,
+            ["Name", "Kontakt", "Projekte / Units", "Mentoring"]) %}
+            <tr id="{{ member.id }}">
+              <td id="{{member.id}}">{{ member.name }}</td>
+              <td>
+                {% call(email) generate_list(member.emails) %}
+                  <a href="mailto:{{email.address}}">{{email.address}}</a>
+                {% endcall %}
 
-								{% call(phone_number) generate_list(member.phone_numbers) %}
-									<a href="tel:{{phone_number.number}}">{{phone_number.number}}</a>
-								{% endcall %}
-							</td>
-							<td>
-								{% call(unit) generate_list(member.managing_units) %}
-									<a href="#unit{{ unit.id }}" {% if unit.status %} class="status-{{ unit.status }}" {% endif %} >
-										<i>{{ unit.name }} (Lama)</i>
-									</a>
-								{% endcall %}
-								{% call(unit) generate_list(member.participating_units) %}
-									<a href="#unit{{ unit.id }}" {% if unit.status %} class="status-{{ unit.status }}" {% endif %} >
-									{{ unit.name }}
-								</a>
-								{% endcall %}
-							</td>
-							<td id="{{member.id}}">{{ member.name }}</td>
+                {% call(phone_number) generate_list(member.phone_numbers) %}
+                  <a href="tel:{{phone_number.number}}">{{phone_number.number}}</a>
+                {% endcall %}
+              </td>
+              <td>
+                {% call(unit) generate_list(member.managing_units) %}
+                  <a href="#unit{{ unit.id }}" {% if unit.status %} class="status-{{ unit.status }}" {% endif %} >
+                    <i>{{ unit.name }} (Lama)</i>
+                  </a>
+                {% endcall %}
+                {% call(unit) generate_list(member.participating_units) %}
+                  <a href="#unit{{ unit.id }}" {% if unit.status %} class="status-{{ unit.status }}" {% endif %} >
+                  {{ unit.name }}
+                </a>
+                {% endcall %}
+              </td>
+              <td id="{{member.id}}">{{ member.name }}</td>
 
-						</tr>
-					{% endcall %}
-				</main>
-			</div>
-		</div>
-	</body>
+            </tr>
+          {% endcall %}
+        </main>
+      </div>
+    </div>
+  </body>
 </html>
