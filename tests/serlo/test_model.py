@@ -42,7 +42,7 @@ class TestPhoneNumber(TestCase):
 
     def setUp(self):
         self.number1 = PhoneNumber(number="+49017867", location="Work")
-        self.number2 = PhoneNumber(number="0178645389", location="Home")
+        self.number2 = PhoneNumber(number="0178645389", location="Mobile")
         self.number3 = PhoneNumber(number="", location="")
 
     def test_attribute_tablename(self):
@@ -64,7 +64,7 @@ class TestPhoneNumber(TestCase):
     def test_attribute_location(self):
         """Testcase for attribute `PhoneNumber.location`."""
         self.assertEqual(self.number1.location, "Work")
-        self.assertEqual(self.number2.location, "Home")
+        self.assertEqual(self.number2.location, "Mobile")
         self.assertEqual(self.number3.location, "")
 
 class TestPerson(TestCase):
@@ -100,8 +100,7 @@ class TestPerson(TestCase):
     def test_attribute_phone_numbers(self):
         """Testcase for attribute `Person.phone_numbers`."""
         self.assertListEqual(self.person1.phone_numbers, [self.phone1])
-        self.assertListEqual(self.person2.phone_numbers,
-                             [self.phone2, self.phone3])
+        self.assertListEqual(self.person2.phone_numbers, [self.phone2, self.phone3])
         self.assertListEqual(self.person3.phone_numbers, [])
 
     def test_attribute_last_name(self):
@@ -121,6 +120,12 @@ class TestPerson(TestCase):
         self.assertListEqual(self.person1.work_emails, [])
         self.assertListEqual(self.person2.work_emails, [self.email2])
         self.assertListEqual(self.person3.work_emails, [])
+
+    def test_attribute_work_phone_numbers(self):
+        """Testcase for attribute `Person.work_phone_numbers`."""
+        self.assertListEqual(self.person1.work_phone_numbers, [])
+        self.assertListEqual(self.person2.work_phone_numbers, [self.phone2])
+        self.assertListEqual(self.person3.work_phone_numbers, [])
 
     def test_attribute_mentor(self):
         """Testcase for attribute `Person.mentor`."""
