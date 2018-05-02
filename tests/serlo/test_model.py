@@ -41,9 +41,9 @@ class TestPhoneNumber(TestCase):
     """Testcases for the model `PhoneNumber`."""
 
     def setUp(self):
-        self.number1 = PhoneNumber(number="+49017867")
-        self.number2 = PhoneNumber(number="0178645389")
-        self.number3 = PhoneNumber(number="")
+        self.number1 = PhoneNumber(number="+49017867", location="Work")
+        self.number2 = PhoneNumber(number="0178645389", location="Home")
+        self.number3 = PhoneNumber(number="", location="")
 
     def test_attribute_tablename(self):
         """Testcase for attribute `__tablename__`."""
@@ -60,6 +60,12 @@ class TestPhoneNumber(TestCase):
         self.assertEqual(self.number1.number, "+49017867")
         self.assertEqual(self.number2.number, "0178645389")
         self.assertEqual(self.number3.number, "")
+
+    def test_attribute_location(self):
+        """Testcase for attribute `PhoneNumber.location`."""
+        self.assertEqual(self.number1.location, "Work")
+        self.assertEqual(self.number2.location, "Home")
+        self.assertEqual(self.number3.location, "")
 
 class TestPerson(TestCase):
     """Testcases for model `Person`."""

@@ -73,10 +73,11 @@ class PhoneNumber(_SerloEntity):
 
     number = Column(String)
     person_id = Column(Integer, ForeignKey("person.id"))
+    location = Column(String)
 
     @property
     def _properties(self):
-        return (self.number,)
+        return (self.number, self.location)
 
 _WorkingUnitParticipants = Table( # pylint: disable=invalid-name
     "working_unit_participants", _SerloEntity.metadata,
