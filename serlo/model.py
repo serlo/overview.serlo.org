@@ -73,10 +73,11 @@ class PhoneNumber(_SerloEntity):
 
     number = Column(String)
     person_id = Column(Integer, ForeignKey("person.id"))
+    location = Column(String)
 
     @property
     def _properties(self):
-        return (self.number,)
+        return (self.number, self.location)
 
 _WorkingUnitParticipants = Table( # pylint: disable=invalid-name
     "working_unit_participants", _SerloEntity.metadata,
@@ -120,6 +121,11 @@ class Person(_SerloEntity):
     def work_emails(self):
         """Returns a list of all emails of a person with location 'work'."""
         return [email for email in self.emails if email.location == "Work"]
+
+    @property
+    def work_phone_numbers(self):
+        """Returns a list of all phone numbers of a person with location 'work'."""
+        return [PhoneNumber for PhoneNumber in self.phone_numbers if PhoneNumber.location == "Work"]
 
 class UnitType(enum.Enum):
     """Typo of an working unit."""

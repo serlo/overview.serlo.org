@@ -26,9 +26,9 @@ def generate_email_specs():
 
 def generate_phone_numbers():
     """Returns example phone numbers."""
-    return [PhoneNumber(number="0123456789"),
-            PhoneNumber(number="+490"),
-            PhoneNumber(number="")]
+    return [PhoneNumber(number="0123456789", location="Mobile"),
+            PhoneNumber(number="+490", location="Work"),
+            PhoneNumber(number="", location="")]
 
 def generate_phone_number_specs():
     """Returns XML specifications of phone number corresponding to the objects
@@ -43,7 +43,7 @@ def generate_phone_number_specs():
                 <location>Work</location>
                 <number>+490</number>
                </phone-number>""",
-            """<phone-number><number /></phone-number>"""]
+            """<phone-number><number /><location></location></phone-number>"""]
 
 def generate_person_ids():
     """Returns person ids corresponding to objects returned by
