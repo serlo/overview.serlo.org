@@ -148,7 +148,7 @@
                   <a href="mailto:{{email.address}}">{{email.address}}</a>
                 {% endcall %}
 
-                {% call(phone_number) generate_list(member.phone_numbers) %}
+                {% call(phone_number) generate_list(member.work_phone_numbers) %}
                   <a href="tel:{{phone_number.number}}">{{phone_number.number}}</a>
                 {% endcall %}
               </td>
