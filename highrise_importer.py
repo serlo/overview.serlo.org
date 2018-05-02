@@ -61,7 +61,7 @@ def parse_email(xml):
 
 def parse_phone_number(xml):
     """Parse phone number defined by XML specification `xml`."""
-    return PhoneNumber(number=xml_text(xml_find("number", xml)))
+    return PhoneNumber(number=xml_text(xml_find("number", xml)), location=xml_text(xml_find("location", xml)))
 
 def parse_person(xml):
     """Parse person defined by XML specification `xml`."""
