@@ -100,7 +100,8 @@ class TestPerson(TestCase):
     def test_attribute_phone_numbers(self):
         """Testcase for attribute `Person.phone_numbers`."""
         self.assertListEqual(self.person1.phone_numbers, [self.phone1])
-        self.assertListEqual(self.person2.phone_numbers, [self.phone2, self.phone3])
+        self.assertListEqual(self.person2.phone_numbers,
+                             [self.phone2, self.phone3])
         self.assertListEqual(self.person3.phone_numbers, [])
 
     def test_attribute_last_name(self):

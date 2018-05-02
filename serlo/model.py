@@ -124,8 +124,10 @@ class Person(_SerloEntity):
 
     @property
     def work_phone_numbers(self):
-        """Returns a list of all phone numbers of a person with location 'work'."""
-        return [PhoneNumber for PhoneNumber in self.phone_numbers if PhoneNumber.location == "Work"]
+        """Returns a list of all phone numbers of a person with location
+        'work'."""
+        return [PhoneNumber for PhoneNumber in self.phone_numbers
+                if PhoneNumber.location == "Work"]
 
 class UnitType(enum.Enum):
     """Typo of an working unit."""
