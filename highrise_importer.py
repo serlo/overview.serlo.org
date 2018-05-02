@@ -82,6 +82,16 @@ def parse_working_unit(xml, persons):
     """Parse a working unit defined by XML specification `xml`."""
     category_id = xml_text(xml_find("category-id", xml))
 
+    if category_id == PROJECT_ID:
+        unit_type = UnitType.project
+    elif category_id == SUPPORT_UNIT_ID:
+        unit_type = UnitType.support_unit
+    else:
+        return None
+
+    if xml_text(xml_find("status", xml)) != "pending":
+        return None
+
     subject_datas = parse_subject_datas(xml)
 
     overview_document = subject_datas.get(SUBJECT_DATA_OVERVIEW, "")
@@ -95,13 +105,6 @@ def parse_working_unit(xml, persons):
         status = UnitStatus.problems
     else:
         status = None
-
-    if category_id == PROJECT_ID:
-        unit_type = UnitType.project
-    elif category_id == SUPPORT_UNIT_ID:
-        unit_type = UnitType.support_unit
-    else:
-        return None
 
     try:
         person_responsible = persons[xml_text(xml_find("party-id", xml))]

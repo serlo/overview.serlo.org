@@ -455,9 +455,17 @@ def generate_working_unit_list_spec():
     return f"""<deals>
                 {unit1}
                 <deal><category-id type="integer">1</category-id></deal>
+                <deal>
+                  <category-id type="integer">4849968</category-id>
+                  <status>lost</status>
+                </deal>
                 {unit2}
                 {unit3}
                 <deal><category-id type="integer">23</category-id></deal>
+                <deal>
+                  <category-id type="integer">4849968</category-id>
+                  <status>won</status>
+                </deal>
                 {unit4}
                 <deal><category-id type="integer">56775</category-id></deal>
                </deals>"""
