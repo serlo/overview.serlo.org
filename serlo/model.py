@@ -99,7 +99,7 @@ class Person(_SerloEntity):
                                        back_populates="participants",
                                        secondary=_WorkingUnitParticipants)
     mentor_id = Column(Integer, ForeignKey("person.id"))
-    mentor = relationship("Person", remote_side=[id])
+    mentor = relationship("Person", remote_side=[id], post_update=True)
     mentees = relationship("Person", back_populates="mentor")
 
     @property
