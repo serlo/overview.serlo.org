@@ -65,10 +65,17 @@
     }
 
     .legend {
-   	  position: absolute;
-   	  bottom: 70px;
-   	  font-size: 70%;
-	}
+      position: absolute;
+      bottom: 70px;
+      padding: 0 14px;
+      font-size: smaller;
+    }
+
+    .legend ul {
+      margin-top: 1em;
+      list-style-type: none;
+      padding-left: 0;
+    }
 
     table td {
       min-width: 25ex;
@@ -118,18 +125,22 @@
             {{ toc_item("Support-Units") }}
             {{ toc_item("Teammitglieder") }}
           </ul>
-          
 
-        <div class="legend">
-          <strong>Legend:</strong> <br>
-         	<p style="background-color: #4dff4d; display:inline">"we are ahead of our schedule"</p> <br>
-			<p style="background-color: #ffff4d; display:inline">"we are in line with our schedule"</p> <br>
-		 	<p style="background-color: #ff8080; display:inline">"we are behind schedule"</p> <br>
-		</div>
-
-	
-
+          <aside class="legend">
+            <strong>Legend:</strong>
+            <ul>
+              <li style="background-color: #4dff4d;">
+                  "we are ahead of our schedule"
+              </li>
+              <li style="background-color: #ffff4d;">
+                  "we are in line with our schedule"
+              </li>
+              <li style="background-color: #ff8080;">
+                  "we are behind schedule"
+              </li>
+          </aside>
         </nav>
+
         <main role="main" class="col-12 col-md-10">
           {% macro render_units(units, name) %}
             {{ section(name) }}
