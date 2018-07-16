@@ -4,11 +4,18 @@
     <title>Login page</title>
 </head>
 <body>
-<form>
-    <label for="pswd">Enter your password: </label>
-    <input type="password" id="pswd">
-    <input type="button" value="Submit" onclick="checkPswd();" />
+
+
+<div style="margin: 5% auto; width: 25%; border-style: solid; border-width: 5px; border-color: #007EC1; padding: 10px; border-radius: 10%; ">
+    
+<form style="text-align: center">
+    <a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/watch?v=685elao-zvs"><img src="./yolobird.jpg" width="50%" height="50%" /></a>
+    <label for="pswd" style="font-family: arial"><h1>Welcome,<br> fellow Yolobird!</h1>Please enter your secret passcode here: </label> <br> <br>
+    <input type="password" id="pswd"> <br> <br>
+    <input type="button" value="Enter the Serloverse" onclick="checkPswd();"style="background-color: #95bc1a; color: white; font-size: 18px; padding: 10px 10px"/>
 </form>
+</div>
+
 <!--Function to check password the already set password is admin-->
 <script type="text/javascript">
     function checkPswd() {
@@ -18,7 +25,7 @@
              window.location="out/index.html";
         }
         else{
-            alert("Passwords do not match.");
+            alert("You shall not pass.");
         }
     }
 </script>
