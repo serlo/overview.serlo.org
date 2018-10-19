@@ -168,7 +168,7 @@
 
           {{ section("Teammitglieder") }}
           {% call(member) generate_table(serlo.persons,
-            ["Name", "Kontakt", "Projekte / Units", "Mentoring"]) %}
+            ["Name", "Kontakt", "Projekte / Units", "Betreuung"]) %}
             <tr id="{{ member.id }}">
               <td id="{{member.id}}"><strong>{{ member.name }}</strong></td>
               <td>
@@ -194,11 +194,11 @@
               </td>
               <td>
                 {% if member.mentor %}
-                  <strong>MentorIn:</strong> <br>
+                  <strong>Sherpa:</strong> <br>
                   <a href="#{{ member.mentor.id }}"> {{ member.mentor.name }} </a>
                 {% endif %}
                 {% if member.mentor and member.mentees %} <br> <br> {% endif %}
-                {% if member.mentees %} <strong> Mentees:</strong> <br> {% endif %}
+                {% if member.mentees %} <strong>Travelor:</strong> <br> {% endif %}
                 {% call(mentee) generate_list(member.mentees) %}
                   <a href="#{{ mentee.id }}">{{ mentee.name }}</a>
                 {% endcall %}
