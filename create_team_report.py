@@ -2,6 +2,8 @@
 
 import sys
 
+from datetime import datetime
+
 import jinja2
 
 from serlo.model import SerloDatabase
@@ -19,7 +21,10 @@ def run_script(args):
 
     template = env.get_template(template)
 
-    print(template.render(serlo=database))
+    print(template.render(
+        serlo=database,
+        timestamp=datetime.now().strftime("%Y-%M-%d %H:%M")
+    ))
 
 if __name__ == "__main__":
     run_script(sys.argv[1:])
