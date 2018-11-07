@@ -1,7 +1,7 @@
 # Requirements for running the script
-requests == 2.18.4
+requests == 2.20.0
 Jinja2 == 2.10
-SQLAlchemy == 1.2.5
+SQLAlchemy == 1.2.13
 
 # Requirements for running the tests
 nose == 1.3.7
