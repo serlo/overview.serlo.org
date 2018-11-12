@@ -23,7 +23,7 @@ def run_script(args):
 
     print(template.render(
         serlo=database,
-        timestamp=datetime.now().strftime("%Y-%M-%d %H:%M")
+        timestamp=datetime.now().strftime("%Y-%m-%d %H:%M")
     ))
 
 if __name__ == "__main__":
