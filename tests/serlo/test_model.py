@@ -122,7 +122,7 @@ class TestPerson(TestCase):
         self.assertListEqual(self.person2.work_emails, [self.email2])
         self.assertListEqual(self.person3.work_emails, [])
 
-    def test_attribute_work_phone_numbers(self):
+    def test_attr_work_phone_numbers(self):
         """Testcase for attribute `Person.work_phone_numbers`."""
         self.assertListEqual(self.person1.work_phone_numbers, [])
         self.assertListEqual(self.person2.work_phone_numbers, [self.phone2])
