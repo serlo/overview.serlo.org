@@ -496,8 +496,8 @@ def generate_working_unit_list_spec():
 
 def generate_mentoring_spec():
     """Retruns a spec specifing all mentoring relationships."""
-    id1, id2, id3 = generate_person_ids()
-    person1, person2, person3 = generate_person_specs()
+    id2, id3 = generate_person_ids()[1:]
+    person1, person2 = generate_person_specs()[:2]
 
     return f"""<deals>
                 <deal>
