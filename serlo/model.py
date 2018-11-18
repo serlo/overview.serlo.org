@@ -79,6 +79,11 @@ class PhoneNumber(_SerloEntity):
     def _properties(self):
         return (self.number, self.location)
 
+class Tag(_SerloEntity):
+    """Model of a tag for a person"""
+
+    tag_id = Column(Integer)
+
 _WorkingUnitParticipants = Table( # pylint: disable=invalid-name
     "working_unit_participants", _SerloEntity.metadata,
     Column("working_unit_id", Integer, ForeignKey("workingunit.id")),

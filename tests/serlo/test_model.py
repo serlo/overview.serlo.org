@@ -3,7 +3,7 @@
 from unittest import TestCase
 
 from serlo.model import UnitType, Email, Person, PhoneNumber, SerloDatabase, \
-                        WorkingUnit, UnitStatus
+                        WorkingUnit, UnitStatus, Tag
 from tests.data import generate_persons, generate_emails, \
                        generate_working_units, generate_phone_numbers
 
@@ -66,6 +66,18 @@ class TestPhoneNumber(TestCase):
         self.assertEqual(self.number1.location, "Work")
         self.assertEqual(self.number2.location, "Mobile")
         self.assertEqual(self.number3.location, "")
+
+class TestTag(TestCase):
+    """Testcase for model `Tag`."""
+
+    def setUp(self):
+        self.tag1 = Tag(tag_id=42)
+        self.tag2 = Tag(tag_id=23)
+
+    def test_attribute_tag_id(self):
+        """Testcase for attribute `tag_id`."""
+        self.assertEqual(self.tag1.tag_id, 42)
+        self.assertEqual(self.tag2.tag_id, 23)
 
 class TestPerson(TestCase):
     """Testcases for model `Person`."""
