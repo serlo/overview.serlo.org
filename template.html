@@ -148,7 +148,7 @@
         <main role="main" class="col-12 col-md-10">
           {% macro render_units(units, name) %}
             {{ section(name) }}
-            {% call(project) generate_table(units,
+            {% call(project) generate_table(units|sort(attribute="title"),
               ["Name", "Lama", "Mitglieder", "Beschreibung"]) %}
               <tr id="unit{{ project.id }}">
                 <td id="unit{{ project.id }}"{% if project.status %} class="status-{{ project.status }}" {% endif %}>
@@ -159,7 +159,7 @@
                 </td>
                 <td>{{ print_person(project.person_responsible) }}</td>
                 <td>
-                  {% call(person) generate_list(project.members) %}
+                  {% call(person) generate_list(project.members|sort(attribute="name")) %}
                     {{ print_person(person) }}
                   {% endcall %}
                 </td>
@@ -190,7 +190,7 @@
                 {% if member.managing_units %}
                 <strong>Lama</strong><br>
                 {% endif %}
-                {% call(unit) generate_list(member.managing_units) %}
+                {% call(unit) generate_list(member.managing_units|sort(attribute="title")) %}
                   <a href="#unit{{ unit.id }}" {% if unit.status %} class="status-{{ unit.status }}" {% endif %} >
                     {{ unit.title }}
                   </a>
@@ -198,7 +198,7 @@
                 {% if member.participating_units %}
                 <strong>Member</strong><br>
                 {% endif %}
-                {% call(unit) generate_list(member.participating_units) %}
+                {% call(unit) generate_list(member.participating_units|sort(attribute="title")) %}
                   <a href="#unit{{ unit.id }}" {% if unit.status %} class="status-{{ unit.status }}" {% endif %} >
                   {{ unit.title }}
                 </a>
@@ -213,7 +213,7 @@
                 {% endif %}
                 {% if member.mentor and member.mentees %} <br> <br> {% endif %}
                 {% if member.mentees %} <strong>Traveler:</strong> <br> {% endif %}
-                {% call(mentee) generate_list(member.mentees) %}
+                {% call(mentee) generate_list(member.mentees|sort(attribute="name")) %}
                   <a href="#{{ mentee.id }}">{{ mentee.name }}</a>
                 {% endcall %}
 
