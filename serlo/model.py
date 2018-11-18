@@ -157,6 +157,15 @@ class UnitType(enum.Enum):
     project = 1
     support_unit = 2
 
+    @property
+    def abbreviation(self):
+        if self == UnitType.project: 
+            return "P";
+        if self == UnitType.support_unit:
+            return "U";
+        else: 
+            return ValueError("Unknown Unit Type")
+
 class UnitStatus(enum.Enum):
     """Status of a working unit."""
     perfect = 1
@@ -188,7 +197,12 @@ class WorkingUnit(_SerloEntity):
     participants = relationship("Person", back_populates="participating_units",
                                 secondary=_WorkingUnitParticipants)
     overview_document = Column(String)
+    title = Column(String)
 
+    @property
+    def title(self):
+        return (self.unit_type.abbreviation + " - " + self.name)
+    
     @property
     def _properties(self):
         return (self.name, self.description, self.unit_type,
