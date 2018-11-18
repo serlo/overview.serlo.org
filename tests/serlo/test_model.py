@@ -133,7 +133,7 @@ class TestPerson(TestCase):
 
     def test_attribute_name(self):
         """Testcase for attribute `Person.name`."""
-        self.assertEqual(self.person1.name, "Markus Miller")
+        self.assertEqual(self.person1.name, "Markus Miller (Pause)")
         self.assertEqual(self.person2.name, "Yannick Müller")
         self.assertEqual(self.person3.name, " ")
 

@@ -47,7 +47,7 @@ def generate_phone_number_specs():
 
 def generate_tags():
     """Returns example tags."""
-    return [Tag(tag_id=23), Tag(tag_id=11), Tag(tag_id=39)]
+    return [Tag(tag_id=23), Tag(tag_id=11), Tag(tag_id=5979171)]
 
 def generate_tag_specs():
     """Return XML specifications of tags corresponding to the objects returned
@@ -61,7 +61,7 @@ def generate_tag_specs():
                  <name>My Tag</name>
                </tag>""",
             """<tag>
-                 <id type="integer">39</id>
+                 <id type="integer">5979171</id>
                </tag>"""]
 
 def generate_person_ids():
