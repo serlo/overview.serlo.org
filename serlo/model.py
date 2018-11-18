@@ -81,8 +81,14 @@ class PhoneNumber(_SerloEntity):
 
 class Tag(_SerloEntity):
     """Model of a tag for a person"""
+    # pylint: disable=too-few-public-methods
 
     tag_id = Column(Integer)
+    person_id = Column(Integer, ForeignKey("person.id"))
+
+    @property
+    def _properties(self):
+        return (self.tag_id,)
 
 _WorkingUnitParticipants = Table( # pylint: disable=invalid-name
     "working_unit_participants", _SerloEntity.metadata,
@@ -98,6 +104,7 @@ class Person(_SerloEntity):
     last_name = Column(String)
     emails = relationship("Email")
     phone_numbers = relationship("PhoneNumber")
+    tags = relationship("Tag")
     managing_units = relationship("WorkingUnit",
                                   back_populates="person_responsible")
     participating_units = relationship("WorkingUnit",

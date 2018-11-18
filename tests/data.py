@@ -1,7 +1,7 @@
 """This module contains example data for testing."""
 
 from serlo.model import Email, PhoneNumber, Person, WorkingUnit, UnitType, \
-                        UnitStatus
+                        UnitStatus, Tag
 
 def generate_emails():
     """Returns examples of emails."""
@@ -45,6 +45,25 @@ def generate_phone_number_specs():
                </phone-number>""",
             """<phone-number><number /><location></location></phone-number>"""]
 
+def generate_tags():
+    """Returns example tags."""
+    return [Tag(tag_id=23), Tag(tag_id=11), Tag(tag_id=39)]
+
+def generate_tag_specs():
+    """Return XML specifications of tags corresponding to the objects returned
+    by `generate_tags()`."""
+    return ["""<tag>
+                   <id type="integer">53</id>
+                   <name>Newsletter</name>
+               </tag>""",
+            """<tag>
+                 <id type="integer">11</id>
+                 <name>My Tag</name>
+               </tag>""",
+            """<tag>
+                 <id type="integer">39</id>
+               </tag>"""]
+
 def generate_person_ids():
     """Returns person ids corresponding to objects returned by
     `generate_person()`."""
@@ -54,21 +73,34 @@ def generate_persons():
     """Returns example objects of Type `Person`."""
     email1, email2, email3 = generate_emails()
     phone1, phone2, phone3 = generate_phone_numbers()
+    tag1, tag2, tag3 = generate_tags()
 
-    person3 = Person(first_name="", last_name="", emails=[], phone_numbers=[])
-    person2 = Person(first_name="Yannick", last_name="Müller",
-                     emails=[email2, email3], phone_numbers=[phone2, phone3],
-                     mentor=person3)
+    person3 = Person(first_name="",
+                     last_name="",
+                     emails=[],
+                     phone_numbers=[],
+                     tags=[])
+    person2 = Person(first_name="Yannick",
+                     last_name="Müller",
+                     emails=[email2, email3],
+                     phone_numbers=[phone2, phone3],
+                     mentor=person3,
+                     tags=[tag2])
+    person1 = Person(first_name="Markus",
+                     last_name="Miller",
+                     emails=[email1],
+                     phone_numbers=[phone1],
+                     mentor=person2,
+                     tags=[tag1, tag2, tag3])
 
-    return [Person(first_name="Markus", last_name="Miller",
-                   emails=[email1], phone_numbers=[phone1], mentor=person2),
-            person2, person3]
+    return [person1, person2, person3]
 
 def generate_person_specs():
     """Returns XML specifications of persons corresponding to the objects
     returned by `generate_persons()`."""
     email1, email2, email3 = generate_email_specs()
     phone1, phone2, phone3 = generate_phone_number_specs()
+    tag1, tag2, tag3 = generate_tags()
     id1, id2, id3 = generate_person_ids()
 
     return [f"""<person>
@@ -86,13 +118,12 @@ def generate_person_specs():
                  <visible-to>Everyone</visible-to>
                  <company-name>Hello e.V.</company-name>
                  <linkedin-url nil="true"></linkedin-url>
-                 <avatar_url>https://secure.highrisehq.com/av/eJ</avatar_url>
                  <tags type="array">
-                   <tag>
-                     <id type="integer">53</id>
-                     <name>Newsletter</name>
-                   </tag>
+                   {tag1}
+                   {tag2}
+                   {tag3}
                  </tags>
+                 <avatar_url>https://secure.highrisehq.com/av/eJ</avatar_url>
                  <contact-data>
                    <instant-messengers type="array"/>
                    <twitter-accounts type="array"/>
@@ -134,10 +165,7 @@ def generate_person_specs():
                  <linkedin-url nil="true"></linkedin-url>
                  <avatar_url>https://secure.highrisehq.com/av/eJ</avatar_url>
                  <tags type="array">
-                   <tag>
-                     <id type="integer">53</id>
-                     <name>Newsletter</name>
-                   </tag>
+                   {tag2}
                  </tags>
                  <contact-data>
                    <instant-messengers type="array"/>
@@ -182,10 +210,6 @@ def generate_person_specs():
                  <linkedin-url nil="true"></linkedin-url>
                  <avatar_url>https://secure.highrisehq.com/av/eJ</avatar_url>
                  <tags type="array">
-                  <tag>
-                     <id type="integer">53</id>
-                     <name>Newsletter</name>
-                   </tag>
                  </tags>
                  <contact-data>
                    <instant-messengers type="array"/>

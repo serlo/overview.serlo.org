@@ -5,7 +5,8 @@ from unittest import TestCase
 from serlo.model import UnitType, Email, Person, PhoneNumber, SerloDatabase, \
                         WorkingUnit, UnitStatus, Tag
 from tests.data import generate_persons, generate_emails, \
-                       generate_working_units, generate_phone_numbers
+                       generate_working_units, generate_phone_numbers, \
+                       generate_tags
 
 class TestEmail(TestCase):
     """Testcases for the model `Email`."""
@@ -87,6 +88,7 @@ class TestPerson(TestCase):
         self.person1, self.person2, self.person3 = generate_persons()
         self.email1, self.email2, self.email3 = generate_emails()
         self.phone1, self.phone2, self.phone3 = generate_phone_numbers()
+        self.tag1, self.tag2, self.tag3 = generate_tags()
 
     def test_attribute_id(self):
         """Testcase for attribute `Person.id`."""
@@ -115,6 +117,13 @@ class TestPerson(TestCase):
         self.assertListEqual(self.person2.phone_numbers,
                              [self.phone2, self.phone3])
         self.assertListEqual(self.person3.phone_numbers, [])
+
+    def test_attribute_tags(self):
+        """Testcase for attribute `Person.tags`."""
+        self.assertListEqual(self.person1.tags,
+                             [self.tag1, self.tag2, self.tag3])
+        self.assertListEqual(self.person2.tags, [self.tag2])
+        self.assertListEqual(self.person3.tags, [])
 
     def test_attribute_last_name(self):
         """Testcase for attribute `Person.last_name`."""
