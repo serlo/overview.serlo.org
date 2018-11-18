@@ -7,7 +7,7 @@ import xml.etree.ElementTree as ET
 import requests
 
 from serlo.model import SerloDatabase, Email, PhoneNumber, Person, UnitType, \
-                        WorkingUnit, UnitStatus
+                        WorkingUnit, UnitStatus, Tag
 
 TOKEN_VARIABLE = "HIGHRISE_API_TOKEN"
 
@@ -63,6 +63,10 @@ def parse_phone_number(xml):
     """Parse phone number defined by XML specification `xml`."""
     return PhoneNumber(number=xml_text(xml_find("number", xml)),
                        location=xml_text(xml_find("location", xml)))
+
+def parse_tag(xml):
+    """Parse tag defined by XML specification `xml`."""
+    return Tag(tag_id=int(xml_text(xml_find("id", xml))))
 
 def parse_person(xml):
     """Parse person defined by XML specification `xml`."""

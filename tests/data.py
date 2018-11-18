@@ -53,7 +53,7 @@ def generate_tag_specs():
     """Return XML specifications of tags corresponding to the objects returned
     by `generate_tags()`."""
     return ["""<tag>
-                   <id type="integer">53</id>
+                   <id type="integer">23</id>
                    <name>Newsletter</name>
                </tag>""",
             """<tag>
