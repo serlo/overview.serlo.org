@@ -152,7 +152,7 @@
               ["Name", "Lama", "Mitglieder", "Beschreibung"]) %}
               <tr id="unit{{ project.id }}">
                 <td id="unit{{ project.id }}"{% if project.status %} class="status-{{ project.status }}" {% endif %}>
-                  <strong> {{ project.name }} </strong>
+                  <strong> {{ project.title }} </strong>
                   {% if project.overview_document %}
                   <small><a href="{{ project.overview_document }}">(Overview)</a></small>
                   {% endif %}
@@ -192,7 +192,7 @@
                 {% endif %}
                 {% call(unit) generate_list(member.managing_units) %}
                   <a href="#unit{{ unit.id }}" {% if unit.status %} class="status-{{ unit.status }}" {% endif %} >
-                    {{ unit.name }}
+                    {{ unit.title }}
                   </a>
                 {% endcall %}
                 {% if member.participating_units %}
@@ -200,7 +200,7 @@
                 {% endif %}
                 {% call(unit) generate_list(member.participating_units) %}
                   <a href="#unit{{ unit.id }}" {% if unit.status %} class="status-{{ unit.status }}" {% endif %} >
-                  {{ unit.name }}
+                  {{ unit.title }}
                 </a>
                 {% endcall %}
               </td>

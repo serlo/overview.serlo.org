@@ -134,6 +134,13 @@ class TestPerson(TestCase):
         self.assertEqual(self.person2.mentor, self.person3)
         self.assertIsNone(self.person3.mentor)
 
+class TestUnitType(TestCase):
+     """Testcases for the class `UnitType`."""
+
+     def test_attribute_abbreviation(self):
+        self.assertEqual(UnitType.project.abbreviation, "P")
+        self.assertEqual(UnitType.support_unit.abbreviation, "U")
+
 class TestWorkingUnit(TestCase):
     """Testcases for the class `WorkingUnit`."""
 
@@ -210,6 +217,13 @@ class TestWorkingUnit(TestCase):
         self.assertIsNone(self.project2.status)
         self.assertEqual(self.unit1.status, UnitStatus.ok)
         self.assertEqual(self.unit2.status, UnitStatus.problems)
+
+    def test_attribute_title(self):
+        self.assertEqual(self.project1.title, "P - project1")
+        self.assertEqual(self.project2.title, "P - ")
+        self.assertEqual(self.unit1.title, "U - Support Unit Master")
+        self.assertEqual(self.unit2.title, "U - Another support unit")
+
 
 class TestSerloDatabase(TestCase):
     """Testcases for the class `SerloDatabase`."""
