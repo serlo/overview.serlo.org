@@ -155,6 +155,15 @@ class TestPerson(TestCase):
         self.assertEqual(self.person2.mentor, self.person3)
         self.assertIsNone(self.person3.mentor)
 
+    def test_has_tag(self):
+        """Testcase for the method `Person.has_tag()`."""
+        self.assertTrue(self.person1.has_tag(self.tag1.tag_id))
+        self.assertTrue(self.person1.has_tag(self.tag2.tag_id))
+        self.assertTrue(self.person2.has_tag(self.tag2.tag_id))
+
+        self.assertFalse(self.person3.has_tag(self.tag3.tag_id))
+        self.assertFalse(self.person2.has_tag(self.tag3.tag_id))
+
 class TestWorkingUnit(TestCase):
     """Testcases for the class `WorkingUnit`."""
 

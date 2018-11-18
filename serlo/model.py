@@ -141,6 +141,10 @@ class Person(_SerloEntity):
         return [PhoneNumber for PhoneNumber in self.phone_numbers
                 if PhoneNumber.location == "Work"]
 
+    def has_tag(self, tag_id):
+        """Checks whether this Person has the tag with the ID `tag_id`."""
+        return tag_id in [t.tag_id for t in self.tags]
+
 class UnitType(enum.Enum):
     """Typo of an working unit."""
     project = 1
