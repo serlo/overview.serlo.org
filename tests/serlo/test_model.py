@@ -3,9 +3,10 @@
 from unittest import TestCase
 
 from serlo.model import UnitType, Email, Person, PhoneNumber, SerloDatabase, \
-                        WorkingUnit, UnitStatus
+                        WorkingUnit, UnitStatus, Tag
 from tests.data import generate_persons, generate_emails, \
-                       generate_working_units, generate_phone_numbers
+                       generate_working_units, generate_phone_numbers, \
+                       generate_tags
 
 class TestEmail(TestCase):
     """Testcases for the model `Email`."""
@@ -67,6 +68,18 @@ class TestPhoneNumber(TestCase):
         self.assertEqual(self.number2.location, "Mobile")
         self.assertEqual(self.number3.location, "")
 
+class TestTag(TestCase):
+    """Testcase for model `Tag`."""
+
+    def setUp(self):
+        self.tag1 = Tag(tag_id=42)
+        self.tag2 = Tag(tag_id=23)
+
+    def test_attribute_tag_id(self):
+        """Testcase for attribute `tag_id`."""
+        self.assertEqual(self.tag1.tag_id, 42)
+        self.assertEqual(self.tag2.tag_id, 23)
+
 class TestPerson(TestCase):
     """Testcases for model `Person`."""
     # pylint: disable=too-many-instance-attributes
@@ -75,6 +88,7 @@ class TestPerson(TestCase):
         self.person1, self.person2, self.person3 = generate_persons()
         self.email1, self.email2, self.email3 = generate_emails()
         self.phone1, self.phone2, self.phone3 = generate_phone_numbers()
+        self.tag1, self.tag2, self.tag3 = generate_tags()
 
     def test_attribute_id(self):
         """Testcase for attribute `Person.id`."""
@@ -104,6 +118,13 @@ class TestPerson(TestCase):
                              [self.phone2, self.phone3])
         self.assertListEqual(self.person3.phone_numbers, [])
 
+    def test_attribute_tags(self):
+        """Testcase for attribute `Person.tags`."""
+        self.assertListEqual(self.person1.tags,
+                             [self.tag1, self.tag2, self.tag3])
+        self.assertListEqual(self.person2.tags, [self.tag2])
+        self.assertListEqual(self.person3.tags, [])
+
     def test_attribute_last_name(self):
         """Testcase for attribute `Person.last_name`."""
         self.assertEqual(self.person1.last_name, "Miller")
@@ -112,7 +133,7 @@ class TestPerson(TestCase):
 
     def test_attribute_name(self):
         """Testcase for attribute `Person.name`."""
-        self.assertEqual(self.person1.name, "Markus Miller")
+        self.assertEqual(self.person1.name, "Markus Miller (Pause)")
         self.assertEqual(self.person2.name, "Yannick Müller")
         self.assertEqual(self.person3.name, " ")
 
@@ -122,7 +143,7 @@ class TestPerson(TestCase):
         self.assertListEqual(self.person2.work_emails, [self.email2])
         self.assertListEqual(self.person3.work_emails, [])
 
-    def test_attribute_work_phone_numbers(self):
+    def test_attr_work_phone_numbers(self):
         """Testcase for attribute `Person.work_phone_numbers`."""
         self.assertListEqual(self.person1.work_phone_numbers, [])
         self.assertListEqual(self.person2.work_phone_numbers, [self.phone2])
@@ -133,6 +154,15 @@ class TestPerson(TestCase):
         self.assertEqual(self.person1.mentor, self.person2)
         self.assertEqual(self.person2.mentor, self.person3)
         self.assertIsNone(self.person3.mentor)
+
+    def test_has_tag(self):
+        """Testcase for the method `Person.has_tag()`."""
+        self.assertTrue(self.person1.has_tag(self.tag1.tag_id))
+        self.assertTrue(self.person1.has_tag(self.tag2.tag_id))
+        self.assertTrue(self.person2.has_tag(self.tag2.tag_id))
+
+        self.assertFalse(self.person3.has_tag(self.tag3.tag_id))
+        self.assertFalse(self.person2.has_tag(self.tag3.tag_id))
 
 class TestUnitType(TestCase):
      """Testcases for the class `UnitType`."""

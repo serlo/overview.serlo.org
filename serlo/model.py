@@ -79,6 +79,19 @@ class PhoneNumber(_SerloEntity):
     def _properties(self):
         return (self.number, self.location)
 
+class Tag(_SerloEntity):
+    """Model of a tag for a person"""
+    # pylint: disable=too-few-public-methods
+
+    PAUSE = 5979171
+
+    tag_id = Column(Integer)
+    person_id = Column(Integer, ForeignKey("person.id"))
+
+    @property
+    def _properties(self):
+        return (self.tag_id,)
+
 _WorkingUnitParticipants = Table( # pylint: disable=invalid-name
     "working_unit_participants", _SerloEntity.metadata,
     Column("working_unit_id", Integer, ForeignKey("workingunit.id")),
@@ -93,6 +106,7 @@ class Person(_SerloEntity):
     last_name = Column(String)
     emails = relationship("Email")
     phone_numbers = relationship("PhoneNumber")
+    tags = relationship("Tag")
     managing_units = relationship("WorkingUnit",
                                   back_populates="person_responsible")
     participating_units = relationship("WorkingUnit",
@@ -105,7 +119,7 @@ class Person(_SerloEntity):
     @property
     def _properties(self):
         return (self.first_name, self.last_name, self.emails,
-                self.phone_numbers)
+                self.phone_numbers, self.tags)
 
     @property
     def name(self):
@@ -115,7 +129,12 @@ class Person(_SerloEntity):
         >>> p.name
         'Markus Miller'
         """
-        return self.first_name + " " + self.last_name
+        name = self.first_name + " " + self.last_name
+
+        if self.has_tag(Tag.PAUSE):
+            name += " (Pause)"
+
+        return name
 
     @property
     def work_emails(self):
@@ -128,6 +147,10 @@ class Person(_SerloEntity):
         'work'."""
         return [PhoneNumber for PhoneNumber in self.phone_numbers
                 if PhoneNumber.location == "Work"]
+
+    def has_tag(self, tag_id):
+        """Checks whether this Person has the tag with the ID `tag_id`."""
+        return tag_id in [t.tag_id for t in self.tags]
 
 class UnitType(enum.Enum):
     """Typo of an working unit."""

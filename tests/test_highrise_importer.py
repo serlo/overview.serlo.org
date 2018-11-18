@@ -8,14 +8,16 @@ from unittest import TestCase
 
 from highrise_importer import parse_email, parse_phone_number, parse_person, \
                               parse_people, parse_working_unit, xml_text, \
-                              xml_find, parse_working_units, parse_mentoring
+                              xml_find, parse_working_units, parse_mentoring, \
+                              parse_tag
 from tests.data import generate_emails, generate_email_specs, \
                        generate_phone_numbers, generate_phone_number_specs, \
                        generate_persons, generate_person_specs, \
                        generate_people, generate_people_specs, \
                        generate_working_units, generate_working_unit_specs, \
                        generate_person_ids, generate_working_unit_list_spec, \
-                       generate_mentoring_spec
+                       generate_mentoring_spec, generate_tags, \
+                       generate_tag_specs
 
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
@@ -85,6 +87,15 @@ class TestHighriseImporterScript(TestCase):
         self.assertEqual(parse_phone_number(specs[0]), numbers[0])
         self.assertEqual(parse_phone_number(specs[1]), numbers[1])
         self.assertEqual(parse_phone_number(specs[2]), numbers[2])
+
+    def test_parse_tag(self):
+        """Testcase for the function `parse_phone_number()`."""
+        specs = [ET.fromstring(x) for x in generate_tag_specs()]
+        tags = generate_tags()
+
+        self.assertEqual(parse_tag(specs[0]), tags[0])
+        self.assertEqual(parse_tag(specs[1]), tags[1])
+        self.assertEqual(parse_tag(specs[2]), tags[2])
 
     def test_parse_person(self):
         """Testcase for the function `parse_person()`."""
