@@ -117,7 +117,7 @@ class Person(_SerloEntity):
     @property
     def _properties(self):
         return (self.first_name, self.last_name, self.emails,
-                self.phone_numbers)
+                self.phone_numbers, self.tags)
 
     @property
     def name(self):

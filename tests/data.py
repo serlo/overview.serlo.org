@@ -100,7 +100,7 @@ def generate_person_specs():
     returned by `generate_persons()`."""
     email1, email2, email3 = generate_email_specs()
     phone1, phone2, phone3 = generate_phone_number_specs()
-    tag1, tag2, tag3 = generate_tags()
+    tag1, tag2, tag3 = generate_tag_specs()
     id1, id2, id3 = generate_person_ids()
 
     return [f"""<person>

@@ -78,7 +78,9 @@ def parse_person(xml):
                    emails=[parse_email(e) for e in
                            xml_find("email-addresses", contact_data)],
                    phone_numbers=[parse_phone_number(e) for e in
-                                  xml_find("phone-numbers", contact_data)]))
+                                  xml_find("phone-numbers", contact_data)],
+                   tags=[parse_tag(e) for e in xml_find("tags", xml)]))
+
 def parse_people(xml):
     """Parse people defined by XML specification `xml`."""
     return [parse_person(e) for e in xml.findall("person", xml)]
