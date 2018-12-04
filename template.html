@@ -154,7 +154,7 @@
                 <td id="unit{{ project.id }}"{% if project.status %} class="status-{{ project.status }}" {% endif %}>
                   <strong> {{ project.title }} </strong>
                   {% if project.overview_document %}
-                  <small><a href="{{ project.overview_document }}">(Overview)</a></small>
+                  <small><a href="{{ project.overview_document }}" target="_blank">(Overview)</a></small>
                   {% endif %}
                 </td>
                 <td>{{ print_person(project.person_responsible) }}</td>
