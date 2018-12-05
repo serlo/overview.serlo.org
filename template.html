@@ -212,7 +212,7 @@
                   <a href="#{{ member.mentor.id }}"> {{ member.mentor.name }} </a>
                 {% endif %}
                 {% if member.mentor and member.mentees %} <br> <br> {% endif %}
-                {% if member.mentees %} <strong>Traveler:</strong> <br> {% endif %}
+                {% if member.mentees %} <strong>Sherpee:</strong> <br> {% endif %}
                 {% call(mentee) generate_list(member.mentees|sort(attribute="name")) %}
                   <a href="#{{ mentee.id }}">{{ mentee.name }}</a>
                 {% endcall %}
