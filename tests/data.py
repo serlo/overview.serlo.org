@@ -259,6 +259,7 @@ def generate_working_units():
     return [WorkingUnit(name="project1",
                         description="My description",
                         overview_document="overview_document",
+                        storage_url="storage_url",
                         unit_type=UnitType.project,
                         status=UnitStatus.perfect,
                         person_responsible=person1,
@@ -266,6 +267,7 @@ def generate_working_units():
             WorkingUnit(name="",
                         description="",
                         overview_document="",
+                        storage_url="",
                         unit_type=UnitType.project,
                         status=None,
                         person_responsible=person2,
@@ -273,6 +275,7 @@ def generate_working_units():
             WorkingUnit(name="Support Unit Master",
                         description="A cool unit.",
                         overview_document="http://example.org",
+                        storage_url="https://example.com/url/",
                         unit_type=UnitType.support_unit,
                         status=UnitStatus.ok,
                         person_responsible=person1,
@@ -280,6 +283,7 @@ def generate_working_units():
             WorkingUnit(name="Another support unit",
                         description="Hello World",
                         overview_document="Hello Document",
+                        storage_url="",
                         person_responsible=person3,
                         unit_type=UnitType.support_unit,
                         status=UnitStatus.problems,
@@ -333,6 +337,12 @@ def generate_working_unit_specs():
                     <subject_field_label>Link to Overview Document</subject_field_label>
                     <value>overview_document</value>
                   </subject_data>
+                  <subject_data>
+                    <id type="integer">44</id>
+                    <subject_field_id type="integer">1258882</subject_field_id>
+                    <subject_field_label>Link to G-Drive Folder</subject_field_label>
+                    <value>storage_url</value>
+                  </subject_data>
                  </subject_datas>
                 </deal>""",
             f"""<deal>
@@ -375,6 +385,12 @@ def generate_working_unit_specs():
                     <id type="integer">148</id>
                     <subject_field_id type="integer">1224165</subject_field_id>
                     <subject_field_label>Link to Overview Document</subject_field_label>
+                    <value></value>
+                  </subject_data>
+                  <subject_data>
+                    <id type="integer">44</id>
+                    <subject_field_id type="integer">1258882</subject_field_id>
+                    <subject_field_label>Link to G-Drive Folder</subject_field_label>
                     <value></value>
                   </subject_data>
                  </subject_datas>
@@ -421,6 +437,12 @@ def generate_working_unit_specs():
                     <subject_field_id type="integer">1224165</subject_field_id>
                     <subject_field_label>Link to Overview Document</subject_field_label>
                     <value>http://example.org</value>
+                  </subject_data>
+                  <subject_data>
+                    <id type="integer">44</id>
+                    <subject_field_id type="integer">1258882</subject_field_id>
+                    <subject_field_label>Link to G-Drive Folder</subject_field_label>
+                    <value>https://example.com/url/</value>
                   </subject_data>
                  </subject_datas>
                 </deal>""",

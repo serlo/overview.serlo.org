@@ -241,6 +241,13 @@ class TestWorkingUnit(TestCase):
         self.assertEqual(self.unit1.overview_document, "http://example.org")
         self.assertEqual(self.unit2.overview_document, "Hello Document")
 
+    def test_attribute_storage_url(self): # pylint: disable=invalid-name
+        """Test for attribute `WorkingUnit.storage_url`"""
+        self.assertEqual(self.project1.storage_url, "storage_url")
+        self.assertEqual(self.project2.storage_url, "")
+        self.assertEqual(self.unit1.storage_url, "https://example.com/url/")
+        self.assertEqual(self.unit2.storage_url, "")
+
     def test_attribute_status(self):
         """Test for attribute `WorkingUnit.status`."""
         self.assertEqual(self.project1.status, UnitStatus.perfect)

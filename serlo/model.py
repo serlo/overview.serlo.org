@@ -198,6 +198,7 @@ class WorkingUnit(_SerloEntity):
     participants = relationship("Person", back_populates="participating_units",
                                 secondary=_WorkingUnitParticipants)
     overview_document = Column(String)
+    storage_url = Column(String)
 
     @property
     def title(self):
