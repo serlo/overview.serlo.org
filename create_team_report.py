@@ -5,6 +5,7 @@ import sys
 from datetime import datetime
 
 import jinja2
+import pytz
 
 from serlo.model import SerloDatabase
 
@@ -20,10 +21,11 @@ def run_script(args):
                              loader=jinja2.FileSystemLoader("."))
 
     template = env.get_template(template)
+    timestamp = datetime.now().astimezone(pytz.timezone('Europe/Berlin'))
 
     print(template.render(
         serlo=database,
-        timestamp=datetime.now().strftime("%Y-%m-%d %H:%M")
+        timestamp=timestamp
     ))
 
 if __name__ == "__main__":
