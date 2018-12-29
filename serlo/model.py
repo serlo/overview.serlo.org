@@ -83,7 +83,11 @@ class Tag(_SerloEntity):
     """Model of a tag for a person"""
     # pylint: disable=too-few-public-methods
 
-    PAUSE = 5979171
+    TAGS = {
+        "Pause": 5979171,
+        "Intern": 5363523,
+        "Newcomer": 5978316,
+    }
 
     tag_id = Column(Integer)
     person_id = Column(Integer, ForeignKey("person.id"))
@@ -130,9 +134,11 @@ class Person(_SerloEntity):
         'Markus Miller'
         """
         name = self.first_name + " " + self.last_name
+        tags = [tag_name for tag_name, tag_id in Tag.TAGS.items()
+                if self.has_tag(tag_id)]
 
-        if self.has_tag(Tag.PAUSE):
-            name += " (Pause)"
+        if tags:
+            name += " (%s)" % ", ".join(tags)
 
         return name
 

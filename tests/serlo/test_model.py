@@ -133,8 +133,8 @@ class TestPerson(TestCase):
 
     def test_attr_name(self):
         """Testcase for attribute `Person.name`."""
-        self.assertEqual(self.person1.name, "Markus Miller (Pause)")
-        self.assertEqual(self.person2.name, "Yannick Müller")
+        self.assertEqual(self.person1.name, "Markus Miller (Pause, Intern)")
+        self.assertEqual(self.person2.name, "Yannick Müller (Intern)")
         self.assertEqual(self.person3.name, " ")
 
     def test_attr_work_emails(self):
