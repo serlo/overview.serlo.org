@@ -165,9 +165,10 @@ class TestPerson(TestCase):
         self.assertFalse(self.person2.has_tag(self.tag3.tag_id))
 
 class TestUnitType(TestCase):
-     """Testcases for the class `UnitType`."""
+    """Testcases for the class `UnitType`."""
 
-     def test_attribute_abbreviation(self):
+    def test_attribute_abbreviation(self):
+        """Testcase for attribute `UnitType.abbreviation`."""
         self.assertEqual(UnitType.project.abbreviation, "P")
         self.assertEqual(UnitType.support_unit.abbreviation, "U")
 
@@ -256,6 +257,7 @@ class TestWorkingUnit(TestCase):
         self.assertEqual(self.unit2.status, UnitStatus.problems)
 
     def test_attribute_title(self):
+        """Test for attribute `WorkingUnit.title`."""
         self.assertEqual(self.project1.title, "P - project1")
         self.assertEqual(self.project2.title, "P - ")
         self.assertEqual(self.unit1.title, "U - Support Unit Master")
