@@ -87,6 +87,7 @@ class Tag(_SerloEntity):
         "Pause": 5979171,
         "Intern": 5363523,
         "Newcomer": 5978316,
+        "Intern (School)": 5417900
     }
 
     tag_id = Column(Integer)
@@ -136,6 +137,8 @@ class Person(_SerloEntity):
         name = self.first_name + " " + self.last_name
         tags = [tag_name for tag_name, tag_id in Tag.TAGS.items()
                 if self.has_tag(tag_id)]
+
+        tags = ["Intern" if x == "Intern (School)" else x for x in tags]
 
         if tags:
             name += " (%s)" % ", ".join(tags)
