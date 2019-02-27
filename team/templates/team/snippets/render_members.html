@@ -1,0 +1,4 @@
+{% include "./section.html" with name=name %}
+{% with "Name Kontakt Projekte/Units Verantwortung" as headers %}
+{% include "./table_member.html" with rows=units headers=headers.split %}
+{% endwith %}

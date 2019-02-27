@@ -1,0 +1,39 @@
+<table class="table hover">
+    <thead>
+      <tr>
+        {% for header in headers %}
+          <th>{{header}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for project in rows %} <!--|sort:attribute="title"-->
+        <tr id="unit{{ project.id }}">
+        <td id="unit{{ project.id }}">
+        <!--{% if project.status %} class="status-{{ project.status }}" {% endif %}-->
+        <strong> {{ project.name }} </strong><br>
+        <!--{% if project.overview_document %}
+        <small><a href="{{ project.overview_document }}" target="_blank">[Overview]</a></small>
+        {% endif %}
+        {% if project.storage_url %}
+        <small><a href="{{ project.storage_url }}" target="_blank">[G Drive Folder]</a></small>
+        {% endif %}-->
+        </td>
+        <td><a href="#{{project.lama.id}}">{{ project.lama.name }}</a></td>
+        <td>
+        {% if project.members %}
+        <ul>
+        {% for member in project.members.all %} <!--|sort:attribute="name"-->
+        <li>
+          <a href="#{{member.id}}">{{ member.name }}</a>
+        </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+    </td>
+    <td>{{ project.description }}</td>
+    </tr>
+      {% endfor %}
+    </tbody>
+</table>
+

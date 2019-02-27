@@ -1,0 +1,93 @@
+<table class="table hover">
+    <thead>
+      <tr>
+        {% for header in headers %}
+          <th>{{header}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for member in rows %}
+        <tr id="{{ member.id }}">
+              <td id="{{member.id}}"><strong>{{ member.name }}</strong></td>
+              <td>
+                {% if member.work_emails %}
+                <ul>
+                {% for email in member.work_emails.all %}
+                    <li>
+                    <a href="mailto:{{email.address}}">{{ email.address }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {% if member.work_phone_numbers %}
+                <ul>
+                {% for phone_number in member.work_phone_numbers.all %}
+                    <li>
+                    <a href="tel:{{phone_number.id}}">{{ phone_number.number }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                                        
+              </td>
+              <td>
+                {% if member.project_lama %}
+                <strong>Lama</strong><br>
+                {% endif %}
+                    <ul>
+                    {% for unit in member.project_lama.all %} <!--sort(attribute="title")-->
+                        <li>
+                        <a href="#unit{{ unit.id }}" >
+                        <!--{% if unit.status %} class="status-{{ unit.status }}" {% endif %}--> 
+                        
+                    {{ unit.name }}
+                  </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+
+
+
+
+                {% if member.project_members %}
+                <strong>Member</strong><br>
+                {% endif %}
+                    <ul>
+                    {% for unit in member.project_members.all %} <!--sort(attribute="title")-->
+                        <li>
+                        <a href="#unit{{ unit.id }}" >
+                        <!--{% if unit.status %} class="status-{{ unit.status }}" {% endif %}--> 
+                        
+                    {{ unit.name }}
+                  </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+              </td>
+
+
+              <td>
+                {% if member.sherpa %}
+                  <strong>Sherpa:</strong> <br>
+                  <a href="#{{ member.sherpa.id }}"> {{ member.sherpa.name }} </a>
+                {% endif %}
+                {% if member.sherpa and member.sherpee %} <br> <br> {% endif %}
+                {% if member.sherpee %} <strong>Sherpee:</strong> <br> {% endif %}
+                <ul>
+                    {% for sherpee in member.sherpee.all %} <!--sort(attribute="name")-->
+                        <li>
+                        <a href="#{{ mentee.id }}">{{ mentee.name }}</a>
+                        </li>
+                    {% endfor %}
+                    </ul>
+              </td>
+
+
+
+
+            </tr>
+
+      {% endfor %}
+    </tbody>
+</table>

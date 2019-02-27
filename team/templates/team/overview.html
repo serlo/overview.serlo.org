@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, follow">
+    <title>Serlo Team Overview</title>
+    <link href="./favicon.ico" rel="icon" type="image/x-icon">
+    <link rel="stylesheet" href="./styles.css">
+    <style type="text/css">
+    @media (min-width: 768px) {
+      .sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+      }
+    }
+
+    .sidebar .nav-link {
+      font-weight: 500;
+    }
+
+    .legend {
+      position: absolute;
+      bottom: 70px;
+      padding: 0 14px;
+      font-size: smaller;
+    }
+
+    .legend ul {
+      margin-top: 1em;
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+
+    table td {
+      min-width: 25ex;
+    }
+
+    table.dataTable td.status-perfect { background-color: #99ff99; }
+    table.dataTable td.status-ok { background-color:  #ffff99; }
+    table.dataTable td.status-problems { background-color: #ffb3b3; }
+    table.dataTable.hover td.status-perfect:hover { background-color: #4dff4d; }
+    table.dataTable.hover td.status-ok:hover { background-color: #ffff4d; }
+    table.dataTable.hover td.status-problems:hover { background-color: #ff8080;}
+
+    a.status-perfect {background-color: #99ff99;}
+    a.status-ok {background-color: #ffff99;}
+    a.status-problems {background-color: #ffb3b3;}
+
+    a.status-perfect:hover { background-color: #4dff4d;}
+    a.status-ok:hover { background-color:  #ffff4d;}
+    a.status-problems:hover { background-color:  #ff8080;}
+
+    </style>
+    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript">
+      $(document).ready( function () {
+        $('table').DataTable({
+          "paging": false,
+          "language": {
+            "info": "Showing _TOTAL_ entries",
+          },
+        });
+      } );
+    </script>
+</head>
+<body>
+    <header class="navbar navbar-expand navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Serlo Team Overview</a>
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-12 col-md-2 bg-light sidebar">
+          <ul class="nav nav-pills flex-column">
+            {% include "./snippets/toc_item.html" with name="Projekte"%}
+            {% include "./snippets/toc_item.html" with name="Support-Units"%}
+            {% include "./snippets/toc_item.html" with name="Teammitglieder"%}
+          </ul>
+
+          <aside class="legend">
+            <strong>Legend:</strong>
+            <ul>
+              <li style="background-color: #4dff4d;">
+                  "we are ahead of our schedule"
+              </li>
+              <li style="background-color: #ffff4d;">
+                  "we are in line with our schedule"
+              </li>
+              <li style="background-color: #ff8080;">
+                  "we are behind schedule"
+              </li>
+            </ul>
+
+            <small>Last update: {{ timestamp.timestamp }}</small>
+          </aside>
+        </nav>
+        <main role="main" class="col-12 col-md-10">
+        {% include "./snippets/render_projects.html" with units=project_list name="Projekte" %}
+          <!--render_units(serlo.support_units, "Support-Units")-->
+        
+        {% include "./snippets/render_members.html" with units=member_list name="Teammitglieder"%}
+            
+        </main>
+</div>
+</div>
+</body>
