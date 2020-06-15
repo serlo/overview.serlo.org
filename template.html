@@ -117,9 +117,9 @@
             {% macro toc_item(name) %}
             <li class="nav-item"><a class="nav-link" href="#{{name|urlencode}}">{{name}}</a></li>
             {% endmacro %}
-            {{ toc_item("Projekte") }}
+            {{ toc_item("Project") }}
             {{ toc_item("Support-Units") }}
-            {{ toc_item("Teammitglieder") }}
+            {{ toc_item("Team member") }}
           </ul>
 
           <aside class="legend">
@@ -144,7 +144,7 @@
           {% macro render_units(units, name) %}
             {{ section(name) }}
             {% call(project) generate_table(units|sort(attribute="title"),
-              ["Name", "Lama", "Mitglieder", "Beschreibung"]) %}
+              ["Name", "Lama", "Member", "Description"]) %}
               <tr id="unit{{ project.id }}">
                 <td id="unit{{ project.id }}"{% if project.status %} class="status-{{ project.status }}" {% endif %}>
                   <strong> {{ project.title }} </strong><br>
@@ -168,9 +168,9 @@
           {{ render_units(serlo.projects, "Projekte") }}
           {{ render_units(serlo.support_units, "Support-Units") }}
 
-          {{ section("Teammitglieder") }}
+          {{ section("Team member") }}
           {% call(member) generate_table(serlo.persons,
-            ["Name", "Kontakt", "Projekte / Units", "Verantwortung"]) %}
+            ["Name", "Contact", "Project / Units", "Responsability"]) %}
             <tr id="{{ member.id }}">
               <td id="{{member.id}}"><strong>{{ member.name }}</strong></td>
               <td>
