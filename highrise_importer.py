@@ -16,7 +16,6 @@ SUPPORT_UNIT_ID = "4849968"
 MENTORING_DEAL_ID = "6438903"
 MEMBER_ID = "5360080"
 SUBJECT_DATA_OVERVIEW = "1224165"
-SUBJECT_DATA_STATUS = "1224123"
 SUBJECT_DATA_STORAGE = "1258882"
 
 def xml_text(xml):
@@ -104,16 +103,9 @@ def parse_working_unit(xml, persons):
 
     overview_document = subject_datas.get(SUBJECT_DATA_OVERVIEW, "")
     storage_url = subject_datas.get(SUBJECT_DATA_STORAGE, "")
-    status = subject_datas.get(SUBJECT_DATA_STATUS, None)
 
-    if status == "we are ahead of our schedule":
-        status = UnitStatus.perfect
-    elif status == "we are in line with our schedule":
-        status = UnitStatus.ok
-    elif status == "we are behind schedule":
-        status = UnitStatus.problems
-    else:
-        status = None
+
+   
 
     try:
         person_responsible = persons[xml_text(xml_find("party-id", xml))]
@@ -128,7 +120,6 @@ def parse_working_unit(xml, persons):
                        description=xml_text(xml_find("background", xml)),
                        overview_document=overview_document,
                        storage_url=storage_url,
-                       status=status,
                        unit_type=unit_type,
                        person_responsible=person_responsible,
                        participants=[persons[x] for x in participant_ids
