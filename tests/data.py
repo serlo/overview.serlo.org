@@ -1,7 +1,7 @@
 """This module contains example data for testing."""
 
 from serlo.model import Email, PhoneNumber, Person, WorkingUnit, UnitType, \
-                        UnitStatus, Tag
+                        Tag
 
 def generate_emails():
     """Returns examples of emails."""
@@ -261,7 +261,6 @@ def generate_working_units():
                         overview_document="overview_document",
                         storage_url="storage_url",
                         unit_type=UnitType.project,
-                        status=UnitStatus.perfect,
                         person_responsible=person1,
                         participants=[person3]),
             WorkingUnit(name="",
@@ -269,7 +268,6 @@ def generate_working_units():
                         overview_document="",
                         storage_url="",
                         unit_type=UnitType.project,
-                        status=None,
                         person_responsible=person2,
                         participants=[]),
             WorkingUnit(name="Support Unit Master",
@@ -277,7 +275,6 @@ def generate_working_units():
                         overview_document="http://example.org",
                         storage_url="https://example.com/url/",
                         unit_type=UnitType.support_unit,
-                        status=UnitStatus.ok,
                         person_responsible=person1,
                         participants=[person2]),
             WorkingUnit(name="Another support unit",
@@ -286,7 +283,6 @@ def generate_working_units():
                         storage_url="",
                         person_responsible=person3,
                         unit_type=UnitType.support_unit,
-                        status=UnitStatus.problems,
                         participants=[person1, person2])]
 
 def generate_working_unit_specs():
@@ -325,12 +321,6 @@ def generate_working_unit_specs():
                    {person3}
                  </parties>
                  <subject_datas type="array">
-                  <subject_data>
-                    <id type="integer">25</id>
-                    <subject_field_id type="integer">1224123</subject_field_id>
-                    <subject_field_label>Status</subject_field_label>
-                    <value>we are ahead of our schedule</value>
-                  </subject_data>
                   <subject_data>
                     <id type="integer">148</id>
                     <subject_field_id type="integer">1224165</subject_field_id>
@@ -375,12 +365,6 @@ def generate_working_unit_specs():
                  <parties type="array">
                  </parties>
                  <subject_datas type="array">
-                  <subject_data>
-                    <id type="integer">25</id>
-                    <subject_field_id type="integer">1224123</subject_field_id>
-                    <subject_field_label>Status</subject_field_label>
-                    <value></value>
-                  </subject_data>
                   <subject_data>
                     <id type="integer">148</id>
                     <subject_field_id type="integer">1224165</subject_field_id>
@@ -427,12 +411,6 @@ def generate_working_unit_specs():
                  </parties>
                  <subject_datas type="array">
                   <subject_data>
-                    <id type="integer">25</id>
-                    <subject_field_id type="integer">1224123</subject_field_id>
-                    <subject_field_label>Status</subject_field_label>
-                    <value>we are in line with our schedule</value>
-                  </subject_data>
-                  <subject_data>
                     <id type="integer">148</id>
                     <subject_field_id type="integer">1224165</subject_field_id>
                     <subject_field_label>Link to Overview Document</subject_field_label>
@@ -478,12 +456,6 @@ def generate_working_unit_specs():
                    {person2}
                  </parties>
                  <subject_datas type="array">
-                  <subject_data>
-                    <id type="integer">25</id>
-                    <subject_field_id type="integer">1224123</subject_field_id>
-                    <subject_field_label>Status</subject_field_label>
-                    <value>we are behind schedule</value>
-                  </subject_data>
                   <subject_data>
                     <id type="integer">148</id>
                     <subject_field_id type="integer">1224165</subject_field_id>
