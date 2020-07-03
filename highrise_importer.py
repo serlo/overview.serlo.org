@@ -7,7 +7,7 @@ import xml.etree.ElementTree as ET
 import requests
 
 from serlo.model import SerloDatabase, Email, PhoneNumber, Person, UnitType, \
-                        WorkingUnit, UnitStatus, Tag
+                        WorkingUnit, Tag
 
 TOKEN_VARIABLE = "HIGHRISE_API_TOKEN"
 

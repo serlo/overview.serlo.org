@@ -1,7 +1,7 @@
 """This module contains example data for testing."""
 
 from serlo.model import Email, PhoneNumber, Person, WorkingUnit, UnitType, \
-                        UnitStatus, Tag
+                        Tag
 
 def generate_emails():
     """Returns examples of emails."""
@@ -261,7 +261,6 @@ def generate_working_units():
                         overview_document="overview_document",
                         storage_url="storage_url",
                         unit_type=UnitType.project,
-                        status=UnitStatus.perfect,
                         person_responsible=person1,
                         participants=[person3]),
             WorkingUnit(name="",
@@ -269,7 +268,6 @@ def generate_working_units():
                         overview_document="",
                         storage_url="",
                         unit_type=UnitType.project,
-                        status=None,
                         person_responsible=person2,
                         participants=[]),
             WorkingUnit(name="Support Unit Master",
@@ -277,7 +275,6 @@ def generate_working_units():
                         overview_document="http://example.org",
                         storage_url="https://example.com/url/",
                         unit_type=UnitType.support_unit,
-                        status=UnitStatus.ok,
                         person_responsible=person1,
                         participants=[person2]),
             WorkingUnit(name="Another support unit",
@@ -286,7 +283,6 @@ def generate_working_units():
                         storage_url="",
                         person_responsible=person3,
                         unit_type=UnitType.support_unit,
-                        status=UnitStatus.problems,
                         participants=[person1, person2])]
 
 def generate_working_unit_specs():
