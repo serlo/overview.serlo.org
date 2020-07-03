@@ -207,7 +207,7 @@ class WorkingUnit(_SerloEntity):
     def members(self):
         """Returns list of all persons working in this unit (person responsible
         and participants)."""
-        return self.participants
+        return set([self.person_responsible] + self.participants)
 
 
 
