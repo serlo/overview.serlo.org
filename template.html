@@ -121,6 +121,9 @@
                   {% if project.storage_url %}
                   <small><a href="{{ project.storage_url }}" target="_blank">[G Drive Folder]</a></small>
                   {% endif %}
+                  {% if project.slack_url %}
+                  <small><a href="{{ project.slack_url }}" target="_blank">[Slack Channel]</a></small>
+                  {% endif %}
                 </td>
                 <td>{{ print_person(project.person_responsible) }}</td>
                 <td>

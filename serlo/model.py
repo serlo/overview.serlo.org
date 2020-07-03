@@ -191,6 +191,7 @@ class WorkingUnit(_SerloEntity):
                                 secondary=_WorkingUnitParticipants)
     overview_document = Column(String)
     storage_url = Column(String)
+    slack_url = Column(String)
 
     @property
     def title(self):
