@@ -207,15 +207,8 @@ class WorkingUnit(_SerloEntity):
     def members(self):
         """Returns list of all persons working in this unit (person responsible
         and participants)."""
-        return set([self.person_responsible] + self.participants)
-            
-        
-    """
-        if self.person_responsible == self.participants:
-            return self.person_responsible
-        else:
-            return [self.person_responsible] + self.participants
-    """
+        return self.participants
+
 
 
 class SerloDatabase(object):
