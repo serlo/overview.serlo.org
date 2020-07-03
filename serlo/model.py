@@ -209,8 +209,6 @@ class WorkingUnit(_SerloEntity):
         and participants)."""
         return set([self.person_responsible] + self.participants)
 
-
-
 class SerloDatabase(object):
     """Class for accessing the stored entities of Serlo and saving new
     entities."""
