@@ -322,12 +322,6 @@ def generate_working_unit_specs():
                  </parties>
                  <subject_datas type="array">
                   <subject_data>
-                    <id type="integer">25</id>
-                    <subject_field_id type="integer">1224123</subject_field_id>
-                    <subject_field_label>Status</subject_field_label>
-                    <value>we are ahead of our schedule</value>
-                  </subject_data>
-                  <subject_data>
                     <id type="integer">148</id>
                     <subject_field_id type="integer">1224165</subject_field_id>
                     <subject_field_label>Link to Overview Document</subject_field_label>
@@ -371,12 +365,6 @@ def generate_working_unit_specs():
                  <parties type="array">
                  </parties>
                  <subject_datas type="array">
-                  <subject_data>
-                    <id type="integer">25</id>
-                    <subject_field_id type="integer">1224123</subject_field_id>
-                    <subject_field_label>Status</subject_field_label>
-                    <value></value>
-                  </subject_data>
                   <subject_data>
                     <id type="integer">148</id>
                     <subject_field_id type="integer">1224165</subject_field_id>
@@ -423,12 +411,6 @@ def generate_working_unit_specs():
                  </parties>
                  <subject_datas type="array">
                   <subject_data>
-                    <id type="integer">25</id>
-                    <subject_field_id type="integer">1224123</subject_field_id>
-                    <subject_field_label>Status</subject_field_label>
-                    <value>we are in line with our schedule</value>
-                  </subject_data>
-                  <subject_data>
                     <id type="integer">148</id>
                     <subject_field_id type="integer">1224165</subject_field_id>
                     <subject_field_label>Link to Overview Document</subject_field_label>
@@ -474,12 +456,6 @@ def generate_working_unit_specs():
                    {person2}
                  </parties>
                  <subject_datas type="array">
-                  <subject_data>
-                    <id type="integer">25</id>
-                    <subject_field_id type="integer">1224123</subject_field_id>
-                    <subject_field_label>Status</subject_field_label>
-                    <value>we are behind schedule</value>
-                  </subject_data>
                   <subject_data>
                     <id type="integer">148</id>
                     <subject_field_id type="integer">1224165</subject_field_id>

@@ -104,9 +104,6 @@ def parse_working_unit(xml, persons):
     overview_document = subject_datas.get(SUBJECT_DATA_OVERVIEW, "")
     storage_url = subject_datas.get(SUBJECT_DATA_STORAGE, "")
 
-
-   
-
     try:
         person_responsible = persons[xml_text(xml_find("party-id", xml))]
     except KeyError:

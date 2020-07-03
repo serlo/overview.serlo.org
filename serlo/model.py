@@ -168,14 +168,13 @@ class UnitType(enum.Enum):
 
     @property
     def abbreviation(self):
-        """Returns an abbreviation of the unit status."""
+        """Returns an abbreviation of the unit type."""
         if self == UnitType.project:
             return "P"
         elif self == UnitType.support_unit:
             return "U"
         else:
             raise ValueError("Unknown Unit Type")
-
 
 class WorkingUnit(_SerloEntity):
     """Model for a working unit."""
