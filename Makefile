@@ -27,11 +27,11 @@ $(FAVICON): $(OUTPUT_DIR)
 	curl -s 'https://de.serlo.org/favicon.ico' > '$@'
 
 $(CSS): $(OUTPUT_DIR)
-	curl -s 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css' > '$@'
+	curl -s 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css' > '$@'
 	curl -s 'https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css' >> '$@'
 
 $(JAVASCRIPT): $(OUTPUT_DIR)
-	curl -s 'https://code.jquery.com/jquery-3.2.1.min.js' > '$@'
+	curl -s 'https://code.jquery.com/jquery-3.5.1.min.js' > '$@'
 	curl -s 'https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js' >> '$@'
 
 $(INDEX_HTML): $(OUTPUT_DIR)
