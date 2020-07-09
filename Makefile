@@ -28,11 +28,11 @@ $(FAVICON): $(OUTPUT_DIR)
 
 $(CSS): $(OUTPUT_DIR)
 	curl -s 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css' > '$@'
-	curl -s 'https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css' >> '$@'
+	curl -s 'https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.21/r-2.2.5/datatables.min.css' >> '$@'
 
 $(JAVASCRIPT): $(OUTPUT_DIR)
 	curl -s 'https://code.jquery.com/jquery-3.5.1.min.js' > '$@'
-	curl -s 'https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js' >> '$@'
+	curl -s 'https://cdn.datatables.net/v/dt/jq-3.3.1/dt-1.10.21/r-2.2.5/datatables.min.js' >> '$@'
 
 $(INDEX_HTML): $(OUTPUT_DIR)
 	$(PYTHON) create_team_report.py 'sqlite:///$(DATABASE)' \

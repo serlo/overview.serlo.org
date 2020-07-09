@@ -18,7 +18,7 @@
 {% endmacro %}
 
 {% macro generate_table(rows, headers) %}
-  <table class="table hover">
+  <table class="table hover responsive">
     <thead>
       <tr>
         {% for header in headers %}
@@ -76,17 +76,19 @@
     table td {
       min-width: 25ex;
     }
+
     </style>
-    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="./script.js"></script>
     <script type="text/javascript">
-      $(document).ready( function () {
+      $(document).ready(function () {
         $('table').DataTable({
-          "paging": false,
           "language": {
             "info": "Showing _TOTAL_ entries",
           },
+          "reponsive": true,
+          "paging": false,
         });
-      } );
+      });
     </script>
   </head>
   <body>
