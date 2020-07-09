@@ -191,6 +191,7 @@ class WorkingUnit(_SerloEntity):
                                 secondary=_WorkingUnitParticipants)
     overview_document = Column(String)
     storage_url = Column(String)
+    slack_url = Column(String)
 
     @property
     def title(self):
@@ -207,7 +208,7 @@ class WorkingUnit(_SerloEntity):
     def members(self):
         """Returns list of all persons working in this unit (person responsible
         and participants)."""
-        return [self.person_responsible] + self.participants
+        return set([self.person_responsible] + self.participants)
 
 class SerloDatabase(object):
     """Class for accessing the stored entities of Serlo and saving new

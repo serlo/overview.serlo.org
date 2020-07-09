@@ -17,6 +17,7 @@ MENTORING_DEAL_ID = "6438903"
 MEMBER_ID = "5360080"
 SUBJECT_DATA_OVERVIEW = "1224165"
 SUBJECT_DATA_STORAGE = "1258882"
+SUBJECT_DATA_SLACK = "1311275"
 
 def xml_text(xml):
     """Returns the inner text of the XML element `xml`. In case it doesn't
@@ -103,6 +104,7 @@ def parse_working_unit(xml, persons):
 
     overview_document = subject_datas.get(SUBJECT_DATA_OVERVIEW, "")
     storage_url = subject_datas.get(SUBJECT_DATA_STORAGE, "")
+    slack_url = subject_datas.get(SUBJECT_DATA_SLACK, "")
 
     try:
         person_responsible = persons[xml_text(xml_find("party-id", xml))]
@@ -117,6 +119,7 @@ def parse_working_unit(xml, persons):
                        description=xml_text(xml_find("background", xml)),
                        overview_document=overview_document,
                        storage_url=storage_url,
+                       slack_url=slack_url,
                        unit_type=unit_type,
                        person_responsible=person_responsible,
                        participants=[persons[x] for x in participant_ids

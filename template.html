@@ -107,6 +107,9 @@
             {{ toc_item("Support-Units") }}
             {{ toc_item("Team members") }}
           </ul>
+          <aside class="legend">
+            <small>Last update: {{ timestamp }}</small>
+          </aside>
         </nav>
 
         <main role="main" class="col-12 col-md-10">
@@ -122,6 +125,9 @@
                   {% endif %}
                   {% if project.storage_url %}
                   <small><a href="{{ project.storage_url }}" target="_blank">[G Drive Folder]</a></small>
+                  {% endif %}
+                  {% if project.slack_url %}
+                  <small><a href="{{ project.slack_url }}" target="_blank">[Slack Channel]</a></small>
                   {% endif %}
                 </td>
                 <td>{{ print_person(project.person_responsible) }}</td>
