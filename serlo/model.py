@@ -202,7 +202,7 @@ class WorkingUnit(_SerloEntity):
     def _properties(self):
         return (self.name, self.description, self.unit_type,
                 self.person_responsible, self.participants,
-                self.overview_document)
+                self.overview_document, self.slack_url)
 
     @property
     def members(self):

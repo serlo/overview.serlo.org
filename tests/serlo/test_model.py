@@ -221,12 +221,13 @@ class TestWorkingUnit(TestCase):
 
     def test_attr_members(self):
         """Test for attribute `WorkingUnit.members`."""
-        self.assertListEqual(self.project1.members,
-                             [self.person1, self.person3])
-        self.assertListEqual(self.project2.members, [self.person2])
-        self.assertListEqual(self.unit1.members, [self.person1, self.person2])
-        self.assertListEqual(self.unit2.members,
-                             [self.person3, self.person1, self.person2])
+        self.assertSetEqual(self.project1.members,
+                            set([self.person1, self.person3]))
+        self.assertSetEqual(self.project2.members, set([self.person2]))
+        self.assertSetEqual(self.unit1.members,
+                            set([self.person1, self.person2]))
+        self.assertSetEqual(self.unit2.members,
+                            set([self.person3, self.person1, self.person2]))
 
     def test_attr_unit_type(self): # pylint: disable=invalid-name
         """Test for attribute `WorkingUnit.type`."""
@@ -242,6 +243,13 @@ class TestWorkingUnit(TestCase):
         self.assertEqual(self.unit1.overview_document, "http://example.org")
         self.assertEqual(self.unit2.overview_document, "Hello Document")
 
+    def test_attr_slack_url(self): # pylint: disable=invalid-name
+        """Test for attribute `WorkingUnit.slack_url`"""
+        self.assertEqual(self.project1.slack_url, "slack_url")
+        self.assertEqual(self.project2.slack_url, "")
+        self.assertEqual(self.unit1.slack_url, "https://example.com/url/")
+        self.assertEqual(self.unit2.slack_url, "")
+
     def test_attr_storage_url(self): # pylint: disable=invalid-name
         """Test for attribute `WorkingUnit.storage_url`"""
         self.assertEqual(self.project1.storage_url, "storage_url")
@@ -249,14 +257,12 @@ class TestWorkingUnit(TestCase):
         self.assertEqual(self.unit1.storage_url, "https://example.com/url/")
         self.assertEqual(self.unit2.storage_url, "")
 
-
     def test_attr_title(self):
         """Test for attribute `WorkingUnit.title`."""
         self.assertEqual(self.project1.title, "P - project1")
         self.assertEqual(self.project2.title, "P - ")
         self.assertEqual(self.unit1.title, "U - Support Unit Master")
         self.assertEqual(self.unit2.title, "U - Another support unit")
-
 
 class TestSerloDatabase(TestCase):
     """Testcases for the class `SerloDatabase`."""
