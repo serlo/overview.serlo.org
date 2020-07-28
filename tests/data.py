@@ -326,6 +326,12 @@ def generate_working_unit_specs():
                  </parties>
                  <subject_datas type="array">
                   <subject_data>
+                   <id type="integer">15</id>
+                    <subject_field_id type="integer">1311275</subject_field_id>
+                    <subject_field_label>Link to Slack Url </subject_field_label>
+                    <value>Slack_link</value>
+                  </subject_data>
+                  <subject_data>
                     <id type="integer">148</id>
                     <subject_field_id type="integer">1224165</subject_field_id>
                     <subject_field_label>Link to Overview Document</subject_field_label>
@@ -515,3 +521,6 @@ def generate_mentoring_spec():
                  </parties>
                 </deal>
                </deals>"""
+
+
+

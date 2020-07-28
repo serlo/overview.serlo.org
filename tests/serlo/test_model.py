@@ -242,6 +242,13 @@ class TestWorkingUnit(TestCase):
         self.assertEqual(self.unit1.overview_document, "http://example.org")
         self.assertEqual(self.unit2.overview_document, "Hello Document")
 
+    def test_attr_slack_url(self): # pylint: disable=invalid-name
+        """Test for attribute `WorkingUnit.slack_url`"""
+        self.assertEqual(self.project1.slack_url, "slack_url")
+        self.assertEqual(self.project2.slack_url, "")
+        self.assertEqual(self.unit1.slack_url, "https://example.com/url/")
+        self.assertEqual(self.unit2.slack_url, "")
+
     def test_attr_storage_url(self): # pylint: disable=invalid-name
         """Test for attribute `WorkingUnit.storage_url`"""
         self.assertEqual(self.project1.storage_url, "storage_url")
@@ -343,3 +350,4 @@ class TestSerloDatabase(TestCase):
         self.assertListEqual(self.person1.mentees, [])
         self.assertListEqual(self.person2.mentees, [self.person1])
         self.assertListEqual(self.person3.mentees, [self.person2])
+        
